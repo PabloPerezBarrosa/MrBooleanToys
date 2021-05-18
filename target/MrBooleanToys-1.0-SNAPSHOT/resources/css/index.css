@@ -1,0 +1,86 @@
+body{
+    background-color:#aeead8 !important;
+}
+#footer{
+    width:100%;
+    background-color: #61d1b6 !important;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+}
+#logo{
+    width: 4em;
+    height: 2em;
+}
+#logo:hover{
+    -webkit-transform:scale(1.41);transform:scale(1.41);
+}
+
+#cart{
+    width: 2em;
+    height: 2em;
+}
+#cart:hover{
+    animation-name: rotation;
+    animation-duration: 1s;
+}
+#navi_bar{
+    background-color: #61d1b6;
+}
+a{
+    color: #effbf7 !important;
+}
+a:hover{
+    color: #3d8474 !important;
+}
+#dropdown_menu{
+    background-color:#61d1b6;
+    color:#effbf7;
+}
+#p_foot{
+    color: #effbf7;
+}
+.cat_img{
+    width: 15em;
+    height: 10em;
+    margin: 1em;
+}
+.cat_img:hover{
+    -webkit-transform:scale(1.41);transform:scale(1.41);
+}
+.cont{
+    width:100%;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    overflow: hidden;
+}
+h3{ 
+    color:#effbf7;
+}
+h3:hover{
+    color: #3d8474;
+}
+#slogan{
+    width: 40em;
+    height: 30em;
+    margin: 1em;
+    animation-name: slogan_move;
+    animation-duration: 3s;
+}
+@keyframes rotation{
+    0% {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+    100% {-webkit-transform: rotate(3600deg);transform: rotate(360deg);}
+}	
+@keyframes slogan_move {
+    0% { width: 0em;height: 0em;}
+    100% {width: 40em;height: 30em;}
+  }
+  
+  
+/*ZONA DE CATEGORIA.XHTML*/
+
+.prod_img{
+    width: 5.5em;
+    height: 3em;
+}
