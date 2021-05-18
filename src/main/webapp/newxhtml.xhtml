@@ -14,7 +14,7 @@
                         <h1 class="title ui-widget-header ui-corner-all">Welcome to PrimeFaces ShowCase</h1>
                 <div>
                     <h:form>                        
-                        <p:commandLink value="GO" action="#{menuController.categoriasMenu()}" update="salida"/>
+                        <p:commandLink value="GO" action="#{menuController.categoriasMenu('Hola, amigo, funciona')}" update="salida"/>
                         <p:outputLabel id="salida" value="#{menuController.url}"/>
                     </h:form>
                 </div>
