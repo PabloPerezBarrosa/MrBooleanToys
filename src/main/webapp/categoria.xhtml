@@ -20,7 +20,7 @@
                                 <p:selectOneMenu value="#{categoriaController.codigo_categoria}">
                                     <f:selectItems value="#{categoriaController.categorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat.idcategoria}"/>
                                 </p:selectOneMenu>
-                                <p:commandButton value="Buscar" update="tabla_productos" actionListener="#{categoriaController.cargarCategoria()}"/>
+                                <p:commandButton value="Buscar" update="tabla_productos" actionListener="#{categoriaController.cargarCategoria(null)}"/>
                             </p:panelGrid>
                         </div>
                         <br/><br/>
@@ -59,7 +59,7 @@
                                 </p:column>
                                 <p:column>
                                     <div class="cont">
-                                        <p:inputNumber minValue="1" maxValue="50" inputStyle="width: 3em;"/>
+                                        <p:inputNumber minValue="1" maxValue="50" emptyValue="1" inputStyle="width: 3em;"/>
                                     </div>
                                     
                                 </p:column>

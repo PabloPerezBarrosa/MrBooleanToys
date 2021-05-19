@@ -36,12 +36,12 @@
                             Categorías
                           </a>
                           <div class="dropdown-menu" id="dropdown_menu">
-                            <p:commandLink class="dropdown-item" value="Figuras"/>
-                            <p:commandLink class="dropdown-item" value="Coches"/>
-                            <p:commandLink class="dropdown-item" value="Construcción"/>
-                            <p:commandLink class="dropdown-item" value="Peluches"/>
-                            <p:commandLink class="dropdown-item" value="Puzles"/>
-                            <p:commandLink class="dropdown-item" value="Aire Libre"/>
+                            <p:commandLink class="dropdown-item" value="Figuras" actionListener="#{categoriaController.redirectCategorias('Figuras')}"/>
+                            <p:commandLink class="dropdown-item" value="Coches" actionListener="#{categoriaController.redirectCategorias('Coches')}"/>
+                            <p:commandLink class="dropdown-item" value="Construcción" actionListener="#{categoriaController.redirectCategorias('Construcción')}"/>
+                            <p:commandLink class="dropdown-item" value="Peluches" actionListener="#{categoriaController.redirectCategorias('Peluches')}"/>
+                            <p:commandLink class="dropdown-item" value="Puzles" actionListener="#{categoriaController.redirectCategorias('Puzles')}"/>
+                            <p:commandLink class="dropdown-item" value="Aire Libre" actionListener="#{categoriaController.redirectCategorias('Aire Libre')}"/>
                           </div>
                         </li>
                       </ul>

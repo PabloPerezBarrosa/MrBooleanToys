@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -28,19 +29,52 @@ public class CategoriaController implements Serializable{
     @PostConstruct
     public void init(){
         
-        categorias = categoriaEJB.findAll();
-        
-    }
-    public void cargarCategoria() throws Exception{
-       
         try{
-            
-            productos = productoEJB.listarProductos(codigo_categoria);
-                      
+            categorias = categoriaEJB.findAll();
+            String cat = (String)(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("categoria_sesion"));
+            System.out.print(cat);
+            cargarCategoria(cat);
         }catch(Exception e){
             
-            throw e;
+        }
+        
+    }
+    public void redirectCategorias(String cat){
+        
+        try{
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("categoria_sesion",cat);
+            FacesContext.getCurrentInstance().getExternalContext().redirect("categoria.xhtml");
+        }catch(Exception e){
+            System.out.println("Error en el redirect" + e);
+        }
+        
+    }
+    public void sacarCatId(String cat_name){
+  
+        for(Categoria categoria : categorias){
             
+            if(categoria.getNombre().equals(cat_name)){
+                this.setCodigo_categoria(categoria.getIdcategoria());
+            }
+        }
+    }
+    public void cargarCategoria(String cat) throws Exception{
+        
+        if(cat != null){
+            sacarCatId(cat);
+        }
+        
+        try{
+            productos = productoEJB.listarProductos(codigo_categoria);
+            
+            for(Producto prod : productos){
+                
+                System.out.println(prod.getNombre());
+                
+            }
+                      
+        }catch(Exception e){
+            throw e;
         }
     }
 
