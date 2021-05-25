@@ -13,46 +13,95 @@
             <ui:define name="content">
                 <br/><br/>
                 <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <div class="cont"><p:graphicImage class="cat_img" name="muñecos.jpg" library="images"/></div>
-                      <div class="cont">
-                          <h:form>
-                              <p:commandButton value="Muñec@s" action="#{principalController.cargarCategoria()}"/>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="cont">
+                                <h:form>
+                                    <p:commandLink action="#{categoriaController.redirectCategorias('Figuras')}">
+                                        <p:graphicImage class="cat_img" name="muñecos.jpg" library="images"/>
+                                    </p:commandLink>
+                                </h:form>
+                            </div>
+                            <div class="cont">
+                                <h:form>
+                                    <p:commandLink value="Figuras" action="#{categoriaController.redirectCategorias('Figuras')}"/>
+                                </h:form>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="cont">
+                                <h:form>
+                                    <p:commandLink action="#{categoriaController.redirectCategorias('Coches')}">
+                                        <p:graphicImage class="cat_img" name="coches.jpg" library="images"/>
+                                    </p:commandLink>
+                                </h:form>
+                            </div>
+                            <div class="cont">
+                                <h:form>
+                              <p:commandLink value="Coches" action="#{categoriaController.redirectCategorias('Coches')}"/>
                           </h:form>
-                      </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="cont">
+                                <h:form>
+                                    <p:commandLink action="#{categoriaController.redirectCategorias('Construcción')}">
+                                        <p:graphicImage class="cat_img" name="construccion.jpg" library="images"/>
+                                    </p:commandLink>
+                                </h:form>
+                            </div>
+                            <div class="cont">
+                                <h:form>
+                                    <p:commandLink value="Construcción" action="#{categoriaController.redirectCategorias('Construcción')}"/>
+                                </h:form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-4">
-                      <div class="cont"><p:graphicImage class="cat_img" name="coches.jpg" library="images"/></div>
-                      <div class="cont"><a href="#"><h3>Coches</h3></a></div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="cont">
+                                <h:form>
+                                    <p:commandLink action="#{categoriaController.redirectCategorias('Peluches')}">
+                                        <p:graphicImage class="cat_img" name="peluches.jpg" library="images"/>
+                                    </p:commandLink>
+                                </h:form>
+                            </div>
+                            <div class="cont">
+                                <h:form>
+                                    <p:commandLink value="Peluches" action="#{categoriaController.redirectCategorias('Peluches')}"/>
+                                </h:form>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="cont">
+                                <h:form>
+                                    <p:commandLink action="#{categoriaController.redirectCategorias('Puzles')}">
+                                        <p:graphicImage class="cat_img" name="puzles.jpg" library="images"/>
+                                    </p:commandLink>
+                                </h:form>
+                            </div>
+                            <div class="cont">
+                                <h:form>
+                                    <p:commandLink value="Puzles" action="#{categoriaController.redirectCategorias('Puzles')}"/>
+                                </h:form>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="cont">
+                                <h:form>
+                                    <p:commandLink action="#{categoriaController.redirectCategorias('Aire Libre')}">
+                                        <p:graphicImage class="cat_img" name="aire.jpeg" library="images"/>
+                                    </p:commandLink>
+                                </h:form>
+                            </div>
+                            <div class="cont">
+                                <h:form>
+                                    <p:commandLink value="Aire Libre" action="#{categoriaController.redirectCategorias('Aire Libre')}"/>
+                                </h:form>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-lg-4">
-                      <div class="cont"><p:graphicImage class="cat_img" name="construccion.jpg" library="images"/></div>
-                      <div class="cont"><a href="#"><h3>Construcción</h3></a></div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-4">
-                      <div class="cont"><p:graphicImage class="cat_img" name="peluches3.jpg" library="images"/></div>
-                      <div class="cont"><a href="#"><h3>Peluches</h3></a></div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="cont"><p:graphicImage class="cat_img" name="puzles.jpg" library="images"/></div>
-                      <div class="cont"><a href="#"><h3>Puzles</h3></a></div>
-                    </div>
-                    <div class="col-lg-4">
-                      <div class="cont"><p:graphicImage class="cat_img" name="aire.jpeg" library="images"/></div>
-                      <div class="cont"><a href="#"><h3>Aire Libre</h3></a></div>
-                    </div>
-                  </div>
                 </div>
-                <h:form>
-                    <p:dataTable value="#{principalController.productos}" var="pro">
-                        <p:column>
-                            <p:outputLabel value="#{pro.nombre}"/>
-                        </p:column>
-                    </p:dataTable>
-                </h:form>
             </ui:define>
 
         </ui:composition>
