@@ -25,6 +25,9 @@ public class Cliente implements Serializable{
     
     @Column(name = "email")
     private String email;
+    
+    @Column(name = "tipo")
+    private char tipo;
 
     public int getIdcliente() {
         return idcliente;
@@ -57,5 +60,13 @@ public class Cliente implements Serializable{
     public void setEmail(String email) {
         this.email = email;
     }
- 
+
+    public char getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(char tipo) {
+        this.tipo = tipo;
+    }
+    
 }
