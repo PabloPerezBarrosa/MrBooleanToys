@@ -37,12 +37,14 @@
                                     Categorías
                                 </a>
                                 <div class="dropdown-menu" id="dropdown_menu">
-                                    <p:commandLink class="dropdown-item" value="Figuras" actionListener="#{categoriaController.redirectCategorias('Figuras')}"/>
-                                    <p:commandLink class="dropdown-item" value="Coches" actionListener="#{categoriaController.redirectCategorias('Coches')}"/>
-                                    <p:commandLink class="dropdown-item" value="Construcción" actionListener="#{categoriaController.redirectCategorias('Construcción')}"/>
-                                    <p:commandLink class="dropdown-item" value="Peluches" actionListener="#{categoriaController.redirectCategorias('Peluches')}"/>
-                                    <p:commandLink class="dropdown-item" value="Puzles" actionListener="#{categoriaController.redirectCategorias('Puzles')}"/>
-                                    <p:commandLink class="dropdown-item" value="Aire Libre" actionListener="#{categoriaController.redirectCategorias('Aire Libre')}"/>                           
+                                    <h:form>
+                                        <p:commandLink class="dropdown-item" value="Figuras" actionListener="#{categoriaController.redirectCategorias('Figuras')}"/>
+                                        <p:commandLink class="dropdown-item" value="Coches" actionListener="#{categoriaController.redirectCategorias('Coches')}"/>
+                                        <p:commandLink class="dropdown-item" value="Construcción" actionListener="#{categoriaController.redirectCategorias('Construcción')}"/>
+                                        <p:commandLink class="dropdown-item" value="Peluches" actionListener="#{categoriaController.redirectCategorias('Peluches')}"/>
+                                        <p:commandLink class="dropdown-item" value="Puzles" actionListener="#{categoriaController.redirectCategorias('Puzles')}"/>
+                                        <p:commandLink class="dropdown-item" value="Aire Libre" actionListener="#{categoriaController.redirectCategorias('Aire Libre')}"/>
+                                    </h:form>                          
                                 </div>
                             </li>
                         </ul>
@@ -53,53 +55,83 @@
                                 <a class="nav-link" href="#"><p:graphicImage id="cart" name="carrito.png" library="images"/></a>
                             </li>
                             <li class="nav-item">
-                                <p:commandLink class ="nav-link" value="Conectar" onclick="PF('wlog').show();"/>
+                                <h:form>
+                                    <p:commandLink class ="nav-link" value="Conectar" onclick="PF('wlog').show();"/>
+                                </h:form>
                             </li>
                             <li class="nav-item">
-                                <p:commandLink class ="nav-link" value="Registrar" onclick="PF('wreg').show();"/>
+                                <h:form>
+                                    <p:commandLink class ="nav-link" value="Registrar" onclick="PF('wreg').show();"/>
+                                </h:form>
                             </li>
                         </ul>
                     </div>
                 </nav>
-                <h:form id="dialog_form">
-                    <p:dialog id="dia_reg" widgetVar="wreg" draggable="false" resizable="false" closeOnEscape="true" 
-                              modal="true">
-                        <p:panelGrid columns="2">
+
+
+
+                <!-- Dialog de Registro-->
+                <p:dialog id="dia_reg" widgetVar="wreg" draggable="false" resizable="false" closeOnEscape="true" 
+                          modal="true" showEffect="slide" hideEffect="slide">
+                    <h:form id="diareg">
+                        <!--mensaje de confirmaciones etc.-->
+                        <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true"/>
+                        <p:fieldset legend="Registro de Clientes">
                             <f:facet name="header">
-                                Registro de Clientes
+                                Datos Cuenta
                             </f:facet>
-                            <h:outputLabel for="nombre_re" value="Nombre: " />
-                            <p:inputText id="nombre_reg" value="" label="nombre" />
-                            <h:outputLabel for="clave_reg" value="Clave" />
-                            <p:password id="clave_reg" value="" label="clave"/>
-                            <h:outputLabel for="clave_reg2  " value="Repetir Clave" />
-                            <p:password id="clave_reg2" value="" label="clave"/>
-                            <h:outputLabel for="email_reg" value="eMail" />
-                            <p:inputText id="email_reg" value="" label="email"/>
-                            <p:column colspan="2">
-                                <p:commandLink value="Al registrarse acepta nuestras condiciones" style="color:red !important;"/>
-                            </p:column>
-                            <f:facet name="footer">
-                                <p:commandButton type="button" value="Registrar" icon="ui-icon-check" />
-                            </f:facet>
-                        </p:panelGrid>  
-                    </p:dialog>
-                    <p:dialog id="dia_log" widgetVar="wlog" draggable="false" resizable="false" closeOnEscape="true" 
-                              modal="true">
-                        <p:panelGrid columns="2">
-                            <f:facet name="header">
-                                Registro de Clientes
-                            </f:facet>
-                            <h:outputLabel for="nombre_log" value="Nombre: " />
-                            <p:inputText id="nombre_log" value="" label="nombre" />
-                            <h:outputLabel for="clave_log" value="Clave" />
-                            <p:password id="clave_log" value="" label="clave" />
-                            <f:facet name="footer">
-                                <p:commandButton type="button" value="Registrar" icon="ui-icon-check" />
-                            </f:facet>
-                        </p:panelGrid>  
-                    </p:dialog>
-                </h:form>
+                            <p:panelGrid columns="2">
+
+                                <h:outputLabel for="Nombre" value="Nombre: " />
+                                <p:inputText id="Nombre" value="#{menuController.cliente.nombre}" required="true"/>
+
+                                <h:outputLabel for="Clave" value="Clave" />
+                                <p:password id="Clave" value="#{menuController.cliente.clave}" match="ClaveRepetida"
+                                            feedback="true" promptLabel="Ingrese una clave" strongLabel="Fuerte" weakLabel="Débil"
+                                            goodLabel="Media" validatorMessage="Las claves no coinciden" required="true"/>
+
+                                <h:outputLabel for="ClaveRepetida" value="Repetir Clave" />
+                                <p:password id="ClaveRepetida" required="true"/>
+
+                                <h:outputLabel for="eMail" value="eMail"/>
+                                <p:inputText id="eMail" value="#{menuController.cliente.email}" required="true" 
+                                             validatorMessage="Introduzca un email válido"/>
+
+                            </p:panelGrid>
+                            <p:panelGrid columns="1">
+                                <p:commandLink value="Al registrarse acepta nuestras condiciones    " style="color:red !important;"/>
+                                <p:commandButton value="Registrar" actionListener="#{menuController.registrarCliente()}"/>
+                            </p:panelGrid>
+                            <f:facet name="footer"/>
+                        </p:fieldset>
+                    </h:form>
+                </p:dialog>
+
+                <!--Dialog de Login-->
+                <p:dialog id="dia_log" widgetVar="wlog" draggable="false" resizable="false" closeOnEscape="true" 
+                          modal="true" showEffect="slide" hideEffect="slide">
+                    <h:form>
+                        <!--mensaje de confirmaciones etc.-->
+                        <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true"/>
+
+                        <p:fieldset legend="Conectarse">
+                            <p:panelGrid columns="2">
+                                <f:facet name="header">
+                                    Datos Conexión
+                                </f:facet>
+                                <h:outputLabel for="NombreUsuario" value="Nombre: " />
+                                <p:inputText id="NombreUsuario" value="#{menuController.cliente.nombre}" required="true"/>
+
+                                <h:outputLabel for="ClaveUsuario" value="Clave" />
+                                <p:password id="ClaveUsuario" value="#{menuController.cliente.clave}" required="true"/>
+
+                                <p:commandButton value="Conectarse" actionListener="#{menuController.iniciarSesion()}"/>
+
+                                <f:facet name="footer"/>
+                            </p:panelGrid> 
+                        </p:fieldset> 
+                    </h:form>
+                </p:dialog>
             </ui:insert>
         </div>
 

@@ -21,4 +21,6 @@ public interface ClienteFacadeLocal {
 
     int count();
     
+    Cliente iniciarSesion(Cliente cliente);
+    
 }
