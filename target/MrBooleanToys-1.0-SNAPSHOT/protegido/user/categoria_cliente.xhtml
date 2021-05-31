@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./../../WEB-INF/templates/template_cliente.xhtml">
+            <ui:define name="content">
+               
+                <div class="container-fluid">
+                    <h:form>
+                        <br/><br/>
+                        <div class="cont">
+                            <p:panelGrid columns="3">
+                                <p:outputLabel value="Categoría"/>
+                                <p:selectOneMenu value="#{categoriaController.codigo_categoria}">
+                                    <f:selectItems value="#{categoriaController.categorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat.idcategoria}"/>
+                                </p:selectOneMenu>
+                                <p:commandButton value="Buscar" update="tabla_productos" actionListener="#{categoriaController.cargarCategoria(null)}"/>
+                            </p:panelGrid>
+                        </div>
+                        <br/><br/>
+                        <div class="cont">
+                            <p:dataTable id="tabla_productos" value="#{categoriaController.productos}" var="pro" style="width:45em;">
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                    <p:column rowspan="2" headerText="Nombre" filterBy="#{pro.nombre}" filterMatchMode="contains"/>
+                                    <p:column rowspan="2" headerText="Descripción" />
+                                    <p:column rowspan="2" headerText="Precio" style="width:5em;"/>
+                                    <p:column rowspan="2" headerText="Imagen" />
+                                    <p:column colspan="2" headerText="Añadir" style="width:10em;"/>
+                                    </p:row>
+                                     <p:row>
+                                     <p:column headerText="Cantidad"/>
+                                     <p:column headerText="Aceptar"/>
+                                     </p:row>
+                                    </p:columnGroup>
+                                <p:column sortBy="#{pro.nombre}">
+                                    <div class="cont">
+                                        <p:outputLabel value="#{pro.nombre}"/>
+                                    </div>
+                                </p:column>
+                                <p:column>
+                                        <p:outputLabel value="#{pro.descripcion}"/>
+                                </p:column>
+                                <p:column>
+                                    <div class="cont">
+                                        <p:outputLabel value="#{pro.precio}€"/>
+                                    </div>
+                                </p:column>
+                                <p:column>
+                                    <div class="cont">
+                                        <p:graphicImage class="prod_img" name="/productos/#{pro.url}" library="images"/>
+                                    </div>
+                                </p:column>
+                                <p:column>
+                                    <div class="cont">
+                                        <p:inputNumber minValue="1" maxValue="50" emptyValue="1" inputStyle="width: 3em;"/>
+                                    </div>
+                                    
+                                </p:column>
+                                <p:column>
+                                    <div class="cont">
+                                        <p:commandButton type="button" icon="ui-icon-cart"/>
+                                    </div>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                        <br/><br/><br/>
+                    </h:form>
+                </div>
+                
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

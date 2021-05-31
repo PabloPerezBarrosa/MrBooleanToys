@@ -14,6 +14,7 @@
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <f:event type="preRenderView" listener="#{menuController.verificarSesion()}"/>
     </h:head>
 
     <h:body>
@@ -30,7 +31,7 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="principal.xhtml">Inicio</a>
+                                <a class="nav-link" href="principal_admin.xhtml">Inicio</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
@@ -61,77 +62,16 @@
                             </li>
                             <li class="nav-item">
                                 <h:form>
-                                    <p:commandLink class ="nav-link" value="Registrar" onclick="PF('wreg').show();"/>
+                                    <p:commandButton class ="nav-link" actionListener="#{menuController.cerrarSesion()}" 
+                                                     icon="ui-icon-power"/>
                                 </h:form>
                             </li>
                         </ul>
                     </div>
                 </nav>
-
-
-
-                <!-- Dialog de Registro-->
-                <p:dialog id="dia_reg" widgetVar="wreg" draggable="false" resizable="false" closeOnEscape="true" 
-                          modal="true" showEffect="slide" hideEffect="slide">
-                    <h:form id="diareg">
-                        <!--mensaje de confirmaciones etc.-->
-                        <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true"/>
-                        <p:fieldset legend="Registro de Clientes">
-                            <f:facet name="header">
-                                Datos Cuenta
-                            </f:facet>
-                            <p:panelGrid columns="2">
-
-                                <h:outputLabel for="Nombre" value="Nombre: " />
-                                <p:inputText id="Nombre" value="#{menuController.cliente.nombre}" required="true"/>
-
-                                <h:outputLabel for="Clave" value="Clave" />
-                                <p:password id="Clave" value="#{menuController.cliente.clave}" match="ClaveRepetida"
-                                            feedback="true" promptLabel="Ingrese una clave" strongLabel="Fuerte" weakLabel="Débil"
-                                            goodLabel="Media" validatorMessage="Las claves no coinciden" required="true"/>
-
-                                <h:outputLabel for="ClaveRepetida" value="Repetir Clave" />
-                                <p:password id="ClaveRepetida" required="true"/>
-
-                                <h:outputLabel for="eMail" value="eMail"/>
-                                <p:inputText id="eMail" value="#{menuController.cliente.email}" required="true" 
-                                             validatorMessage="Introduzca un email válido"/>
-
-                            </p:panelGrid>
-                            <p:panelGrid columns="1">
-                                <p:commandLink value="Al registrarse acepta nuestras condiciones    " style="color:red !important;"/>
-                                <p:commandButton value="Registrar" actionListener="#{menuController.registrarCliente()}"/>
-                            </p:panelGrid>
-                            <f:facet name="footer"/>
-                        </p:fieldset>
-                    </h:form>
-                </p:dialog>
-
-                <!--Dialog de Login-->
-                <p:dialog id="dia_log" widgetVar="wlog" draggable="false" resizable="false" closeOnEscape="true" 
-                          modal="true" showEffect="slide" hideEffect="slide">
-                    <h:form>
-                        <!--mensaje de confirmaciones etc.-->
-                        <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true"/>
-
-                        <p:fieldset legend="Conectarse">
-                            <p:panelGrid columns="2">
-                                <f:facet name="header">
-                                    Datos Conexión
-                                </f:facet>
-                                <h:outputLabel for="NombreUsuario" value="Nombre: " />
-                                <p:inputText id="NombreUsuario" value="#{menuController.cliente.nombre}" required="true"/>
-
-                                <h:outputLabel for="ClaveUsuario" value="Clave" />
-                                <p:password id="ClaveUsuario" value="#{menuController.cliente.clave}" required="true"/>
-
-                                <p:commandButton value="Conectarse" actionListener="#{menuController.iniciarSesion()}"/>
-
-                                <f:facet name="footer"/>
-                            </p:panelGrid> 
-                        </p:fieldset> 
-                    </h:form>
-                </p:dialog>
+                
+                <!--mensaje de confirmaciones etc.-->
+                <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true"/>
             </ui:insert>
         </div>
 
