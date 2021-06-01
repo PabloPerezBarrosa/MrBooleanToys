@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template_admin.xhtml">
+
+            <ui:define name="content">
+                <div class="container-fluid">
+                    <p:growl autoUpdate="true"/>
+                    <h:form>
+                        <br/><br/>
+                        <div class="cont">
+                            <p:panelGrid columns="3">
+                                <p:outputLabel value="Categoría"/>
+                                <p:selectOneMenu value="#{categoriaController.codigo_categoria}">
+                                    <f:selectItems value="#{categoriaController.categorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat.idcategoria}"/>
+                                </p:selectOneMenu>
+                                <p:commandButton value="Buscar" update="tabla_clientes" actionListener="#{categoriaController.cargarCategoria(null)}"/>
+                            </p:panelGrid>
+                        </div>
+                        <br/><br/>
+                        <div class="cont">
+                            <p:dataTable id="tabla_clientes" value="#{adminUsuarioController.clientes}" var="cli" editable="true" 
+                                         style="width:45em;">
+                                
+                                <!--COLUMNA NOMBRE USUARIO-->
+                                <p:column sortBy="#{cli.nombre}" headerText="Nombre" styleClass="centeredColumnContent">
+                                    
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{cli.nombre}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{cli.nombre}"/>
+                                            </f:facet>
+                                        </p:cellEditor> 
+                                    
+                                </p:column>
+                                
+                                <!--COLUMNA CLAVE USUARIO-->
+                                <p:column headerText="Clave" styleClass="centeredColumnContent">
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{cli.clave}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{cli.clave}"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                </p:column>
+                                
+                                <!--COLUMNA EMAIL USUARIO-->
+                                <p:column headerText="eMail" styleClass="centeredColumnContent">
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{cli.email}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{cli.email}"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                </p:column>
+                                
+                                <!--COLUMNA TIPO USUARIO-->
+                                <p:column sortBy="#{cli.tipo}" headerText="Tipo" styleClass="centeredColumnContent">
+                                        <p:cellEditor>
+                                            <f:facet name="output">
+                                                <p:outputLabel value="#{cli.tipo}"/>
+                                            </f:facet>
+                                            <f:facet name="input">
+                                                <p:inputText value="#{cli.tipo}"/>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                </p:column>
+                                <p:column style="width:4em;" styleClass="centeredColumnContent">
+                                    <p:rowEditor/>
+                                </p:column>
+                                <p:ajax event="rowEdit" listener="#{adminUsuarioController.modificarUsuario(cli)}" update="tabla_clientes"/>
+                            </p:dataTable>
+                        </div>
+                        <br/><br/><br/>
+                    </h:form>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

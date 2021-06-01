@@ -77,6 +77,10 @@ h3:hover{
     100% {width: 40em;height: 30em;}
   }
   
+  td.centeredColumnContent{
+    text-align: center;
+}
+  
   
 /*ZONA DE CATEGORIA.XHTML*/
 

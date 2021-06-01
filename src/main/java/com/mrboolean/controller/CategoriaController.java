@@ -33,10 +33,10 @@ public class CategoriaController implements Serializable{
         try{
             categorias = categoriaEJB.findAll();
             String cat = (String)(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("categoria_sesion"));
-            System.out.print(cat);
             cargarCategoria(cat);
         }catch(Exception e){
-            
+            e.printStackTrace();
+            System.out.println("Error en init CategoriaController...");
         }
         
     }
