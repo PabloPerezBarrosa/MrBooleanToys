@@ -19,10 +19,12 @@ public class MenuController implements Serializable {
     private ClienteFacadeLocal clienteEJB;
 
     private Cliente cliente;
+    private Cliente cliente_sesion;
 
     @PostConstruct
     public void init() {
         cliente = new Cliente();
+        cliente_sesion = new Cliente();
     }
 
     public void registrarCliente() {
@@ -62,7 +64,7 @@ public class MenuController implements Serializable {
 
                 if (url.equals(url1)) {
                     if (cl.getTipo().equals("a")) {
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/admin/principal.xhtml_admin");
+                        FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/admin/principal_admin.xhtml");
                     } else {
                         FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/user/principal_cliente.xhtml");
                     }
@@ -86,10 +88,10 @@ public class MenuController implements Serializable {
 
     }
 
-    public void verificarSesion() {
+    public void verificarSesionAdmin() {
 
         try {
-
+            
             FacesContext context = FacesContext.getCurrentInstance();
             Cliente cl = (Cliente) context.getExternalContext().getSessionMap().get("cliente");
 
@@ -97,9 +99,38 @@ public class MenuController implements Serializable {
                 context.getExternalContext().redirect("/MrBooleanToys/");
             } else {
                 if (cl.getTipo().equals("c")) {
+                    this.cliente_sesion = cl;
                     context.getExternalContext().redirect("/MrBooleanToys/faces/protegido/user/principal_cliente.xhtml");
+                }else{
+                    this.cliente_sesion = cl;
                 }
             }
+            
+
+        } catch (Exception e) {
+            System.out.println("Fallo en verificarSesion() MenuController..");
+            e.printStackTrace();
+        }
+
+    }
+    public void verificarSesionCliente() {
+
+        try {
+            
+            FacesContext context = FacesContext.getCurrentInstance();
+            Cliente cl = (Cliente) context.getExternalContext().getSessionMap().get("cliente");
+
+            if (cl == null) {
+                context.getExternalContext().redirect("/MrBooleanToys/");
+            } else {
+                if (cl.getTipo().equals("a")) {
+                    this.cliente_sesion = cl;
+                    context.getExternalContext().redirect("/MrBooleanToys/faces/protegido/admin/principal_admin .xhtml");
+                }else{
+                    this.cliente_sesion = cl;
+                }
+            }
+            
 
         } catch (Exception e) {
             System.out.println("Fallo en verificarSesion() MenuController..");
@@ -131,4 +162,12 @@ public class MenuController implements Serializable {
         this.cliente = cliente;
     }
 
+    public Cliente getCliente_sesion() {
+        return cliente_sesion;
+    }
+
+    public void setCliente_sesion(Cliente cliente_sesion) {
+        this.cliente_sesion = cliente_sesion;
+    }
+    
 }

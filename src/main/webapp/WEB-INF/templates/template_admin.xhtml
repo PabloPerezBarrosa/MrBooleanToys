@@ -14,7 +14,7 @@
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <f:event type="preRenderView" listener="#{menuController.verificarSesion()}"/>
+        <f:event type="preRenderView" listener="#{menuController.verificarSesionAdmin()}"/>
     </h:head>
 
     <h:body>
@@ -57,21 +57,40 @@
                             </li>
                             <li class="nav-item">
                                 <h:form>
-                                    <p:commandLink class ="nav-link" value="Conectar" onclick="PF('wlog').show();"/>
+                                    <p:outputLabel class="nav-link" value="Administrador: #{menuController.cliente_sesion.nombre}" 
+                                                   rendered="#{menuController.cliente_sesion.tipo eq 'a'}"  />
+                                    <p:outputLabel class="nav-link" value="Cliente: #{menuController.cliente_sesion.nombre}" 
+                                                   rendered="#{menuController.cliente_sesion.tipo eq 'c'}"  />
                                 </h:form>
                             </li>
                             <li class="nav-item">
                                 <h:form>
-                                    <p:commandButton class ="nav-link" actionListener="#{menuController.cerrarSesion()}" 
-                                                     icon="ui-icon-power"/>
+                                    <p:commandButton class ="nav-link" onclick="PF('wlogout').show();" icon="ui-icon-power"/>
                                 </h:form>
                             </li>
                         </ul>
                     </div>
                 </nav>
-                
+
                 <!--mensaje de confirmaciones etc.-->
-                <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true"/>
+                <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true" showSummary="false"/>
+                <p:dialog id="logout_dialog" widgetVar="wlogout" draggable="false" resizable="false" closeOnEscape="true" 
+                          modal="true" showEffect="slide" hideEffect="explode">
+                    <h:form>
+                        <p:fieldset legend="Desconexión">
+                            <p:panelGrid columns="2">
+                                <f:facet name="header">
+                                    ¿Está usted seguro?
+                                </f:facet>
+
+                                <p:commandButton value="Sí" icon="ui-icon-yes" actionListener="#{menuController.cerrarSesion()}"/>
+                                <p:commandButton value="No" icon="ui-icon-no" onclick="PF('wlogout').hide();"/>
+
+                                <f:facet name="footer"/>
+                            </p:panelGrid> 
+                        </p:fieldset> 
+                    </h:form>
+                </p:dialog>
             </ui:insert>
         </div>
 

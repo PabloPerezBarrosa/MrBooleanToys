@@ -3,6 +3,7 @@ package com.mrboolean.controller;
 import com.mrboolean.ejb.CategoriaFacadeLocal;
 import com.mrboolean.ejb.ProductoFacadeLocal;
 import com.mrboolean.model.Categoria;
+import com.mrboolean.model.Cliente;
 import com.mrboolean.model.Producto;
 import java.io.Serializable;
 import java.util.List;
@@ -43,7 +44,18 @@ public class CategoriaController implements Serializable{
         
         try{
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("categoria_sesion",cat);
-            FacesContext.getCurrentInstance().getExternalContext().redirect("categoria.xhtml");
+            Cliente cliente = (Cliente)(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("cliente"));
+            
+            if(cliente == null){
+                FacesContext.getCurrentInstance().getExternalContext().redirect("categoria.xhtml");
+            }else{
+                if(cliente.getTipo().equals("a")){
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/admin/categoria_admin.xhtml");
+                }else{
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/user/categoria_cliente.xhtml");
+                }
+            }
+            
         }catch(Exception e){
             System.out.println("Error en el redirect" + e);
         }
