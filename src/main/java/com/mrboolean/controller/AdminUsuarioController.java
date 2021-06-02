@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.PrimeFaces;
 
 @Named
 @ViewScoped
@@ -55,16 +58,28 @@ public class AdminUsuarioController implements Serializable{
         
         
     }
-//    
-//    public void leer(Cliente cliente_selected){
-//        
-//        this.cliente = cliente_selected;
-//        
-//    }
+
    /*Función para editar las filas de la tabla de clientes.*/
     public void modificarUsuario(Cliente cli){
         
         clienteEJB.edit(cli);
+    }
+    
+    /*Función para añadir usuario*/
+    public void añadirUsuario() {
+
+        try {
+            clienteEJB.create(this.cliente);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Usuario añadido correctamente"));
+            listarClientesByTipo();
+            PrimeFaces.current().executeScript("PF('wregusu').hide();");
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Fallo tratando de añadir el usuario"));
+            System.out.println("Error en registrarCliente..");
+            PrimeFaces.current().executeScript("PF('wregusu').hide();");
+            e.printStackTrace();
+        }
+
     }
 
     /*GET AND SET*/

@@ -64,6 +64,18 @@
                                     </p:cellEditor> 
                                 </p:column>
                                 
+                                <!--COLUMNA STOCK PRODUCTO-->
+                                <p:column headerText="Stock" styleClass="centeredColumnContent">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <p:outputLabel value="#{pro.stock}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{pro.stock}"/>
+                                        </f:facet>
+                                    </p:cellEditor> 
+                                </p:column>
+                                
                                 <!--COLUMNA IMAGEN PRODUCTO-->
                                 <p:column headerText="Imagen" styleClass="centeredColumnContent">
                                         <p:graphicImage class="prod_img" name="/productos/#{pro.url}" library="images"/>

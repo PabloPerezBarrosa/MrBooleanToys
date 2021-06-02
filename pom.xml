@@ -39,6 +39,12 @@
             <artifactId>primefaces</artifactId>
             <version>6.2</version>
         </dependency>
+        <!--Dependencias Themes-->
+        <dependency>
+	<groupId>org.primefaces.extensions</groupId>
+	<artifactId>all-themes</artifactId>
+	<version>1.0.8</version>
+	</dependency>
     </dependencies>
 
     <build>

@@ -10,6 +10,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import org.primefaces.PrimeFaces;
 
 @Named(value = "menuController")
 @SessionScoped
@@ -33,10 +34,11 @@ public class MenuController implements Serializable {
             this.cliente.setTipo("c");
             clienteEJB.create(this.cliente);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Registro Exitoso"));
-            FacesContext.getCurrentInstance().getExternalContext().redirect("principal.xhtml");
+            PrimeFaces.current().executeScript("PF('wreg').hide();");
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Fallo en el Registro"));
             System.out.println("Error en registrarCliente..");
+            PrimeFaces.current().executeScript("PF('wreg').hide();");
             e.printStackTrace();
         }
 

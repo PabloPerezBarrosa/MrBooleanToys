@@ -34,7 +34,14 @@ public class CategoriaController implements Serializable {
         try {
             categorias = categoriaEJB.findAll();
             this.nombre_categoria = (String) (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("categoria_sesion"));
-            cargarCategoria(this.nombre_categoria);
+            
+            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            System.out.println(this.nombre_categoria);
+            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            
+            if(this.nombre_categoria != null){
+                cargarCategoria(this.nombre_categoria);
+            }   
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error en init CategoriaController...");
@@ -87,7 +94,7 @@ public class CategoriaController implements Serializable {
         }
 
         try {
-            if (cat.equals("Todo")) {
+            if (cat != null && cat.equals("Todo")) {
                 listarAllProductos();
             } else {
 
@@ -100,7 +107,7 @@ public class CategoriaController implements Serializable {
         }
     }
 
-    public void listarAllProductos() {
+    public void listarAllProductos() {  
 
         this.productos = productoEJB.findAll();
 
