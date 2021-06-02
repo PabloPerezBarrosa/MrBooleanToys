@@ -30,6 +30,9 @@ public class Producto implements Serializable{
     @Column(name = "url")
     private String url;
     
+    @Column(name = "stock")
+    private int stock;
+    
     @ManyToOne
     @JoinColumn(name = "idcategoria", nullable = false)
     private Categoria categoria;
@@ -80,6 +83,14 @@ public class Producto implements Serializable{
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
     
 }

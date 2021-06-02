@@ -128,20 +128,28 @@ public class CategoriaController implements Serializable {
         }
     }
 
+    public CategoriaFacadeLocal getCategoriaEJB() {
+        return categoriaEJB;
+    }
+
+    public void setCategoriaEJB(CategoriaFacadeLocal categoriaEJB) {
+        this.categoriaEJB = categoriaEJB;
+    }
+
+    public ProductoFacadeLocal getProductoEJB() {
+        return productoEJB;
+    }
+
+    public void setProductoEJB(ProductoFacadeLocal productoEJB) {
+        this.productoEJB = productoEJB;
+    }
+
     public List<Categoria> getCategorias() {
         return categorias;
     }
 
     public void setCategorias(List<Categoria> categorias) {
         this.categorias = categorias;
-    }
-
-    public int getCodigo_categoria() {
-        return codigo_categoria;
-    }
-
-    public void setCodigo_categoria(int codigo_categoria) {
-        this.codigo_categoria = codigo_categoria;
     }
 
     public List<Producto> getProductos() {
@@ -152,6 +160,14 @@ public class CategoriaController implements Serializable {
         this.productos = productos;
     }
 
+    public int getCodigo_categoria() {
+        return codigo_categoria;
+    }
+
+    public void setCodigo_categoria(int codigo_categoria) {
+        this.codigo_categoria = codigo_categoria;
+    }
+
     public String getNombre_categoria() {
         return nombre_categoria;
     }
@@ -159,5 +175,7 @@ public class CategoriaController implements Serializable {
     public void setNombre_categoria(String nombre_categoria) {
         this.nombre_categoria = nombre_categoria;
     }
+
+    
     
 }

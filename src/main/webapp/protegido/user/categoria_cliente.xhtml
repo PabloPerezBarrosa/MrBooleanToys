@@ -9,7 +9,7 @@
     <body>
         <ui:composition template="./../../WEB-INF/templates/template_cliente.xhtml">
             <ui:define name="content">
-               
+
                 <div class="container-fluid">
                     <h:form>
                         <br/><br/>
@@ -24,55 +24,65 @@
                         </div>
                         <br/><br/>
                         <div class="cont">
-                            <p:dataTable id="tabla_productos" value="#{categoriaController.productos}" var="pro" style="width:45em;">
+                            <p:dataTable id="tabla_productos" value="#{categoriaController.productos}" var="pro" 
+                                         tableStyle="table-layout: auto;">
                                 <p:columnGroup type="header">
                                     <p:row>
-                                    <p:column rowspan="2" headerText="Nombre" filterBy="#{pro.nombre}" filterMatchMode="contains"/>
-                                    <p:column rowspan="2" headerText="Descripción" />
-                                    <p:column rowspan="2" headerText="Precio" style="width:5em;"/>
-                                    <p:column rowspan="2" headerText="Imagen" />
-                                    <p:column colspan="2" headerText="Añadir" style="width:10em;"/>
+                                        <p:column rowspan="2" headerText="Nombre" sortBy="#{pro.nombre}"/>
+                                        <p:column rowspan="2" headerText="Descripción" />
+                                        <p:column rowspan="2" headerText="Precio" style="width:5em;"/>
+                                        <p:column rowspan="2" headerText="Disponibilidad"/>
+                                        <p:column rowspan="2" headerText="Imagen" />
+                                        <p:column colspan="2" headerText="Añadir" style="width:10em;"/>
                                     </p:row>
-                                     <p:row>
-                                     <p:column headerText="Cantidad"/>
-                                     <p:column headerText="Aceptar"/>
-                                     </p:row>
-                                    </p:columnGroup>
-                                <p:column sortBy="#{pro.nombre}">
-                                    <div class="cont">
-                                        <p:outputLabel value="#{pro.nombre}"/>
-                                    </div>
+                                    <p:row>
+                                        <p:column headerText="Cantidad"/>
+                                        <p:column headerText="Aceptar"/>
+                                    </p:row>
+                                </p:columnGroup>
+
+                                <!--COLUMNA NOMBRE DEL PRODUCTO-->
+                                <p:column sortBy="#{pro.nombre}" styleClass="centeredColumnContent" style="max-width: 10em;">
+                                    <p:outputLabel value="#{pro.nombre}"/>
                                 </p:column>
-                                <p:column>
-                                        <p:outputLabel value="#{pro.descripcion}"/>
+
+                                <!--COLUMNA DESCRIPCIÓN DEL PRODUCTO-->
+                                <p:column styleClass="centeredColumnContent" style="max-width: 10em;">
+                                    <p:outputLabel value="#{pro.descripcion}"/>
                                 </p:column>
-                                <p:column>
-                                    <div class="cont">
-                                        <p:outputLabel value="#{pro.precio}€"/>
-                                    </div>
+
+                                <!--COLUMNA PRECIO DEL PRODUCTO-->
+                                <p:column styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pro.precio}€"/>
                                 </p:column>
-                                <p:column>
-                                    <div class="cont">
-                                        <p:graphicImage class="prod_img" name="/productos/#{pro.url}" library="images"/>
-                                    </div>
+
+                                <!--COLUMNA STOCK DEL PRODUCTO-->
+                                <p:column styleClass="centeredColumnContent">
+                                    <p:outputLabel value="En Stock" rendered="#{pro.stock > 5 eq true}"  />
+                                    <p:outputLabel value="Stock Bajo" rendered="#{pro.stock > 5 eq false and pro.stock != 0}" style="color:orange;"/>
+                                    <p:outputLabel value="Sin Stock" rendered="#{pro.stock eq 0}" style="color:red;"/>
                                 </p:column>
-                                <p:column>
-                                    <div class="cont">
-                                        <p:inputNumber minValue="1" maxValue="50" emptyValue="1" inputStyle="width: 3em;"/>
-                                    </div>
-                                    
+
+                                <!--COLUMNA IMAGEN DEL PRODUCTO-->
+                                <p:column styleClass="centeredColumnContent">
+                                    <p:graphicImage class="prod_img" name="/productos/#{pro.url}" library="images"/>
                                 </p:column>
-                                <p:column>
-                                    <div class="cont">
-                                        <p:commandButton type="button" icon="ui-icon-cart"/>
-                                    </div>
+
+                                <!--COLUMNA CANTIDAD DEL PRODUCTO-->
+                                <p:column styleClass="centeredColumnContent">
+                                    <p:inputNumber minValue="1" maxValue="50" emptyValue="1" inputStyle="width: 3em;"/>
+                                </p:column>
+
+                                <!--COLUMNA ACEPTAR DEL PRODUCTO-->
+                                <p:column styleClass="centeredColumnContent">
+                                    <p:commandButton type="button" icon="ui-icon-cart"/>
                                 </p:column>
                             </p:dataTable>
                         </div>
                         <br/><br/><br/>
                     </h:form>
                 </div>
-                
+
             </ui:define>
         </ui:composition>
 

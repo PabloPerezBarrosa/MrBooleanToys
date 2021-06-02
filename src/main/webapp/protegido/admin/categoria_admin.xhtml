@@ -29,7 +29,7 @@
                                          tableStyle="table-layout: auto;">
                                 
                                 <!--COLUMNA NOMBRE PRODUCTO-->
-                                <p:column sortBy="#{pro.nombre}" headerText="Nombre" styleClass="centeredColumnContent">
+                                <p:column sortBy="#{pro.nombre}" headerText="Nombre" styleClass="centeredColumnContent" style="width:10em;">
                                         <p:cellEditor>
                                         <f:facet name="output">
                                             <p:outputLabel value="#{pro.nombre}"/>
@@ -41,7 +41,7 @@
                                 </p:column>
                                 
                                 <!--COLUMNA DESCRIPCIÓN PRODUCTO-->
-                                <p:column headerText="Descripción" styleClass="centeredColumnContent">
+                                <p:column headerText="Descripción" styleClass="centeredColumnContent" style="width:10em;">
                                     <p:cellEditor>
                                         <f:facet name="output">
                                             <p:outputLabel value="#{pro.descripcion}"/>
