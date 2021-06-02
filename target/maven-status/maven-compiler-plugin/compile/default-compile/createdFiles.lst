@@ -16,6 +16,7 @@ com/mrboolean/model/LineaPedido_.class
 com/mrboolean/controller/MenuController.class
 com/mrboolean/ejb/LineaPedidoFacadeLocal.class
 com/mrboolean/model/LineaPedido.class
+com/mrboolean/controller/ProductoController.class
 com/mrboolean/ejb/LineaPedidoFacade.class
 com/mrboolean/ejb/ClienteFacadeLocal.class
 com/mrboolean/ejb/PedidoFacadeLocal.class

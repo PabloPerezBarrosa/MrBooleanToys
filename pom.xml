@@ -41,10 +41,17 @@
         </dependency>
         <!--Dependencias Themes-->
         <dependency>
-	<groupId>org.primefaces.extensions</groupId>
-	<artifactId>all-themes</artifactId>
-	<version>1.0.8</version>
-	</dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>all-themes</artifactId>
+            <version>1.0.8</version>
+        </dependency>
+        <!-- Dependencias fileUpload -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -27,10 +27,10 @@
                         <div class="cont">
                             <p:dataTable id="tabla_productos" value="#{categoriaController.productos}" var="pro" editable="true" 
                                          tableStyle="table-layout: auto;">
-                                
+
                                 <!--COLUMNA NOMBRE PRODUCTO-->
                                 <p:column sortBy="#{pro.nombre}" headerText="Nombre" styleClass="centeredColumnContent" style="width:10em;">
-                                        <p:cellEditor>
+                                    <p:cellEditor>
                                         <f:facet name="output">
                                             <p:outputLabel value="#{pro.nombre}"/>
                                         </f:facet>
@@ -39,7 +39,7 @@
                                         </f:facet>
                                     </p:cellEditor> 
                                 </p:column>
-                                
+
                                 <!--COLUMNA DESCRIPCIÓN PRODUCTO-->
                                 <p:column headerText="Descripción" styleClass="centeredColumnContent" style="width:10em;">
                                     <p:cellEditor>
@@ -51,19 +51,19 @@
                                         </f:facet>
                                     </p:cellEditor> 
                                 </p:column>
-                                
+
                                 <!--COLUMNA PRECIO PRODUCTO-->
                                 <p:column headerText="Precio" styleClass="centeredColumnContent">
                                     <p:cellEditor>
                                         <f:facet name="output">
-                                        <p:outputLabel value="#{pro.precio}€"/>
+                                            <p:outputLabel value="#{pro.precio}€"/>
                                         </f:facet>
                                         <f:facet name="input">
                                             <p:inputText value="#{pro.precio}"/>
                                         </f:facet>
                                     </p:cellEditor> 
                                 </p:column>
-                                
+
                                 <!--COLUMNA STOCK PRODUCTO-->
                                 <p:column headerText="Stock" styleClass="centeredColumnContent">
                                     <p:cellEditor>
@@ -75,10 +75,10 @@
                                         </f:facet>
                                     </p:cellEditor> 
                                 </p:column>
-                                
+
                                 <!--COLUMNA IMAGEN PRODUCTO-->
                                 <p:column headerText="Imagen" styleClass="centeredColumnContent">
-                                        <p:graphicImage class="prod_img" name="/productos/#{pro.url}" library="images"/>
+                                    <p:graphicImage class="prod_img" name="/productos/#{pro.url}" library="images"/>
                                 </p:column>
                                 <p:column style="width:4em;" styleClass="centeredColumnContent">
                                     <p:rowEditor/>
@@ -88,10 +88,54 @@
                                 </p:column>
                                 <p:ajax event="rowEdit" listener="#{categoriaController.modificarProducto(pro)}" update="tabla_productos"/>
                             </p:dataTable>
+
+
                         </div>
-                        <br/><br/><br/>
+                        <div class="cont">
+                            <p:commandButton icon="ui-icon-plusthick" onclick="PF('waddprod').show();"/>
+                        </div>
+                        <br/><br/>
+                        <br/>
                     </h:form>
                 </div>
+                <p:dialog id="dia_addpro" widgetVar="waddprod" draggable="false" resizable="false" closeOnEscape="true" 
+                          modal="true" showEffect="slide" hideEffect="slide">
+                    <h:form id="diaaddpro" enctype="multipart/form-data">
+                        <!--mensaje de confirmaciones etc.-->
+                        <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true" showSummary="false"/>
+                        <p:fieldset legend="Añadir nuevo producto">
+                            <f:facet name="header">
+                                Datos Producto
+                            </f:facet>
+                            <p:panelGrid columns="2">
+
+                                <h:outputLabel for="Nombre" value="Nombre" />
+                                <p:inputText id="Nombre" value="#{productoController.producto.nombre}" required="true"/>
+
+                                <h:outputLabel for="Precio" value="Precio" />
+                                <p:inputNumber id="Precio" value="#{productoController.producto.precio}" required="true"/>
+
+                                <h:outputLabel for="Descripcion" value="Descripción"/>
+                                <p:inputTextarea id="Descripcion" value="#{productoController.producto.descripcion}" required="true"/>
+
+                                <h:outputLabel for="Stock" value="Stock" />
+                                <p:inputNumber id="Stock" value="#{productoController.producto.stock}" required="true"/>
+
+                                <h:outputLabel for="Imagen" value="Imagen" />
+                                <p:fileUpload id="Imagen" value="#{productoController.file}" mode="simple" />
+                                <p:outputLabel value="Categoría"/>
+                                <!--<p:selectOneMenu value="{productoController.producto.categoria}" required="true">
+                                    <f:selectItems value="{categoriaController.categorias}" var="cat" itemLabelcat.nombre}" itemValue="{cat}"/>
+                                </p:selectOneMenu>-->
+
+                            </p:panelGrid>
+                            <p:panelGrid columns="1">
+                                <p:commandButton value="Añadir" actionListener="#{productoController.upload()}" ajax="false"/>
+                            </p:panelGrid>
+                            <f:facet name="footer"/>
+                        </p:fieldset>
+                    </h:form>
+                </p:dialog>
             </ui:define>
 
         </ui:composition>

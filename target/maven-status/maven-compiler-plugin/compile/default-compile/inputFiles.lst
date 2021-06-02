@@ -11,6 +11,7 @@
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/ejb/LineaPedidoFacadeLocal.java
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/ejb/PedidoFacadeLocal.java
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/ejb/PedidoFacade.java
+/home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/controller/ProductoController.java
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/ejb/CategoriaFacade.java
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/model/LineaPedido.java
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/ejb/ClienteFacadeLocal.java
