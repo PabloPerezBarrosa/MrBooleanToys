@@ -23,4 +23,6 @@ public interface ClienteFacadeLocal {
     
     Cliente iniciarSesion(Cliente cliente);
     
+    List<Cliente> findByTipo(String tipo);
+    
 }

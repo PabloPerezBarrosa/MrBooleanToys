@@ -18,6 +18,7 @@ public class AdminUsuarioController implements Serializable{
     
     private List<Cliente> clientes;
     private Cliente cliente = new Cliente();
+    private String tipo_user;
     
     @PostConstruct
     public void init(){
@@ -29,10 +30,30 @@ public class AdminUsuarioController implements Serializable{
     public void listarAllClientes(){
         try{
             clientes = clienteEJB.findAll();
+            this.tipo_user = "t";
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Error en init AdminUsuarioController...");
         }
+    }
+    public void listarClientesByTipo(){
+        
+        if(this.tipo_user.equals("t")){
+            
+            listarAllClientes();
+            
+        }else{
+            
+            this.clientes = clienteEJB.findByTipo(this.tipo_user);
+            
+        } 
+    }
+    public void eliminarCliente(Cliente cli){
+        
+        clienteEJB.remove(cli);
+        listarClientesByTipo();
+        
+        
     }
 //    
 //    public void leer(Cliente cliente_selected){
@@ -62,5 +83,13 @@ public class AdminUsuarioController implements Serializable{
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
+
+    public String getTipo_user() {
+        return tipo_user;
+    }
+
+    public void setTipo_user(String tipo_user) {
+        this.tipo_user = tipo_user;
+    }
+   
 }

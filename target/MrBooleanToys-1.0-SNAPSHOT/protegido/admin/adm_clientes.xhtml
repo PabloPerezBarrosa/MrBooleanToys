@@ -17,69 +17,77 @@
                         <br/><br/>
                         <div class="cont">
                             <p:panelGrid columns="3">
-                                <p:outputLabel value="Categoría"/>
-                                <p:selectOneMenu value="#{categoriaController.codigo_categoria}">
-                                    <f:selectItems value="#{categoriaController.categorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat.idcategoria}"/>
+                                <p:outputLabel value="Usuarios"/>
+                                <p:selectOneMenu value="#{adminUsuarioController.tipo_user}">
+                                    <f:selectItem itemLabel="Cliente" itemValue="c"/>
+                                    <f:selectItem itemLabel="Admin" itemValue="a"/>
+                                    <f:selectItem itemLabel="Todos" itemValue="t"/>
                                 </p:selectOneMenu>
-                                <p:commandButton value="Buscar" update="tabla_clientes" actionListener="#{categoriaController.cargarCategoria(null)}"/>
+                                <p:commandButton value="Buscar" update="tabla_clientes" 
+                                                 actionListener="#{adminUsuarioController.listarClientesByTipo()}"/>
                             </p:panelGrid>
                         </div>
                         <br/><br/>
                         <div class="cont">
                             <p:dataTable id="tabla_clientes" value="#{adminUsuarioController.clientes}" var="cli" editable="true" 
-                                         style="width:45em;">
-                                
+                                         tableStyle="table-layout: auto;">
+
                                 <!--COLUMNA NOMBRE USUARIO-->
                                 <p:column sortBy="#{cli.nombre}" headerText="Nombre" styleClass="centeredColumnContent">
-                                    
-                                        <p:cellEditor>
-                                            <f:facet name="output">
-                                                <p:outputLabel value="#{cli.nombre}"/>
-                                            </f:facet>
-                                            <f:facet name="input">
-                                                <p:inputText value="#{cli.nombre}"/>
-                                            </f:facet>
-                                        </p:cellEditor> 
-                                    
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <p:outputLabel value="#{cli.nombre}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{cli.nombre}"/>
+                                        </f:facet>
+                                    </p:cellEditor> 
                                 </p:column>
-                                
+
                                 <!--COLUMNA CLAVE USUARIO-->
                                 <p:column headerText="Clave" styleClass="centeredColumnContent">
-                                        <p:cellEditor>
-                                            <f:facet name="output">
-                                                <p:outputLabel value="#{cli.clave}"/>
-                                            </f:facet>
-                                            <f:facet name="input">
-                                                <p:inputText value="#{cli.clave}"/>
-                                            </f:facet>
-                                        </p:cellEditor>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <p:outputLabel value="#{cli.clave}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{cli.clave}"/>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
-                                
+
                                 <!--COLUMNA EMAIL USUARIO-->
                                 <p:column headerText="eMail" styleClass="centeredColumnContent">
-                                        <p:cellEditor>
-                                            <f:facet name="output">
-                                                <p:outputLabel value="#{cli.email}"/>
-                                            </f:facet>
-                                            <f:facet name="input">
-                                                <p:inputText value="#{cli.email}"/>
-                                            </f:facet>
-                                        </p:cellEditor>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <p:outputLabel value="#{cli.email}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{cli.email}"/>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
-                                
+
                                 <!--COLUMNA TIPO USUARIO-->
                                 <p:column sortBy="#{cli.tipo}" headerText="Tipo" styleClass="centeredColumnContent">
-                                        <p:cellEditor>
-                                            <f:facet name="output">
-                                                <p:outputLabel value="#{cli.tipo}"/>
-                                            </f:facet>
-                                            <f:facet name="input">
-                                                <p:inputText value="#{cli.tipo}"/>
-                                            </f:facet>
-                                        </p:cellEditor>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <p:outputLabel value="Admin" rendered="#{cli.tipo eq 'a'}"  />
+                                            <p:outputLabel value="Cliente" rendered="#{cli.tipo eq 'c'}"  />
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:selectOneMenu value="#{cli.tipo}" style="width:100%">
+                                                <f:selectItem itemLabel="Cliente" itemValue="c"/>
+                                                <f:selectItem itemLabel="Admin" itemValue="a"/>
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                    </p:cellEditor>
                                 </p:column>
                                 <p:column style="width:4em;" styleClass="centeredColumnContent">
                                     <p:rowEditor/>
+                                </p:column>
+                                <p:column styleClass="centeredColumnContent">
+                                    <p:commandButton icon="ui-icon-trash" action="#{adminUsuarioController.eliminarCliente(cli)}" update="tabla_clientes"/>
                                 </p:column>
                                 <p:ajax event="rowEdit" listener="#{adminUsuarioController.modificarUsuario(cli)}" update="tabla_clientes"/>
                             </p:dataTable>

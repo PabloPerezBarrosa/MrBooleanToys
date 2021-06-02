@@ -15,78 +15,116 @@ import javax.inject.Named;
 
 @Named
 @ViewScoped
-public class CategoriaController implements Serializable{
-    
+public class CategoriaController implements Serializable {
+
     @EJB
     private CategoriaFacadeLocal categoriaEJB;
-    
+
     @EJB
     private ProductoFacadeLocal productoEJB;
-    
+
     private List<Categoria> categorias;
     private List<Producto> productos;
     private int codigo_categoria;
-    
+    private String nombre_categoria;
+
     @PostConstruct
-    public void init(){
-        
-        try{
+    public void init() {
+
+        try {
             categorias = categoriaEJB.findAll();
-            String cat = (String)(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("categoria_sesion"));
-            cargarCategoria(cat);
-        }catch(Exception e){
+            this.nombre_categoria = (String) (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("categoria_sesion"));
+            cargarCategoria(this.nombre_categoria);
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error en init CategoriaController...");
         }
-        
+
     }
-    public void redirectCategorias(String cat){
-        
-        try{
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("categoria_sesion",cat);
-            Cliente cliente = (Cliente)(FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("cliente"));
-            
-            if(cliente == null){
+
+    public void redirectCategorias(String cat) {
+
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("categoria_sesion", cat);
+            Cliente cliente = (Cliente) (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("cliente"));
+
+            if (cliente == null) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("categoria.xhtml");
-            }else{
-                if(cliente.getTipo().equals("a")){
+            } else {
+                if (cliente.getTipo().equals("a")) {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/admin/categoria_admin.xhtml");
-                }else{
+                } else {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/user/categoria_cliente.xhtml");
                 }
             }
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             System.out.println("Error en el redirect" + e);
         }
-        
+
     }
-    public void sacarCatId(String cat_name){
-  
-        for(Categoria categoria : categorias){
-            
-            if(categoria.getNombre().equals(cat_name)){
+
+    public void sacarCatId(String cat_name) {
+
+        for (Categoria categoria : categorias) {
+
+            if (categoria.getNombre().equals(cat_name)) {
                 this.setCodigo_categoria(categoria.getIdcategoria());
             }
         }
     }
-    public void cargarCategoria(String cat) throws Exception{
+
+    public void cargarCategoria(String cat) throws Exception {
         
-        if(cat != null){
+        Categoria categoria_aux = new Categoria();
+        
+        if (cat != null) {
             sacarCatId(cat);
+            this.nombre_categoria = cat;
+        }else{
+             categoria_aux= categoriaEJB.find(this.codigo_categoria);
+             this.nombre_categoria = categoria_aux.getNombre();
         }
+
+        try {
+            if (cat.equals("Todo")) {
+                listarAllProductos();
+            } else {
+
+                this.productos = productoEJB.listarProductos(this.codigo_categoria);
+
+            }
+
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public void listarAllProductos() {
+
+        this.productos = productoEJB.findAll();
+
+    }
+
+    public void eliminarProducto(Producto pro) {
+
+        try {
+            productoEJB.remove(pro);
+            cargarCategoria(this.nombre_categoria);
+        }catch(Exception e){
+            
+            e.printStackTrace();
+            System.out.println("Error en eliminarProducto()...");
+        }
+
+    }
+    public void modificarProducto(Producto pro){
         
         try{
-            productos = productoEJB.listarProductos(codigo_categoria);
-            
-            for(Producto prod : productos){
-                
-                System.out.println(prod.getNombre());
-                
-            }
-                      
+             productoEJB.edit(pro);
         }catch(Exception e){
-            throw e;
+            e.printStackTrace();
+            System.out.println("Error en modificarProducto()...");
         }
     }
 
@@ -113,5 +151,13 @@ public class CategoriaController implements Serializable{
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
     }
-     
+
+    public String getNombre_categoria() {
+        return nombre_categoria;
+    }
+
+    public void setNombre_categoria(String nombre_categoria) {
+        this.nombre_categoria = nombre_categoria;
+    }
+    
 }

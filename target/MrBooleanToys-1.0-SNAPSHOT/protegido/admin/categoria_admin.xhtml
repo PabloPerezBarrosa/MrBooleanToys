@@ -25,25 +25,56 @@
                         </div>
                         <br/><br/>
                         <div class="cont">
-                            <p:dataTable id="tabla_productos" value="#{categoriaController.productos}" var="pro" style="width:45em;">
-                                <p:column sortBy="#{pro.nombre}" headerText="Nombre">
-                                    <div class="cont">
-                                        <p:outputLabel value="#{pro.nombre}"/>
-                                    </div>
+                            <p:dataTable id="tabla_productos" value="#{categoriaController.productos}" var="pro" editable="true" 
+                                         tableStyle="table-layout: auto;">
+                                
+                                <!--COLUMNA NOMBRE PRODUCTO-->
+                                <p:column sortBy="#{pro.nombre}" headerText="Nombre" styleClass="centeredColumnContent">
+                                        <p:cellEditor>
+                                        <f:facet name="output">
+                                            <p:outputLabel value="#{pro.nombre}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{pro.nombre}"/>
+                                        </f:facet>
+                                    </p:cellEditor> 
                                 </p:column>
-                                <p:column headerText="Descripción">
-                                    <p:outputLabel value="#{pro.descripcion}"/>
+                                
+                                <!--COLUMNA DESCRIPCIÓN PRODUCTO-->
+                                <p:column headerText="Descripción" styleClass="centeredColumnContent">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <p:outputLabel value="#{pro.descripcion}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{pro.descripcion}"/>
+                                        </f:facet>
+                                    </p:cellEditor> 
                                 </p:column>
-                                <p:column headerText="Precio">
-                                    <div class="cont">
+                                
+                                <!--COLUMNA PRECIO PRODUCTO-->
+                                <p:column headerText="Precio" styleClass="centeredColumnContent">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
                                         <p:outputLabel value="#{pro.precio}€"/>
-                                    </div>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{pro.precio}"/>
+                                        </f:facet>
+                                    </p:cellEditor> 
                                 </p:column>
-                                <p:column headerText="Imagen">
-                                    <div class="cont">
+                                
+                                <!--COLUMNA IMAGEN PRODUCTO-->
+                                <p:column headerText="Imagen" styleClass="centeredColumnContent">
                                         <p:graphicImage class="prod_img" name="/productos/#{pro.url}" library="images"/>
-                                    </div>
                                 </p:column>
+                                <p:column style="width:4em;" styleClass="centeredColumnContent">
+                                    <p:rowEditor/>
+                                </p:column>
+                                <p:column styleClass="centeredColumnContent">
+                                    <p:commandButton icon="ui-icon-trash" action="#{categoriaController.eliminarProducto(pro)}" update="tabla_productos"/>
+                                </p:column>
+                                <p:ajax event="rowEdit" listener="#{categoriaController.modificarProducto(pro)}" update="tabla_productos"/>
                             </p:dataTable>
                         </div>
                         <br/><br/><br/>

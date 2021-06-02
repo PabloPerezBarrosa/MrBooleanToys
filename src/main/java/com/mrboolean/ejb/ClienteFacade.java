@@ -47,5 +47,25 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
         
         return cliente;
     }
+
+    @Override
+    public List<Cliente> findByTipo(String tipo) {
+        
+        List<Cliente> clientes = new ArrayList<Cliente>();
+        String consulta = "";
+        try{
+            
+          consulta = "FROM Cliente c WHERE c.tipo = ?1";
+          Query query = em.createQuery(consulta);
+          query.setParameter(1,tipo);
+          clientes = query.getResultList();
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error en findByTipo() en ClienteFacade ...");
+        }
+        
+        return clientes;
+    }
     
 }
