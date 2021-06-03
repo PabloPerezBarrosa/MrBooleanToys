@@ -122,15 +122,15 @@
                                 <p:inputNumber id="Stock" value="#{productoController.producto.stock}" required="true"/>
 
                                 <h:outputLabel for="Imagen" value="Imagen" />
-                                <p:fileUpload id="Imagen" value="#{productoController.file}" mode="simple" />
+                                <p:fileUpload id="Imagen" value="#{productoController.file}" mode="simple"/>
                                 <p:outputLabel value="Categoría"/>
-                                <!--<p:selectOneMenu value="{productoController.producto.categoria}" required="true">
-                                    <f:selectItems value="{categoriaController.categorias}" var="cat" itemLabelcat.nombre}" itemValue="{cat}"/>
-                                </p:selectOneMenu>-->
+                                <p:selectOneMenu value="#{productoController.cat_id}" required="true">
+                                    <f:selectItems value="#{productoController.categorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat.idcategoria}"/>
+                                </p:selectOneMenu>
 
                             </p:panelGrid>
                             <p:panelGrid columns="1">
-                                <p:commandButton value="Añadir" actionListener="#{productoController.upload()}" ajax="false"/>
+                                <p:commandButton value="Añadir" actionListener="#{productoController.añadirProducto()}" ajax="false"/>
                             </p:panelGrid>
                             <f:facet name="footer"/>
                         </p:fieldset>

@@ -35,10 +35,6 @@ public class CategoriaController implements Serializable {
             categorias = categoriaEJB.findAll();
             this.nombre_categoria = (String) (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("categoria_sesion"));
             
-            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-            System.out.println(this.nombre_categoria);
-            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-            
             if(this.nombre_categoria != null){
                 cargarCategoria(this.nombre_categoria);
             }   

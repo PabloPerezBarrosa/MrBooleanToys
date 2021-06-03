@@ -1,5 +1,8 @@
 package com.mrboolean.controller;
 
+import com.mrboolean.ejb.CategoriaFacadeLocal;
+import com.mrboolean.ejb.ProductoFacadeLocal;
+import com.mrboolean.model.Categoria;
 import com.mrboolean.model.Producto;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -7,9 +10,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -19,14 +25,28 @@ import org.primefaces.model.UploadedFile;
 @Named
 @ViewScoped
 public class ProductoController implements Serializable {
+    
+    @EJB
+    private CategoriaFacadeLocal categoriaEJB;
+    @EJB
+    private ProductoFacadeLocal productoEJB;
 
     private String ruta = "/home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/webapp/resources/images/productos/";
     private UploadedFile file;
     private Producto producto;
+    private List<Categoria> categorias = new ArrayList<Categoria>();
+    private int cat_id;
     
     @PostConstruct
     public void init(){
         this.producto = new Producto();
+        loadCategorias();
+        
+    }
+    public void loadCategorias(){
+        
+        this.categorias = categoriaEJB.findAll();
+        
     }
 
     public void transferFile(String fileName, InputStream in) {
@@ -77,7 +97,22 @@ public class ProductoController implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("Error", "Seleccione un archivo"));
         }
+    }
+    
+    public void añadirProducto(){
         
+        upload();
+        
+        Categoria categoria = new Categoria();
+        
+        this.producto.setUrl(getFile().getFileName());
+        
+        categoria = categoriaEJB.find(this.cat_id);
+        
+        this.producto.setCategoria(categoria);
+        
+        productoEJB.create(this.producto);
+      
     }
 
     public String getRuta() {
@@ -102,6 +137,22 @@ public class ProductoController implements Serializable {
 
     public void setProducto(Producto producto) {
         this.producto = producto;
+    }
+
+    public List<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(List<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
+    public int getCat_id() {
+        return cat_id;
+    }
+
+    public void setCat_id(int cat_id) {
+        this.cat_id = cat_id;
     }
 
 }
