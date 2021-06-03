@@ -1,9 +1,9 @@
 body{
-    background-color:#aeead8 !important;
+    background-color:#eaf4fd !important;
 }
 #footer{
     width:100%;
-    background-color: #61d1b6 !important;
+    background-color: #6ea5d1 !important;
     display: flex; 
     align-items: center; 
     justify-content: center;
@@ -25,7 +25,7 @@ body{
     animation-duration: 1s;
 }
 #navi_bar{
-    background-color: #61d1b6;
+    background-color: #6ea5d1;
 }
 a{
     color: #effbf7 !important;
@@ -87,4 +87,8 @@ h3:hover{
 .prod_img{
     width: 5.5em;
     height: 3em;
+}
+.prod_img_big{
+    width: 25em;
+    height: 18em;
 }

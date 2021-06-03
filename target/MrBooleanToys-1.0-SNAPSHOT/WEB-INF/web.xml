@@ -26,7 +26,7 @@
         </init-param>
         <init-param>
             <param-name>uploadDirectory</param-name>
-            <param-value>/home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/webapp/resources/images/productos</param-value>
+            <param-value>../../../../../Pablo/Mis_Proyectos/MrBooleanToys/src/main/webapp/resources/images/productos/</param-value>
         </init-param>
     </filter>
     <filter-mapping>

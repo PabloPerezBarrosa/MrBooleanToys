@@ -25,28 +25,29 @@ import org.primefaces.model.UploadedFile;
 @Named
 @ViewScoped
 public class ProductoController implements Serializable {
-    
+
     @EJB
     private CategoriaFacadeLocal categoriaEJB;
     @EJB
     private ProductoFacadeLocal productoEJB;
 
-    private String ruta = "/home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/webapp/resources/images/productos/";
+    private String ruta = "../../../../../Pablo/Mis_Proyectos/MrBooleanToys/src/main/webapp/resources/images/productos/";
     private UploadedFile file;
     private Producto producto;
     private List<Categoria> categorias = new ArrayList<Categoria>();
     private int cat_id;
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         this.producto = new Producto();
         loadCategorias();
-        
+
     }
-    public void loadCategorias(){
-        
+
+    public void loadCategorias() {
+
         this.categorias = categoriaEJB.findAll();
-        
+
     }
 
     public void transferFile(String fileName, InputStream in) {
@@ -57,62 +58,76 @@ public class ProductoController implements Serializable {
             int reader = 0;
             byte[] bytes = new byte[(int) getFile().getSize()];
             while ((reader = in.read(bytes)) != -1) {
-                 
+
                 out.write(bytes, 0, reader);
-                
+
             }
             in.close();
             out.flush();
             out.close();
-            
-        }catch (IOException e) {
+
+        } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
-    
-    public void upload(){
-        
+
+    public void upload() {
+
         String extValidate;
-        if(getFile()!=null){
-            
+        if (getFile() != null) {
+
             String ext = getFile().getFileName();
-            
-            if(ext != null){
-                extValidate = ext.substring(ext.indexOf(".")+1);
-            }else{
+
+            if (ext != null) {
+                extValidate = ext.substring(ext.indexOf(".") + 1);
+            } else {
                 extValidate = null;
             }
-            try{
-                
+            try {
+
                 transferFile(getFile().getFileName(), getFile().getInputstream());
-                
-            }catch(Exception e){
+
+            } catch (Exception e) {
                 Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, e);
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, new FacesMessage("Fallo","Error subiendo el archivo"));
+                context.addMessage(null, new FacesMessage("Fallo", "Error subiendo el archivo"));
             }
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Conseguido",getFile().getFileName() + " se subió " + getFile().getContentType() + " tamaño " + getFile().getSize()));
-        }else{
+            context.addMessage(null, new FacesMessage("Conseguido", getFile().getFileName() + " se subió " + getFile().getContentType() + " tamaño " + getFile().getSize()));
+        } else {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("Error", "Seleccione un archivo"));
         }
     }
-    
-    public void añadirProducto(){
-        
+
+    public void añadirProducto() {
+
         upload();
-        
+
         Categoria categoria = new Categoria();
-        
+
         this.producto.setUrl(getFile().getFileName());
-        
+
         categoria = categoriaEJB.find(this.cat_id);
-        
+
         this.producto.setCategoria(categoria);
-        
+
         productoEJB.create(this.producto);
-      
+
+    }
+
+    public void leerProducto(Producto pro){
+        
+        this.producto = pro;
+   
+    }
+    
+    public void modificarImagen(){
+    
+        upload();
+        this.producto.setUrl(getFile().getFileName());
+        productoEJB.edit(this.producto);
+        
     }
 
     public String getRuta() {
