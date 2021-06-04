@@ -1,6 +1,6 @@
 package com.mrboolean.ejb;
 
-import com.mrboolean.model.Categoria;
+import com.mrboolean.model.entities.Categoria;
 import java.util.List;
 import javax.ejb.Local;
 

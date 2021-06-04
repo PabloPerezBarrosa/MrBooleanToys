@@ -59,14 +59,16 @@
 
                                 <!--COLUMNA STOCK DEL PRODUCTO-->
                                 <p:column styleClass="centeredColumnContent">
-                                    <p:outputLabel value="En Stock" rendered="#{pro.stock > 5 eq true}"  />
-                                    <p:outputLabel value="Stock Bajo" rendered="#{pro.stock > 5 eq false and pro.stock != 0}" style="color:orange;"/>
-                                    <p:outputLabel value="Sin Stock" rendered="#{pro.stock eq 0}" style="color:red;"/>
+                                    <p:outputLabel value="Disponible" rendered="#{pro.stock > 0 eq true}" style="color:green;" />
+                                    <p:outputLabel value="Agotado" rendered="#{pro.stock eq 0}" style="color:red;"/>
                                 </p:column>
 
                                 <!--COLUMNA IMAGEN DEL PRODUCTO-->
                                 <p:column styleClass="centeredColumnContent">
-                                    <p:graphicImage class="prod_img" name="/productos/#{pro.url}" library="images"/>
+                                    <p:commandLink actionListener="#{productoController.leerProducto(pro)}" 
+                                                   oncomplete="PF('wimg').show();" update="dia_img">
+                                        <p:graphicImage class="prod_img" name="/productos/#{pro.url}" library="images"/>
+                                    </p:commandLink>
                                 </p:column>
 
                                 <!--COLUMNA CANTIDAD DEL PRODUCTO-->
@@ -83,6 +85,18 @@
                         <br/><br/><br/>
                     </h:form>
                 </div>
+                <p:dialog id="dia_img" widgetVar="wimg" draggable="false" resizable="false" closeOnEscape="true" 
+                          modal="true" showEffect="explode" hideEffect="explode">
+                    <h:form id="diacimg" enctype="multipart/form-data">
+                        <p:fieldset legend="#{productoController.producto.nombre}">
+                            <f:facet name="header"/>
+                            <div class="cont">
+                                <p:graphicImage class="prod_img_big" name="/productos/#{productoController.producto.url}" library="images"/>
+                            </div>
+                            <f:facet name="footer"/>
+                        </p:fieldset>
+                    </h:form>
+                </p:dialog>
             </ui:define>
 
         </ui:composition>

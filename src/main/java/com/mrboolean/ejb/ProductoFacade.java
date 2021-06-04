@@ -1,6 +1,6 @@
     package com.mrboolean.ejb;
 
-import com.mrboolean.model.Producto;
+import com.mrboolean.model.entities.Producto;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

@@ -1,7 +1,7 @@
 package com.mrboolean.controller;
 
 import com.mrboolean.ejb.ClienteFacadeLocal;
-import com.mrboolean.model.Cliente;
+import com.mrboolean.model.entities.Cliente;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
