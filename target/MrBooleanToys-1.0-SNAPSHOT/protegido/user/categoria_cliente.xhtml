@@ -28,16 +28,12 @@
                                          tableStyle="table-layout: auto;">
                                 <p:columnGroup type="header">
                                     <p:row>
-                                        <p:column rowspan="2" headerText="Nombre" sortBy="#{pro.nombre}"/>
-                                        <p:column rowspan="2" headerText="Descripción" />
-                                        <p:column rowspan="2" headerText="Precio" style="width:5em;"/>
-                                        <p:column rowspan="2" headerText="Disponibilidad"/>
-                                        <p:column rowspan="2" headerText="Imagen" />
-                                        <p:column colspan="2" headerText="Añadir" style="width:10em;"/>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column headerText="Cantidad"/>
-                                        <p:column headerText="Aceptar"/>
+                                        <p:column rowspan="1" headerText="Nombre" sortBy="#{pro.nombre}"/>
+                                        <p:column rowspan="1" headerText="Descripción" />
+                                        <p:column rowspan="1" headerText="Precio" style="width:5em;"/>
+                                        <p:column rowspan="1" headerText="Disponibilidad"/>
+                                        <p:column rowspan="1" headerText="Imagen" />
+                                        <p:column rowspan="1" headerText="Añadir" style="width:10em;"/>
                                     </p:row>
                                 </p:columnGroup>
 
@@ -70,14 +66,10 @@
                                     </p:commandLink>
                                 </p:column>
 
-                                <!--COLUMNA CANTIDAD DEL PRODUCTO-->
-                                <p:column styleClass="centeredColumnContent">
-                                    <p:inputNumber minValue="1" maxValue="50" emptyValue="1" inputStyle="width: 3em;"/>
-                                </p:column>
-
                                 <!--COLUMNA ACEPTAR DEL PRODUCTO-->
                                 <p:column styleClass="centeredColumnContent">
-                                    <p:commandButton type="button" icon="ui-icon-cart"/>
+                                    <p:commandButton icon="ui-icon-cart" actionListener="#{carritoController.leerProducto(pro)}" 
+                                                     oncomplete="PF('wcart').show();" update="dia_cart"/>
                                 </p:column>
                             </p:dataTable>
                         </div>
@@ -92,6 +84,25 @@
                             <div class="cont">
                                 <p:graphicImage class="prod_img_big" name="/productos/#{productoController.producto.url}" library="images"/>
                             </div>
+                            <f:facet name="footer"/>
+                        </p:fieldset>
+                    </h:form>
+                </p:dialog>
+                <p:dialog id="dia_cart" widgetVar="wcart" draggable="false" resizable="false" closeOnEscape="true" 
+                          modal="true" showEffect="bounce" hideEffect="bounce">
+                    <h:form id="diacart">
+                        <p:fieldset legend="#{carritoController.producto.nombre}">
+                            <f:facet name="header">
+                                Cantidad a comprar
+                            </f:facet> 
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Cantidad"/>
+                                <p:inputNumber value="#{carritoController.cantidad}" padControl="false" emptyValue="empty" 
+                                               inputStyle="width: 3em;" minValue="1"/>
+                            </p:panelGrid>
+                            <p:panelGrid columns="1">
+                                <p:commandButton actionListener="#{carritoController.añadirCartItem()}" value="Añadir"/>
+                            </p:panelGrid>
                             <f:facet name="footer"/>
                         </p:fieldset>
                     </h:form>

@@ -1,9 +1,12 @@
 package com.mrboolean.controller;
 
 import com.mrboolean.ejb.ClienteFacadeLocal;
+import com.mrboolean.model.CartItem;
 import com.mrboolean.model.Cliente;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -58,11 +61,12 @@ public class MenuController implements Serializable {
             String url2 = "http://localhost:8080/MrBooleanToys/faces/categoria.xhtml";
 
             System.out.println(url);
-
+            
             cl = clienteEJB.iniciarSesion(this.cliente);
             if (cl != null) {
-
+                List<CartItem> items = new ArrayList<CartItem>();
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("cliente", cl);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("carrito", items);
 
                 if (url.equals(url1)) {
                     if (cl.getTipo().equals("a")) {
