@@ -1,6 +1,6 @@
 package com.mrboolean.ejb;
 
-import com.mrboolean.model.entities.Cliente;
+import com.mrboolean.model.Cliente;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;

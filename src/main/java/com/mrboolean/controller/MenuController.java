@@ -1,7 +1,7 @@
 package com.mrboolean.controller;
 
 import com.mrboolean.ejb.ClienteFacadeLocal;
-import com.mrboolean.model.entities.Cliente;
+import com.mrboolean.model.Cliente;
 import javax.inject.Named;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -146,6 +146,19 @@ public class MenuController implements Serializable {
         try {
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
             FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/");
+
+        } catch (Exception e) {
+
+            System.out.println("Fallo en cerrarSesion() MenuController..");
+            e.printStackTrace();
+
+        }
+
+    }
+    public void cerrarSesionIndex() {
+
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
         } catch (Exception e) {
 

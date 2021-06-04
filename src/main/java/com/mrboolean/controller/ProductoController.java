@@ -2,8 +2,8 @@ package com.mrboolean.controller;
 
 import com.mrboolean.ejb.CategoriaFacadeLocal;
 import com.mrboolean.ejb.ProductoFacadeLocal;
-import com.mrboolean.model.entities.Categoria;
-import com.mrboolean.model.entities.Producto;
+import com.mrboolean.model.Categoria;
+import com.mrboolean.model.Producto;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
