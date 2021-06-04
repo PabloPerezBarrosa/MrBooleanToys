@@ -59,7 +59,7 @@ public class CarritoController implements Serializable {
                         itemList.add(item);
                     }
                 } else {
-        
+
                     itemList.add(item);
                 }
 
@@ -68,12 +68,11 @@ public class CarritoController implements Serializable {
                 System.out.println("SIGGUIENTE VUELTA");
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Articulo añadido al carrito"));
                 PrimeFaces.current().executeScript("PF('wcart').hide();");
+
+            } else {
                 
-            }else{
-                
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Error", "No hay unidades en stock suficientes, quedan: "+ this.producto.getStock()));
-                PrimeFaces.current().executeScript("PF('wcart').hide();");
-                
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No hay unidades en stock suficientes, quedan: " + this.producto.getStock()));
+                    PrimeFaces.current().executeScript("PF('wcart').hide();");
             }
 
         } catch (Exception e) {
