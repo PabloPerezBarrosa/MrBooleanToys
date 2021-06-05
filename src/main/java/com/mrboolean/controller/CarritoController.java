@@ -34,47 +34,68 @@ public class CarritoController implements Serializable {
     public void añadirCartItem() {
         List<CartItem> itemList = new ArrayList<CartItem>();
         try {
+            boolean match = false;
+            itemList = (List<CartItem>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("carrito");
+            CartItem item = new CartItem();
+            int cant_carrito = 0;
+            int cant_peticion = 0;
 
-            if (this.producto.getStock() >= this.cantidad) {
+            item.setProducto(this.producto);
+            item.setCantidad(this.cantidad);
 
-                boolean match = false;
-                itemList = (List<CartItem>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("carrito");
-                CartItem item = new CartItem();
+            if (itemList != null && !itemList.isEmpty()) {
 
-                item.setProducto(this.producto);
-                item.setCantidad(this.cantidad);
+                for (CartItem ci : itemList) {
 
-                if (itemList != null && !itemList.isEmpty()) {
+                    if (ci.getProducto().getIdproducto() == item.getProducto().getIdproducto()) {
 
-                    for (CartItem ci : itemList) {
-
-                        if (ci.getProducto().getIdproducto() == item.getProducto().getIdproducto()) {
-
-                            ci.setCantidad(ci.getCantidad() + item.getCantidad());
-                            match = true;
-                            break;
+                        cant_carrito = ci.getCantidad();
+                        cant_peticion = item.getCantidad();
+                        match = true;
+                        if (this.producto.getStock() >= cant_carrito + cant_peticion) {
+                            ci.setCantidad(cant_carrito + cant_peticion);
+                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Articulo añadido al carrito"));
+                            PrimeFaces.current().executeScript("PF('wcart').hide();");
+                        } else {
+                            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+                                    "No hay unidades en stock suficientes, quedan: " + this.producto.getStock() + " actualmente en carrito: "
+                                    + cant_carrito + " intentando aumentar: " + cant_peticion));
+                            PrimeFaces.current().executeScript("PF('wcart').hide();");
                         }
+                        break;
                     }
-                    if (!match) {
-                        itemList.add(item);
-                    }
-                } else {
+                }
+                if (!match) {
 
-                    itemList.add(item);
+                    if (this.producto.getStock() >= this.cantidad) {
+                        itemList.add(item);
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Articulo añadido al carrito"));
+                        PrimeFaces.current().executeScript("PF('wcart').hide();");
+                    } else {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+                                "No hay unidades en stock suficientes, quedan: " + this.producto.getStock() + " intentando adquirir: " + cant_peticion));
+                        PrimeFaces.current().executeScript("PF('wcart').hide();");
+                    }
+
                 }
 
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("carrito", itemList);
-
-                System.out.println("SIGGUIENTE VUELTA");
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Articulo añadido al carrito"));
-                PrimeFaces.current().executeScript("PF('wcart').hide();");
-
             } else {
-                
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No hay unidades en stock suficientes, quedan: " + this.producto.getStock()));
+                if (this.producto.getStock() >= this.cantidad) {
+                    itemList.add(item);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Correcto", "Articulo añadido al carrito"));
                     PrimeFaces.current().executeScript("PF('wcart').hide();");
+                } else {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+                            "No hay unidades en stock suficientes, quedan: " + this.producto.getStock() + " intentando adquirir: " + cant_peticion));
+                    PrimeFaces.current().executeScript("PF('wcart').hide();");
+                }
             }
 
+            System.out.println("XXXXXXXXXXXXXXXXXXXXXX");
+            for (CartItem i : itemList) {
+                System.out.println(i.getProducto().getNombre() + "Cantidad: " + i.getCantidad());
+            }
+            System.out.println("XXXXXXXXXXXXXXXXXXXXXX");
         } catch (Exception e) {
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Fallo añadiendo al carrito"));
