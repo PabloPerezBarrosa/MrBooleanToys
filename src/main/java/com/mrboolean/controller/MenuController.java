@@ -61,7 +61,7 @@ public class MenuController implements Serializable {
             String url2 = "http://localhost:8080/MrBooleanToys/faces/categoria.xhtml";
 
             System.out.println(url);
-            
+
             cl = clienteEJB.iniciarSesion(this.cliente);
             if (cl != null) {
                 List<CartItem> items = new ArrayList<CartItem>();
@@ -97,7 +97,7 @@ public class MenuController implements Serializable {
     public void verificarSesionAdmin() {
 
         try {
-            
+
             FacesContext context = FacesContext.getCurrentInstance();
             Cliente cl = (Cliente) context.getExternalContext().getSessionMap().get("cliente");
 
@@ -107,11 +107,10 @@ public class MenuController implements Serializable {
                 if (cl.getTipo().equals("c")) {
                     this.cliente_sesion = cl;
                     context.getExternalContext().redirect("/MrBooleanToys/faces/protegido/user/principal_cliente.xhtml");
-                }else{
+                } else {
                     this.cliente_sesion = cl;
                 }
             }
-            
 
         } catch (Exception e) {
             System.out.println("Fallo en verificarSesion() MenuController..");
@@ -119,10 +118,11 @@ public class MenuController implements Serializable {
         }
 
     }
+
     public void verificarSesionCliente() {
 
         try {
-            
+
             FacesContext context = FacesContext.getCurrentInstance();
             Cliente cl = (Cliente) context.getExternalContext().getSessionMap().get("cliente");
 
@@ -132,11 +132,10 @@ public class MenuController implements Serializable {
                 if (cl.getTipo().equals("a")) {
                     this.cliente_sesion = cl;
                     context.getExternalContext().redirect("/MrBooleanToys/faces/protegido/admin/principal_admin .xhtml");
-                }else{
+                } else {
                     this.cliente_sesion = cl;
                 }
             }
-            
 
         } catch (Exception e) {
             System.out.println("Fallo en verificarSesion() MenuController..");
@@ -159,9 +158,11 @@ public class MenuController implements Serializable {
         }
 
     }
+
     public void cerrarSesionIndex() {
 
         try {
+            
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
         } catch (Exception e) {
@@ -188,5 +189,5 @@ public class MenuController implements Serializable {
     public void setCliente_sesion(Cliente cliente_sesion) {
         this.cliente_sesion = cliente_sesion;
     }
-    
+
 }

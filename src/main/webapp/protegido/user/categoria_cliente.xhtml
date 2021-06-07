@@ -9,10 +9,14 @@
     <body>
         <ui:composition template="./../../WEB-INF/templates/template_cliente.xhtml">
             <ui:define name="content">
-
-                <div class="container-fluid">
+                <br/><br/>
+                <div class="container-fluid principal_contenedor">
                     <h:form>
-                        <br/><br/>
+                        <br/>
+                        <div class="cont">
+                            <h1 id="categorias_titulo"><p:outputLabel id="titulo" value="#{categoriaController.categoria.nombre}" /></h1>
+                        </div>
+                        <br/>
                         <div class="cont">
                             <p:panelGrid columns="3">
                                 <p:outputLabel value="Categoría"/>
@@ -76,6 +80,7 @@
                         <br/><br/><br/>
                     </h:form>
                 </div>
+                <br/><br/><br/>
                 <p:dialog id="dia_img" widgetVar="wimg" draggable="false" resizable="false" closeOnEscape="true" 
                           modal="true" showEffect="explode" hideEffect="explode">
                     <h:form id="diacimg" enctype="multipart/form-data">

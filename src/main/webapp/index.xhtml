@@ -14,13 +14,22 @@
         <ui:composition template="./WEB-INF/templates/portada_template.xhtml">
 
             <ui:define name="content">
-                <div class="container-fluid">
+                <br/><br/>
+                <div class="container-fluid principal_contenedor">
                     <div class="row">
                       <div class="col-lg-12 justify-contennt-center">
-                        <div class="cont"><a href="#"><p:graphicImage id="slogan" name="slogan.jpg" library="images" x:onload="redirect();"/></a></div>
+                        <div class="cont"><a href="#"><p:graphicImage id="slogan" name="logo_portada.png" library="images" x:onload="redirect();"/></a></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12 justify-contennt-center">
+                          <div class="cont">
+                              <h1 id="titulo_portada">Mr Boolean Toys</h1>
+                          </div>
                       </div>
                     </div>
                 </div>
+                <br/><br/>
             </ui:define>
 
         </ui:composition>

@@ -1,7 +1,6 @@
 package com.mrboolean.controller;
 
 import com.mrboolean.model.CartItem;
-import com.mrboolean.model.Cliente;
 import com.mrboolean.model.Producto;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,6 +23,7 @@ public class CarritoController implements Serializable {
     public void init() {
 
         producto = new Producto();
+        
 
     }
 

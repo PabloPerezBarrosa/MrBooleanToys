@@ -15,6 +15,7 @@ com/mrboolean/controller/CarritoController.class
 com/mrboolean/model/LineaPedido_.class
 com/mrboolean/controller/MenuController.class
 com/mrboolean/ejb/LineaPedidoFacadeLocal.class
+com/mrboolean/controller/CarritoViewController.class
 com/mrboolean/model/LineaPedido.class
 com/mrboolean/model/CartItem.class
 com/mrboolean/controller/ProductoController.class

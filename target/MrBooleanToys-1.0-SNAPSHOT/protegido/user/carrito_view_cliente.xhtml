@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template_cliente.xhtml">
+
+            <ui:define name="content">
+                <h:form>
+
+                    <br/><br/>
+                    <div class="cont">
+                        <p:dataTable id="tabla_carrito" value="#{carritoViewController.items}" var="item" 
+                                     tableStyle="table-layout: auto;">
+                            <p:columnGroup type="header">
+                                <p:row>
+                                    <p:column colspan="5" headerText="Artículos en su carrito"/>
+                                </p:row>
+                                <p:row>
+                                    <p:column rowspan="1" headerText="Nombre"/>
+                                    <p:column rowspan="1" headerText="Descripción" />
+                                    <p:column rowspan="1" headerText="Imagen"/>
+                                    <p:column rowspan="1" headerText="Precio"/>
+                                    <p:column rowspan="1" headerText="Cantidad" />
+                                </p:row>
+                            </p:columnGroup>
+
+                            <!--COLUMNA NOMBRE DEL PRODUCTO-->
+                            <p:column sortBy="#{item.producto.nombre}" styleClass="centeredColumnContent" style="max-width: 10em;">
+                                <p:outputLabel value="#{item.producto.nombre}"/>
+                            </p:column>
+
+                            <!--COLUMNA DESCRIPCIÓN DEL PRODUCTO-->
+                            <p:column styleClass="centeredColumnContent" style="max-width: 10em;">
+                                <p:outputLabel value="#{item.producto.descripcion}"/>
+                            </p:column>
+
+                            <!--COLUMNA IMAGEN DEL PRODUCTO-->
+                            <p:column styleClass="centeredColumnContent">
+                                <p:commandLink actionListener="#{carritoViewController.leerItem(item)}" 
+                                               oncomplete="PF('wimg').show();" update="dia_img">
+                                    <p:graphicImage class="prod_img" name="/productos/#{item.producto.url}" library="images"/>
+                                </p:commandLink>
+                            </p:column>
+                            <!--COLUMNA PRECIO DEL PRODUCTO-->
+                            <p:column styleClass="centeredColumnContent">
+                                <p:outputLabel value="#{item.producto.precio}€"/>
+                            </p:column>
+                            <!--COLUMNA CANTIDAD DEL PRODUCTO-->
+                            <p:column styleClass="centeredColumnContent">
+                                <p:outputLabel value="#{item.cantidad}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                    <br/><br/>
+                    <div class="cont">
+                        <p:panelGrid columns ="2">
+                            <p:outputLabel value="Total a pagar"/>
+                            <p:outputLabel value="#{carritoViewController.monto}€"/>
+                        </p:panelGrid>
+                        <p:panelGrid columns="1">
+                            <p:commandButton value="A la compra" onclick="PF('wcart').show();"/>
+                        </p:panelGrid>
+                    </div>
+                    <br/>
+                </h:form>
+                <p:dialog id="dia_img" widgetVar="wimg" draggable="false" resizable="false" closeOnEscape="true" 
+                          modal="true" showEffect="explode" hideEffect="explode">
+                    <h:form id="diacimg">
+                        <p:fieldset legend="#{carritoViewController.item.producto.nombre}">
+                            <f:facet name="header"/>
+                            <div class="cont">
+                                <p:graphicImage class="prod_img_big" name="/productos/#{carritoViewController.item.producto.url}" library="images"/>
+                            </div>
+                            <f:facet name="footer"/>
+                        </p:fieldset>
+                    </h:form>
+                </p:dialog>
+                <p:dialog id="dia_cart" widgetVar="wcart" draggable="false" resizable="false" closeOnEscape="true" 
+                          modal="true" showEffect="slide" hideEffect="slide">
+                    <h:form id="diacart">
+                        <p:fieldset legend="Confirmación de compra">
+                            <f:facet name="header">
+                                Datos Pedido
+                            </f:facet> 
+                            <p:panelGrid columns="2">
+
+                                <h:outputLabel for="dir" value="Dirección de entrega" />
+                                <p:inputText id="dir" value="#{carritoViewController.pedido.direccion}" required="true"/>
+
+                                <h:outputLabel for="prov" value="Provincia" />
+                                <p:inputText id="prov" value="#{carritoViewController.pedido.provincia}" required="true"/>
+
+                                <h:outputLabel for="cp" value="Código Postal" />
+                                <p:inputMask mask="99999" value="#{carritoViewController.pedido.cp}" id="cp" required="true"/>
+
+                                <h:outputLabel for="cuenta" value="Número de tarjeta" />
+                                <p:inputMask mask="9999-9999-9999-9999" id="cuenta" required="true"/>
+
+                                <h:outputLabel for="cv" value="cv" />
+                                <p:inputMask mask="999" id="cv" required="true"/>
+
+                                <!--<h:outputLabel for="cad" value="Número de tarjeta" />
+                                <p:inputMask mask="" id="cad" required="true"/>-->                                
+
+                            </p:panelGrid>
+                            <p:panelGrid columns="1">
+                                <p:commandButton value="Comprar" action="#{carritoViewController.confirmarCompra()}"/>
+                            </p:panelGrid>
+                            <f:facet name="footer"/>
+                        </p:fieldset>
+                    </h:form>
+                </p:dialog>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

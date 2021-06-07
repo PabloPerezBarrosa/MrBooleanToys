@@ -11,7 +11,48 @@
 
             <ui:define name="content">
                 <br/><br/>
-                <div class="container-fluid">
+                <div class="container-fluid" id="carrusel_cont">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <p:graphicImage class="d-block w-100 img_carru" name="Amongus_carrusel.jpg" library="images"/>
+                            </div>
+                            <div class="carousel-item">
+                                <p:graphicImage class="d-block w-100 img_carru" name="Hotwheels_carrusel.jpg" library="images"/>
+                            </div>
+                            <div class="carousel-item">
+                                <p:graphicImage class="d-block w-100 img_carru" name="barbie_carrusel.jpg" library="images"/>
+                            </div>
+                            <div class="carousel-item">
+                                <p:graphicImage class="d-block w-100 img_carru" name="lego_carrusel.png" library="images"/>
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                </div>
+                <br/><br/>
+                <div class="container-fluid principal_contenedor" >
+                    <br/>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="cont">
+                                <h1 id="categorias_titulo">Categorías</h1>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="cont">
@@ -23,7 +64,7 @@
                             </div>
                             <div class="cont">
                                 <h:form>
-                                    <p:commandLink value="Figuras" action="#{categoriaController.redirectCategorias('Figuras')}"/>
+                                    <p:commandLink class="links_cat" value="Figuras" action="#{categoriaController.redirectCategorias('Figuras')}"/>
                                 </h:form>
                             </div>
                         </div>
@@ -37,7 +78,7 @@
                             </div>
                             <div class="cont">
                                 <h:form>
-                                    <p:commandLink value="Coches" action="#{categoriaController.redirectCategorias('Coches')}"/>
+                                    <p:commandLink class="links_cat" value="Coches" action="#{categoriaController.redirectCategorias('Coches')}"/>
                                 </h:form>
                             </div>
                         </div>
@@ -51,7 +92,7 @@
                             </div>
                             <div class="cont">
                                 <h:form>
-                                    <p:commandLink value="Construcción" action="#{categoriaController.redirectCategorias('Construcción')}"/>
+                                    <p:commandLink class="links_cat" value="Construcción" action="#{categoriaController.redirectCategorias('Construcción')}"/>
                                 </h:form>
                             </div>
                         </div>
@@ -67,7 +108,7 @@
                             </div>
                             <div class="cont">
                                 <h:form>
-                                    <p:commandLink value="Peluches" action="#{categoriaController.redirectCategorias('Peluches')}"/>
+                                    <p:commandLink class="links_cat" value="Peluches" action="#{categoriaController.redirectCategorias('Peluches')}"/>
                                 </h:form>
                             </div>
                         </div>
@@ -81,7 +122,7 @@
                             </div>
                             <div class="cont">
                                 <h:form>
-                                    <p:commandLink value="Puzles" action="#{categoriaController.redirectCategorias('Puzles')}"/>
+                                    <p:commandLink class="links_cat" value="Puzles" action="#{categoriaController.redirectCategorias('Puzles')}"/>
                                 </h:form>
                             </div>
                         </div>
@@ -89,18 +130,20 @@
                             <div class="cont">
                                 <h:form>
                                     <p:commandLink action="#{categoriaController.redirectCategorias('Aire Libre')}">
-                                        <p:graphicImage class="cat_img" name="aire.jpeg" library="images"/>
+                                        <p:graphicImage class="cat_img" name="aire.jpg" library="images"/>
                                     </p:commandLink>
                                 </h:form>
                             </div>
                             <div class="cont">
                                 <h:form>
-                                    <p:commandLink value="Aire Libre" action="#{categoriaController.redirectCategorias('Aire Libre')}"/>
+                                    <p:commandLink class="links_cat" value="Aire Libre" action="#{categoriaController.redirectCategorias('Aire Libre')}"/>
                                 </h:form>
                             </div>
                         </div>
                     </div>
+                    <br/>
                 </div>
+                <br/><br/><br/><br/>
             </ui:define>
 
         </ui:composition>

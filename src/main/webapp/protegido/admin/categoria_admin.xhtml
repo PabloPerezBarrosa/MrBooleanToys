@@ -11,9 +11,14 @@
         <ui:composition template="./../../WEB-INF/templates/template_admin.xhtml">
 
             <ui:define name="content">
-                <div class="container-fluid">
+                <br/><br/>
+                <div class="container-fluid principal_contenedor">
                     <h:form>
-                        <br/><br/>
+                        <br/>
+                        <div class="cont">
+                            <h1 id="categorias_titulo"><p:outputLabel id="titulo" value="#{categoriaController.categoria.nombre}" /></h1>
+                        </div>
+                        <br/>
                         <div class="cont">
                             <p:panelGrid columns="3">
                                 <p:outputLabel value="Categoría"/>
@@ -103,6 +108,7 @@
 
 
                         </div>
+                        <br/>
                         <div class="cont">
                             <p:commandButton icon="ui-icon-plusthick" onclick="PF('waddprod').show();"/>
                         </div>
@@ -110,6 +116,7 @@
                         <br/>
                     </h:form>
                 </div>
+                <br/><br/><br/><br/>
                 
                 <!-- DIALOGO PARA LA CREACIÓN DE PRODUCTOS -->
                 <p:dialog id="dia_addpro" widgetVar="waddprod" draggable="false" resizable="false" closeOnEscape="true" 

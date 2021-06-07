@@ -28,14 +28,17 @@ body{
     background-color: #6ea5d1;
 }
 a{
-    color: #effbf7 !important;
-}
+    color: white !important;
+}   
 a:hover{
-    color: #3d8474 !important;
+    color: darkblue !important;
+}
+.links_cat{
+    color: #6ea5d1 !important;
 }
 #dropdown_menu{
-    background-color:#61d1b6;
-    color:#effbf7;
+    background-color:#6ea5d1;
+    color:white;
 }
 #p_foot{
     color: #effbf7;
@@ -62,26 +65,45 @@ h3:hover{
     color: #3d8474;
 }
 #slogan{
-    width: 40em;
-    height: 30em;
+    width: 30em;
+    height: 22em;
     margin: 1em;
-    animation-name: slogan_move;
-    animation-duration: 3s;
 }
 @keyframes rotation{
     0% {-webkit-transform: rotate(0deg);transform: rotate(0deg);}
     100% {-webkit-transform: rotate(3600deg);transform: rotate(360deg);}
-}	
-@keyframes slogan_move {
-    0% { width: 0em;height: 0em;}
-    100% {width: 40em;height: 30em;}
-  }
-  
-  td.centeredColumnContent{
+}	 
+td.centeredColumnContent{
     text-align: center;
 }
-  
-  
+#carrusel_cont{
+    width: 70%;
+} 
+.principal_contenedor{
+    border:0px solid #6ea5d1;
+    width: 70% !important;
+    box-shadow: 5px 10px 18px #6ea5d1;
+    border-radius: 2em 2em 2em 2em;
+    background-color: #d9e8f7;
+}
+#titulo_portada{
+    font-size:7em;
+    font-style: monaco;
+    color: #6ea5d1;
+}
+.fondo_cosas{
+    background-color:#eaf4fd !important;
+}
+#categorias_titulo{
+    padding: 0.1em 1em 0em 1em;
+    font-style: monaco;
+    color: #6ea5d1;
+    border:0px solid #6ea5d1;
+    box-shadow: 5px 10px 18px #6ea5d1;
+    border-radius: 0.5em 0.5em 0.5em 0.5em;
+    background-color: #eaf4fd !important;
+}
+
 /*ZONA DE CATEGORIA.XHTML*/
 
 .prod_img{

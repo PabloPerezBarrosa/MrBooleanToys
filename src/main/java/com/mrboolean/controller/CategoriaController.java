@@ -27,6 +27,7 @@ public class CategoriaController implements Serializable {
     private List<Producto> productos;
     private int codigo_categoria;
     private String nombre_categoria;
+    private Categoria categoria = new Categoria();
 
     @PostConstruct
     public void init() {
@@ -38,11 +39,17 @@ public class CategoriaController implements Serializable {
             if(this.nombre_categoria != null){
                 cargarCategoria(this.nombre_categoria);
             }   
+            sacarCategoria();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error en init CategoriaController...");
         }
 
+    }
+    public void sacarCategoria(){
+        
+        this.categoria = categoriaEJB.find(this.codigo_categoria);
+        
     }
 
     public void redirectCategorias(String cat) {
@@ -90,6 +97,10 @@ public class CategoriaController implements Serializable {
         }
 
         try {
+            sacarCategoria();
+            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXx");
+            System.out.println(this.categoria.getNombre());
+            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXx");
             if (cat != null && cat.equals("Todo")) {
                 listarAllProductos();
             } else {
@@ -177,6 +188,14 @@ public class CategoriaController implements Serializable {
 
     public void setNombre_categoria(String nombre_categoria) {
         this.nombre_categoria = nombre_categoria;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
     
 }
