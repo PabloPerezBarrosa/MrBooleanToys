@@ -25,6 +25,7 @@ public class MenuController implements Serializable {
 
     private Cliente cliente;
     private Cliente cliente_sesion;
+    private String email_recu;
 
     @PostConstruct
     public void init() {
@@ -58,7 +59,7 @@ public class MenuController implements Serializable {
                 this.cliente.setEstado(0);
                 clienteEJB.create(this.cliente);
 
-                SendMail.sendEmail(this.cliente);
+                SendMail.sendEmail(this.cliente, true);
 
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Registro Exitoso"));
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Atención", "Revise su email para verificación de cuenta"));
@@ -228,6 +229,27 @@ public class MenuController implements Serializable {
         clienteEJB.edit(cl);
 
     }
+    public void recuperarClave(){
+        
+        Cliente cl = new Cliente();
+        
+        try{
+            
+            cl = clienteEJB.findByEmail(this.email_recu);
+            
+            SendMail.sendEmail(cl, false);
+             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Revise su email para recuperar su clave"));
+            PrimeFaces.current().executeScript("PF('wrecu').hide();");
+            PrimeFaces.current().executeScript("PF('wlog').hide();");
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Fallo en recuperarClave()...................");
+        }
+        
+        
+        
+    }
 
     public Cliente getCliente() {
         return cliente;
@@ -243,6 +265,14 @@ public class MenuController implements Serializable {
 
     public void setCliente_sesion(Cliente cliente_sesion) {
         this.cliente_sesion = cliente_sesion;
+    }
+
+    public String getEmail_recu() {
+        return email_recu;
+    }
+
+    public void setEmail_recu(String email_recu) {
+        this.email_recu = email_recu;
     }
 
 }

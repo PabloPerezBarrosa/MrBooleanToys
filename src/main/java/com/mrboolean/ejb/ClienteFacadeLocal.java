@@ -25,4 +25,6 @@ public interface ClienteFacadeLocal {
     
     List<Cliente> findByTipo(String tipo);
     
+    Cliente findByEmail(String email);
+    
 }

@@ -85,7 +85,7 @@
                             </f:facet>
                             <p:panelGrid columns="2">
 
-                                <h:outputLabel for="Nombre" value="Nombre: " />
+                                <h:outputLabel for="Nombre" value="Nombre" />
                                 <p:inputText id="Nombre" value="#{menuController.cliente.nombre}" required="true"/>
 
                                 <h:outputLabel for="Clave" value="Clave" />
@@ -124,14 +124,37 @@
                                 <f:facet name="header">
                                     Datos Conexión
                                 </f:facet>
-                                <h:outputLabel for="NombreUsuario" value="Nombre: " />
+                                <h:outputLabel for="NombreUsuario" value="Nombre" />
                                 <p:inputText id="NombreUsuario" value="#{menuController.cliente.nombre}" required="true"/>
 
                                 <h:outputLabel for="ClaveUsuario" value="Clave" />
                                 <p:password id="ClaveUsuario" value="#{menuController.cliente.clave}" required="true"/>
 
                                 <p:commandButton value="Conectarse" actionListener="#{menuController.iniciarSesion()}"/>
+        
 
+                                <f:facet name="footer"/>
+                            </p:panelGrid> 
+                        </p:fieldset> 
+                    </h:form>
+                    <h:form>
+                        <p:panelGrid columns="1">
+                            <p:commandLink value="¿Ha olvidado su clave?" onclick="PF('wrecu').show();" style="color:red !important"/>
+                        </p:panelGrid>       
+                    </h:form>
+                </p:dialog>
+                <p:dialog id="dia_recu" widgetVar="wrecu" draggable="false" resizable="false" closeOnEscape="true" 
+                          modal="true" showEffect="highlight" hideEffect="highlight">
+                    <h:form>
+                        <p:fieldset legend="Recuperación de Clave">
+                            <p:panelGrid columns="2">
+                                <f:facet name="header"/>
+                                <h:outputLabel for="eMail" value="eMail de recuperación"/>
+                                <p:inputText id="eMail" value="#{menuController.email_recu}" required="true" 
+                                             validatorMessage="Introduzca un email válido">
+                                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                </p:inputText>
+                                <p:commandButton value="Mandar email de recuperación" actionListener="#{menuController.recuperarClave()}"/>
                                 <f:facet name="footer"/>
                             </p:panelGrid> 
                         </p:fieldset> 

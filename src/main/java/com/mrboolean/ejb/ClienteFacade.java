@@ -67,5 +67,25 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
         
         return clientes;
     }
+
+    @Override
+    public Cliente findByEmail(String email) {
+        
+        Cliente cliente = new Cliente();
+        String consulta = "";
+        
+        try{
+            
+          consulta = "FROM Cliente c WHERE c.email = ?1";
+          Query query = em.createQuery(consulta);
+          query.setParameter(1,email);
+          cliente =(Cliente) query.getResultList().get(0);
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Error en findByTipo() en ClienteFacade ...");
+        }
+        return cliente;
+    }
     
 }
