@@ -1,6 +1,7 @@
 package com.mrboolean.controller;
 
 import com.mrboolean.ejb.ClienteFacadeLocal;
+import com.mrboolean.mail.SendMail;
 import com.mrboolean.model.CartItem;
 import com.mrboolean.model.Cliente;
 import javax.inject.Named;
@@ -33,11 +34,50 @@ public class MenuController implements Serializable {
 
     public void registrarCliente() {
 
+        List<Cliente> clientes = new ArrayList<Cliente>();
+        boolean match_email = false;
+        boolean match_name = false;
+
         try {
-            this.cliente.setTipo("c");
-            clienteEJB.create(this.cliente);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Registro Exitoso"));
-            PrimeFaces.current().executeScript("PF('wreg').hide();");
+
+            clientes = clienteEJB.findAll();
+
+            for (Cliente cl : clientes) {
+
+                if (cl.getNombre().equals(this.cliente.getNombre())) {
+                    match_name = true;
+                } else if (cl.getEmail().equals(this.cliente.getEmail())) {
+                    match_email = true;
+                }
+
+            }
+
+            if (!match_name && !match_email) {
+
+                this.cliente.setTipo("c");
+                this.cliente.setEstado(0);
+                clienteEJB.create(this.cliente);
+
+                SendMail.sendEmail(this.cliente);
+
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Registro Exitoso"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Atención", "Revise su email para verificación de cuenta"));
+                PrimeFaces.current().executeScript("PF('wreg').hide();");
+
+            }else{
+                if(match_name && match_email){
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Nombre y email ya están en uso"));
+                }else if(true){
+                    if(match_email){
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Email ya en uso"));
+                }
+                if(match_name){
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Nombre ya en uso"));
+                }
+                }
+                
+            }
+
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Fallo en el Registro"));
             System.out.println("Error en registrarCliente..");
@@ -162,7 +202,7 @@ public class MenuController implements Serializable {
     public void cerrarSesionIndex() {
 
         try {
-            
+
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 
         } catch (Exception e) {
@@ -171,6 +211,21 @@ public class MenuController implements Serializable {
             e.printStackTrace();
 
         }
+
+    }
+
+    public void activarCliente() {
+
+        Cliente cl = new Cliente();
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
+        int id = Integer.parseInt(request.getParameter("key1"));
+        
+        cl = clienteEJB.find(id);
+        
+        cl.setEstado(1);
+        
+        clienteEJB.edit(cl);
 
     }
 

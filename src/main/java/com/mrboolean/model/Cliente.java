@@ -28,6 +28,9 @@ public class Cliente implements Serializable{
     
     @Column(name = "tipo")
     private String tipo;
+    
+    @Column(name = "estado")
+    private int estado;
 
     public int getIdcliente() {
         return idcliente;
@@ -68,5 +71,12 @@ public class Cliente implements Serializable{
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-  
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
+    }
 }

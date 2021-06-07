@@ -1,4 +1,5 @@
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/model/Cliente.java
+/home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/mail/SendMail.java
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/ejb/LineaPedidoFacade.java
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/model/Producto.java
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/ejb/AbstractFacade.java
