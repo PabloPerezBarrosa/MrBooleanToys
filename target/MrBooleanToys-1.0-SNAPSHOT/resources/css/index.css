@@ -103,6 +103,11 @@ td.centeredColumnContent{
     border-radius: 0.5em 0.5em 0.5em 0.5em;
     background-color: #eaf4fd !important;
 }
+.user_img{
+    margin-right: 1em;
+    width: 3em;
+    height: 3em;
+}
 
 /*ZONA DE CATEGORIA.XHTML*/
 

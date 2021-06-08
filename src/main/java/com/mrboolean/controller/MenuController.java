@@ -4,10 +4,17 @@ import com.mrboolean.ejb.ClienteFacadeLocal;
 import com.mrboolean.mail.SendMail;
 import com.mrboolean.model.CartItem;
 import com.mrboolean.model.Cliente;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -15,6 +22,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import org.primefaces.PrimeFaces;
+import org.primefaces.context.RequestContext;
+import org.primefaces.model.UploadedFile;
 
 @Named(value = "menuController")
 @SessionScoped
@@ -26,11 +35,13 @@ public class MenuController implements Serializable {
     private Cliente cliente;
     private Cliente cliente_sesion;
     private String email_recu;
+    private String ruta = "../../../../../Pablo/Mis_Proyectos/MrBooleanToys/src/main/webapp/resources/images/productos/";
+    private UploadedFile file;
 
     @PostConstruct
     public void init() {
         cliente = new Cliente();
-        cliente_sesion = new Cliente();
+        cliente_sesion = new Cliente(); 
     }
 
     public void registrarCliente() {
@@ -65,18 +76,18 @@ public class MenuController implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Atención", "Revise su email para verificación de cuenta"));
                 PrimeFaces.current().executeScript("PF('wreg').hide();");
 
-            }else{
-                if(match_name && match_email){
+            } else {
+                if (match_name && match_email) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Nombre y email ya están en uso"));
-                }else if(true){
-                    if(match_email){
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Email ya en uso"));
+                } else if (true) {
+                    if (match_email) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Email ya en uso"));
+                    }
+                    if (match_name) {
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Nombre ya en uso"));
+                    }
                 }
-                if(match_name){
-                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Atención", "Nombre ya en uso"));
-                }
-                }
-                
+
             }
 
         } catch (Exception e) {
@@ -149,6 +160,7 @@ public class MenuController implements Serializable {
                     this.cliente_sesion = cl;
                     context.getExternalContext().redirect("/MrBooleanToys/faces/protegido/user/principal_cliente.xhtml");
                 } else {
+                    cl = clienteEJB.find(cl.getIdcliente());
                     this.cliente_sesion = cl;
                 }
             }
@@ -174,6 +186,7 @@ public class MenuController implements Serializable {
                     this.cliente_sesion = cl;
                     context.getExternalContext().redirect("/MrBooleanToys/faces/protegido/admin/principal_admin .xhtml");
                 } else {
+                    cl = clienteEJB.find(cl.getIdcliente());
                     this.cliente_sesion = cl;
                 }
             }
@@ -221,34 +234,117 @@ public class MenuController implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 
         int id = Integer.parseInt(request.getParameter("key1"));
-        
+
         cl = clienteEJB.find(id);
-        
+
         cl.setEstado(1);
-        
+
         clienteEJB.edit(cl);
 
     }
-    public void recuperarClave(){
-        
+
+    public void recuperarClave() {
+
         Cliente cl = new Cliente();
-        
-        try{
-            
+
+        try {
+
             cl = clienteEJB.findByEmail(this.email_recu);
-            
+
             SendMail.sendEmail(cl, false);
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Revise su email para recuperar su clave"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Revise su email para recuperar su clave"));
             PrimeFaces.current().executeScript("PF('wrecu').hide();");
             PrimeFaces.current().executeScript("PF('wlog').hide();");
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Fallo en recuperarClave()...................");
         }
-        
-        
-        
+    }
+
+    /*MODIFICACIÓN DE OTROS DATOS DE USUARIO POR EL USUARIO*/
+    public void modUser() {
+
+        String cat = "";
+        List<CartItem> items = new ArrayList<CartItem>();
+        clienteEJB.edit(this.cliente_sesion);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Nombre modificado correctamente"));
+        PrimeFaces.current().executeScript("PF('wuser').hide();");
+    }
+
+    /*FUNCIONES DE MODIFICACIÓN DE IMAGEN DE USUARIO*/
+    public void transferFile(String fileName, InputStream in) {
+
+        try {
+
+            OutputStream out = new FileOutputStream(new File(this.ruta + fileName));
+            int reader = 0;
+            byte[] bytes = new byte[(int) getFile().getSize()];
+            while ((reader = in.read(bytes)) != -1) {
+
+                out.write(bytes, 0, reader);
+
+            }
+            in.close();
+            out.flush();
+            out.close();
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void upload() {
+
+        String extValidate;
+        if (getFile() != null) {
+
+            String ext = getFile().getFileName();
+
+            if (ext != null) {
+                extValidate = ext.substring(ext.indexOf(".") + 1);
+            } else {
+                extValidate = null;
+            }
+            try {
+
+                transferFile(getFile().getFileName(), getFile().getInputstream());
+
+            } catch (Exception e) {
+                Logger.getLogger(ProductoController.class.getName()).log(Level.SEVERE, null, e);
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage("Fallo", "Error subiendo el archivo"));
+            }
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Conseguido", getFile().getFileName() + " se subió " + getFile().getContentType() + " tamaño " + getFile().getSize()));
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Error", "Seleccione un archivo"));
+        }
+    }
+
+    public void modificarImagen() {
+        String cat = "";
+        List<CartItem> items = new ArrayList<CartItem>();
+        try {
+
+            upload();
+            this.cliente_sesion.setUrl(getFile().getFileName());
+            clienteEJB.edit(this.cliente_sesion);
+            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Imagen modificada correctamente, espere para recargar carpeta imagenes."));
+            
+            PrimeFaces.current().executeScript("PF('wuserimg').hide();");
+            PrimeFaces.current().executeScript("PF('wuser').hide();");
+            RequestContext.getCurrentInstance().execute("redirectDelayUserPrin();");
+          
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            System.out.println("Fallo en modificar Imagen .......");
+        }
+
     }
 
     public Cliente getCliente() {
@@ -273,6 +369,22 @@ public class MenuController implements Serializable {
 
     public void setEmail_recu(String email_recu) {
         this.email_recu = email_recu;
+    }
+
+    public String getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(String ruta) {
+        this.ruta = ruta;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
     }
 
 }

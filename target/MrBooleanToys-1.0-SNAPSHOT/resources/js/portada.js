@@ -5,3 +5,5 @@ function redirect() {
 function redirect2() {
   window.setTimeout(function(){location.href="/MrBooleanToys/faces/principal.xhtml"}, 2000);
 }
+
+

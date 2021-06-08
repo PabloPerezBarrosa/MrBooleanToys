@@ -31,6 +31,9 @@ public class Cliente implements Serializable{
     
     @Column(name = "estado")
     private int estado;
+    
+    @Column(name = "url")
+    private String url;
 
     public int getIdcliente() {
         return idcliente;
@@ -79,4 +82,13 @@ public class Cliente implements Serializable{
     public void setEstado(int estado) {
         this.estado = estado;
     }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    
 }
