@@ -83,6 +83,22 @@
                                         </f:facet>
                                     </p:cellEditor>
                                 </p:column>
+                                
+                                <!--COLUMNA ESTADO USUARIO-->
+                                <p:column sortBy="#{cli.estado}" headerText="Estado" styleClass="centeredColumnContent">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <p:outputLabel value="No Activo" rendered="#{cli.estado eq '0'}"  />
+                                            <p:outputLabel value="Activo" rendered="#{cli.estado eq '1'}"  />
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:selectOneMenu value="#{cli.estado}" style="width:100%">
+                                                <f:selectItem itemLabel="No Activo" itemValue="0"/>
+                                                <f:selectItem itemLabel="Activo" itemValue="1"/>
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
                                 <p:column style="width:4em;" styleClass="centeredColumnContent">
                                     <p:rowEditor/>
                                 </p:column>
