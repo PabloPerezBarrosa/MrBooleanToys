@@ -336,6 +336,8 @@ public class MenuController implements Serializable {
             
             PrimeFaces.current().executeScript("PF('wuserimg').hide();");
             PrimeFaces.current().executeScript("PF('wuser').hide();");
+            
+            if(this)
             RequestContext.getCurrentInstance().execute("redirectDelayUserPrin();");
           
 
