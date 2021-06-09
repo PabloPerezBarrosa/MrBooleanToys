@@ -59,10 +59,12 @@
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <h:form>
-                                    <p:outputLabel class="nav-link" value="Administrador: #{menuController.cliente_sesion.nombre}" 
-                                                   rendered="#{menuController.cliente_sesion.tipo eq 'a'}"  />
-                                    <p:outputLabel class="nav-link" value="Cliente: #{menuController.cliente_sesion.nombre}" 
-                                                   rendered="#{menuController.cliente_sesion.tipo eq 'c'}"  />
+                                    <p:commandLink onclick="PF('wuser').show();">
+                                        <p:graphicImage class="user_img" name="/productos/default.jpg" library="images" 
+                                                        rendered="#{menuController.cliente_sesion.url eq null}"/>
+                                        <p:graphicImage class="user_img " name="/productos/#{menuController.cliente_sesion.url}" 
+                                                        library="images" rendered="#{menuController.cliente_sesion.url ne null}"/>
+                                    </p:commandLink>
                                 </h:form>
                             </li>
                             <li class="nav-item">
@@ -93,6 +95,55 @@
                         </p:fieldset> 
                     </h:form>
                 </p:dialog>
+                <!--MENU DE USUARIO DIALOG-->
+                <p:dialog id="user_dialog" widgetVar="wuser" draggable="false" resizable="false" closeOnEscape="true" 
+                          modal="true" showEffect="clip" hideEffect="clip">
+                    <h:form>
+                        <p:fieldset legend="#{menuController.cliente_sesion.nombre}">
+                            <f:facet name="header">
+                                Modificación de datos
+                            </f:facet>
+                            <div class="cont">
+                                <p:commandLink onclick="PF('wuserimg').show();">
+                                    <p:graphicImage class="prod_img_big" name="/productos/default.jpg" library="images" rendered="#{menuController.cliente_sesion.url eq null}"/>
+                                    <p:graphicImage class="prod_img_big" name="/productos/#{menuController.cliente_sesion.url}" library="images" rendered="#{menuController.cliente_sesion.url ne null}"/>
+                                </p:commandLink>
+                            </div><br/>
+
+                            <p:panelGrid columns ="2">
+                                <p:outputLabel value="Nombre"/>
+                                <p:inputText value="#{menuController.cliente_sesion.nombre}" required="true"/>
+
+                                <p:commandButton value="Cambiar Nombre  " actionListener="#{menuController.modUser()}" update="user_dialog"/>
+                            </p:panelGrid> 
+                        </p:fieldset> 
+                    </h:form>
+                </p:dialog>
+
+                <!--DIALOGO MODIFICACIÓN DE IMAGEN-->
+                <p:dialog id="img_user_dialog" widgetVar="wuserimg" draggable="false" resizable="false" closeOnEscape="true" 
+                          modal="true" showEffect="puff" hideEffect="puff">
+                    <h:form enctype="multipart/form-data">
+                        <p:fieldset legend="#{menuController.cliente_sesion.nombre}">
+                            <f:facet name="header">
+                                Modificación de Imagen
+                            </f:facet>
+                            <div class="cont">
+                                <p:graphicImage class="prod_img_big" name="/productos/default.jpg" library="images" 
+                                                rendered="#{menuController.cliente_sesion.url eq null}"/>
+                                <p:graphicImage class="prod_img_big" name="/productos/#{menuController.cliente_sesion.url}" 
+                                                library="images" rendered="#{menuController.cliente_sesion.url ne null}"/>
+                            </div>
+                            <p:panelGrid columns="1">
+                                <p:fileUpload id="Imagen" value="#{menuController.file}" mode="simple"/>
+                            </p:panelGrid>
+                            <p:panelGrid columns="1">
+                                <p:commandButton value="Cambiar Imagen" actionListener="#{menuController.modificarImagen()}" ajax="false" onclick="redirectDelayUserPrin();"/>
+                            </p:panelGrid>
+                            <f:facet name="footer"/>
+                        </p:fieldset> 
+                    </h:form>
+                </p:dialog>
             </ui:insert>
         </div>
 
@@ -107,7 +158,20 @@
                 </footer>
             </ui:insert>
         </div>
+        <script type="text/javascript">
 
+            function redirectDelayUserPrin() {
+                window.setTimeout(function () {
+                    location.href = "principal_admin.xhtml"
+                }, 5000);
+            }
+            function redirectDelayUserProd() {
+                window.setTimeout(function () {
+                    location.href = "categoria_admin.xhtml"
+                }, 5000);
+            }
+
+        </script>
     </h:body>
 
 </html>

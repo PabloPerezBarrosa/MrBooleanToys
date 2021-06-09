@@ -20,6 +20,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.PrimeFaces;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.UploadedFile;
 
 @Named
@@ -113,6 +115,10 @@ public class ProductoController implements Serializable {
         this.producto.setCategoria(categoria);
 
         productoEJB.create(this.producto);
+        
+        PrimeFaces.current().executeScript("PF('waddprod').hide();");
+        
+        RequestContext.getCurrentInstance().execute("redirectDelayUserProd();");
 
     }
 
@@ -127,6 +133,10 @@ public class ProductoController implements Serializable {
         upload();
         this.producto.setUrl(getFile().getFileName());
         productoEJB.edit(this.producto);
+        
+        PrimeFaces.current().executeScript("PF('wcimg').hide();");
+        
+        RequestContext.getCurrentInstance().execute("redirectDelayUserProd();");
         
     }
 

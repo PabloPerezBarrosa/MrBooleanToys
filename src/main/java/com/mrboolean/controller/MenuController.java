@@ -41,7 +41,7 @@ public class MenuController implements Serializable {
     @PostConstruct
     public void init() {
         cliente = new Cliente();
-        cliente_sesion = new Cliente(); 
+        cliente_sesion = new Cliente();
     }
 
     public void registrarCliente() {
@@ -201,8 +201,19 @@ public class MenuController implements Serializable {
     public void cerrarSesion() {
 
         try {
-            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/");
+            FacesContext context = FacesContext.getCurrentInstance();
+            Cliente cl = (Cliente) context.getExternalContext().getSessionMap().get("cliente");
+
+            if (cl == null) {
+
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/");
+
+            } else {
+
+                FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/");
+
+            }
 
         } catch (Exception e) {
 
@@ -331,15 +342,13 @@ public class MenuController implements Serializable {
             upload();
             this.cliente_sesion.setUrl(getFile().getFileName());
             clienteEJB.edit(this.cliente_sesion);
-            
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Imagen modificada correctamente, espere para recargar carpeta imagenes."));
-            
+
             PrimeFaces.current().executeScript("PF('wuserimg').hide();");
             PrimeFaces.current().executeScript("PF('wuser').hide();");
-            
-            if(this)
+
             RequestContext.getCurrentInstance().execute("redirectDelayUserPrin();");
-          
 
         } catch (Exception e) {
 
