@@ -70,7 +70,7 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
 
     @Override
     public Cliente findByEmail(String email) {
-        
+        List<Cliente>clientes = new ArrayList<Cliente>();
         Cliente cliente = new Cliente();
         String consulta = "";
         
@@ -79,7 +79,13 @@ public class ClienteFacade extends AbstractFacade<Cliente> implements ClienteFac
           consulta = "FROM Cliente c WHERE c.email = ?1";
           Query query = em.createQuery(consulta);
           query.setParameter(1,email);
-          cliente =(Cliente) query.getResultList().get(0);
+          clientes =(List<Cliente>) query.getResultList();
+          
+          if(clientes != null && clientes.size() > 0){
+              cliente = clientes.get(0);
+          }else{
+              cliente = null;
+          }
             
         }catch(Exception e){
             e.printStackTrace();

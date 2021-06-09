@@ -60,9 +60,9 @@ public class SendMail {
                 MimeMessage message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(email));
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(cliente.getEmail()));
-                message.setSubject("Recuperación de clave");
+                message.setSubject("Recuperación de clave Mr Boolean Toys");
                 message.setContent(
-                        "<h1 style='color: #6ea5d1'>Recuperación de clave</h1><br><p>Buenos dias " + cliente.getNombre() + " su clave es: " + cliente.getClave()+".<br> No comparta esta información con nadie si quiere mantener su cuenta segura.</p>",
+                        "<h1 style='color: #6ea5d1;display: flex;align-items: center;justify-content: center;overflow: hidden;'>Mr Boolean Toys</h1><br><p>Buenos dias " + cliente.getNombre() + " para recuperar su clave acceda a este enlace:<br><a href='http://localhost:8080/MrBooleanToys/faces/protegido/verificacion/recuperar_clave.xhtml?key1=" + cliente.getIdcliente() + "'>Enlace de recuperación de Clave</a></p>",
                         "text/html");
                 Transport.send(message);
             }

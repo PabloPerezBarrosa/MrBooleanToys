@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:x="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body >
+
+        <ui:composition template="./../../WEB-INF/templates/clave_recu.xhtml">
+
+            <ui:define name="content">
+                <br/><br/>
+                <div class="container-fluid principal_contenedor">
+                    <h:form>
+                        <!--mensaje de confirmaciones etc.-->
+                            <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true" showSummary="false"/>
+                        <div class="row">
+                            <div class="col-lg-12 justify-contennt-center">
+                                <div class="cont"><a href="#"><p:graphicImage id="slogan" name="logo_portada.png" library="images" x:onload="PF('wrecuclave').show();"/></a></div>
+                            </div>
+                        </div>
+
+                        <br/><br/>
+                        <!-- DIALOGO DE RECUPERACIÓN DE CUENTA-->
+                        <p:dialog id="dia_recu" widgetVar="wrecuclave" draggable="false" resizable="false" closeOnEscape="true" 
+                                  modal="true" showEffect="highlight" hideEffect="highlight" styleClass="modalResponsivo">
+
+                            
+                            <p:fieldset legend="Recuperación de Clave">
+                                <p:panelGrid columns="2">
+                                    <f:facet name="header">
+                                        Escriba su clave
+                                    </f:facet>
+                                    <h:outputLabel for="Clave" value="Clave" />
+                                    <p:password id="Clave" value="#{menuController.clave}" match="ClaveRepetida"
+                                                feedback="true" promptLabel="Ingrese una clave" strongLabel="Fuerte" weakLabel="Débil"
+                                                goodLabel="Media" validatorMessage="Las claves no coinciden" required="true"/>
+
+                                    <h:outputLabel for="ClaveRepetida" value="Repetir Clave" />
+                                    <p:password id="ClaveRepetida" required="true"/>
+                                    <p:commandButton value="Cambiar clave" actionListener="#{menuController.claveClienteRecu()}" oncomplete="redirect2()"/>
+                                    <f:facet name="footer"/>
+                                </p:panelGrid> 
+                            </p:fieldset> 
+                        </p:dialog>
+                    </h:form>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

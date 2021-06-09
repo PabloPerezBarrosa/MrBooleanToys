@@ -39,6 +39,8 @@ public class MenuController implements Serializable {
     private String email_recu;
     private String ruta = "../../../../../Pablo/Mis_Proyectos/MrBooleanToys/src/main/webapp/resources/images/productos/";
     private UploadedFile file;
+    private String clave;
+    private int id_recu;
 
     @PostConstruct
     public void init() {
@@ -70,6 +72,9 @@ public class MenuController implements Serializable {
 
                 this.cliente.setTipo("c");
                 this.cliente.setEstado(0);
+
+                this.cliente.setClave(encriptar(this.cliente.getClave()));
+
                 clienteEJB.create(this.cliente);
 
                 SendMail.sendEmail(this.cliente, true);
@@ -115,6 +120,8 @@ public class MenuController implements Serializable {
             String url2 = "http://localhost:8080/MrBooleanToys/faces/categoria.xhtml";
 
             System.out.println(url);
+
+            this.cliente.setClave(encriptar(this.cliente.getClave()));
 
             cl = clienteEJB.iniciarSesion(this.cliente);
             if (cl != null) {
@@ -264,15 +271,54 @@ public class MenuController implements Serializable {
 
             cl = clienteEJB.findByEmail(this.email_recu);
 
-            SendMail.sendEmail(cl, false);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Revise su email para recuperar su clave"));
-            PrimeFaces.current().executeScript("PF('wrecu').hide();");
-            PrimeFaces.current().executeScript("PF('wlog').hide();");
+            if (cl != null) {
+                SendMail.sendEmail(cl, false);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Revise su email para recuperar su clave"));
+                PrimeFaces.current().executeScript("PF('wrecu').hide();");
+                PrimeFaces.current().executeScript("PF('wlog').hide();");
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "No ha introducido un email que corresponda a ninguno de nuestros clientes."));
+                PrimeFaces.current().executeScript("PF('wrecu').hide();");
+                PrimeFaces.current().executeScript("PF('wlog').hide();");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Fallo en recuperarClave()...................");
         }
+    }
+
+    public void loadIdRecu() {
+
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+
+        this.id_recu = Integer.parseInt(request.getParameter("key1"));
+
+    }
+
+    public void claveClienteRecu() {
+
+        try {
+
+            Cliente cl = new Cliente();
+
+            cl = clienteEJB.find(this.id_recu);
+
+            this.clave = encriptar(this.clave);
+
+            cl.setClave(this.clave);
+
+            clienteEJB.edit(cl);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Clave cambiada con éxito."));
+            System.out.println(cl.getNombre());
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Fallo al cambiar la clave."));
+
+        }
+
     }
 
     /*MODIFICACIÓN DE OTROS DATOS DE USUARIO POR EL USUARIO*/
@@ -359,26 +405,6 @@ public class MenuController implements Serializable {
         }
 
     }
-    public void pruebaEncriptar(){
-        String pass = "Hello my friend";
-        String enc = "";
-        String des = "";
-        try{
-            enc = encriptar(pass);
-            
-            System.out.println("CADENA ENCRIPTADA DEBAJO");
-            System.out.println(enc);
-            
-            des = desencriptar(enc);
-            
-            System.out.println("CADENA DESENCRIPTADA DEBAJO");
-            System.out.println(des);
-            
-        }catch(Exception e){
-            
-        }
-        
-    }
 
     private static String encriptar(String s) throws UnsupportedEncodingException {
         return Base64.getEncoder().encodeToString(s.getBytes("utf-8"));
@@ -427,6 +453,22 @@ public class MenuController implements Serializable {
 
     public void setFile(UploadedFile file) {
         this.file = file;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    public int getId_recu() {
+        return id_recu;
+    }
+
+    public void setId_recu(int id_recu) {
+        this.id_recu = id_recu;
     }
 
 }
