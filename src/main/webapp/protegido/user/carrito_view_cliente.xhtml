@@ -17,7 +17,7 @@
                         <br/><br/>
                         <div class="cont">
                             <p:dataTable id="tabla_carrito" value="#{carritoViewController.items}" var="item" 
-                                         tableStyle="table-layout: auto;" scrollable="true" scrollWidth="100%">
+                                         tableStyle="table-layout: auto;" scrollable="true" scrollWidth="100%" editable="true">
                                 <p:columnGroup type="header">
                                     <p:row>
                                         <p:column colspan="5" headerText="Artículos en su carrito"/>
@@ -54,8 +54,33 @@
                                 </p:column>
                                 <!--COLUMNA CANTIDAD DEL PRODUCTO-->
                                 <p:column styleClass="centeredColumnContent">
-                                    <p:outputLabel value="#{item.cantidad}"/>
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <p:outputLabel value="#{item.cantidad}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{item.cantidad}"/>
+                                        </f:facet>
+                                    </p:cellEditor> 
                                 </p:column>
+                                
+                                <!-- COLUMNA CON BOTÓN DE EDITADO -->
+                                <p:column style="width:4em;" styleClass="centeredColumnContent">
+                                    <p:rowEditor/>
+                                </p:column>
+                                
+                                <!-- COLUMNA CON BOTÓN DE BORRADO -->
+                                <p:column styleClass="centeredColumnContent">
+                                    <p:commandButton icon="ui-icon-trash" action="#{carritoViewController.eliminarCartItem(item)}" 
+                                                     update="tabla_carrito"/>
+                                </p:column>
+                                
+                                <!--Evento al editar una línea, llama a la función para la modificación en el back-->
+                                <p:ajax event="rowEdit" listener="#{carritoViewController.editarCartItem(item)}" 
+                                        update="tabla_carrito"/>
+
+
+
                             </p:dataTable>
                         </div>
                         <br/><br/>

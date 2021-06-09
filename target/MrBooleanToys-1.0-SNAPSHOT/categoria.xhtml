@@ -12,14 +12,10 @@
 
             <ui:define name="content">
 
-                <!--DATA GRID-->
+                
                 <br/><br/>
                 <div class="container-fluid principal_contenedor">
                     <h:form id="form">
-                        <br/>
-                        <div class="cont">
-                            <h1 id="categorias_titulo"><p:outputLabel id="titulo" value="#{categoriaController.categoria.nombre}" /></h1>
-                        </div>
                         <br/>
                         <div class="cont">
                             <p:panelGrid columns="3">
@@ -32,11 +28,12 @@
                         </div>
                         <br/><br/>
                         <div class="product card">
-
+                            
+                            
                             <p:dataGrid var="prod" value="#{categoriaController.productos}" columns="3" layout="grid"
                                         rows="12" paginator="true" id="productos_grid"
                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                        rowsPerPageTemplate="6,12,16">
+                                        rowsPerPageTemplate="6,12,24">
 
                                 <f:facet name="header">
                                     #{categoriaController.categoria.nombre}

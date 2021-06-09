@@ -87,7 +87,7 @@ public class CarritoViewController implements Serializable {
                 LineaPedido lp = new LineaPedido();
 
                 lp.setCantidad(ci.getCantidad());
-                restarStock(ci.getProducto(),ci.getCantidad());
+                restarStock(ci.getProducto(), ci.getCantidad());
                 lp.setProducto(ci.getProducto());
                 lp.setPedido(this.pedido);
 
@@ -104,31 +104,98 @@ public class CarritoViewController implements Serializable {
         }
 
     }
-    public void restarStock(Producto pr, int cantidad){
-        
-        try{
-            
-            pr.setStock(pr.getStock()-cantidad);
-            
-            if(pr.getStock() == 0){
+
+    public void restarStock(Producto pr, int cantidad) {
+
+        try {
+
+            pr.setStock(pr.getStock() - cantidad);
+
+            if (pr.getStock() == 0) {
                 pr.setEstado("Agotado");
-            }else{
+            } else {
                 pr.setEstado("Disponible");
             }
-            
+
             productoEJB.edit(pr);
-            
-            
-            
-        }catch(Exception e){
-            
+
+        } catch (Exception e) {
+
             e.printStackTrace();
             System.out.println("Fallo en bajada de stock");
-            
+
         }
-        
-        
-        
+
+    }
+
+    public void eliminarCartItem(CartItem item) {
+
+        try {
+            List<CartItem> itemList = new ArrayList<CartItem>();
+
+            itemList = (List<CartItem>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("carrito");
+
+            for (CartItem i : itemList) {
+
+                if (i.getProducto().getIdproducto() == item.getProducto().getIdproducto()) {
+
+                    itemList.remove(i);
+                    break;
+
+                }
+
+            }
+
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("carrito", itemList);
+
+            listarCarrito();
+            calcularMonto();
+
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/user/carrito_view_cliente.xhtml");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error borrando producto en carritoView..................");
+        }
+    }
+
+    public void editarCartItem(CartItem item) {
+
+        try {
+
+            List<CartItem> itemList = new ArrayList<CartItem>();
+
+            itemList = (List<CartItem>) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("carrito");
+
+            for (CartItem i : itemList) {
+
+                if (i.getProducto().getIdproducto() == item.getProducto().getIdproducto()) {
+
+                    if (item.getCantidad() == 0) {
+
+                        itemList.remove(i);
+                        break;
+
+                    } else {
+                        i.setCantidad(item.getCantidad());
+                        break;
+                    }
+
+                }
+
+            }
+
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("carrito", itemList);
+
+            listarCarrito();
+            calcularMonto();
+
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/user/carrito_view_cliente.xhtml");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error editando producto en carritoView..................");
+        }
+
     }
 
     public List<CartItem> getItems() {
