@@ -11,7 +11,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -356,6 +358,35 @@ public class MenuController implements Serializable {
             System.out.println("Fallo en modificar Imagen .......");
         }
 
+    }
+    public void pruebaEncriptar(){
+        String pass = "Hello my friend";
+        String enc = "";
+        String des = "";
+        try{
+            enc = encriptar(pass);
+            
+            System.out.println("CADENA ENCRIPTADA DEBAJO");
+            System.out.println(enc);
+            
+            des = desencriptar(enc);
+            
+            System.out.println("CADENA DESENCRIPTADA DEBAJO");
+            System.out.println(des);
+            
+        }catch(Exception e){
+            
+        }
+        
+    }
+
+    private static String encriptar(String s) throws UnsupportedEncodingException {
+        return Base64.getEncoder().encodeToString(s.getBytes("utf-8"));
+    }
+
+    private static String desencriptar(String s) throws UnsupportedEncodingException {
+        byte[] decode = Base64.getDecoder().decode(s.getBytes());
+        return new String(decode, "utf-8");
     }
 
     public Cliente getCliente() {

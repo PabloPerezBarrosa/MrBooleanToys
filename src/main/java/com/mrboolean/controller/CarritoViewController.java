@@ -10,6 +10,7 @@ import com.mrboolean.model.Pedido;
 import com.mrboolean.model.Producto;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -34,11 +35,13 @@ public class CarritoViewController implements Serializable {
     private CartItem item = new CartItem();
     private double monto;
     private Pedido pedido = new Pedido();
+    private List<String> provincias = new ArrayList<String>();
 
     @PostConstruct
     public void init() {
 
         items = new ArrayList<CartItem>();
+        listarProvincias();
         listarCarrito();
         calcularMonto();
 
@@ -98,6 +101,7 @@ public class CarritoViewController implements Serializable {
             List<CartItem> list = new ArrayList<CartItem>();
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("carrito", list);
             PrimeFaces.current().executeScript("PF('wcart').hide();");
+            //FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/user/carrito_view_cliente.xhtml");
         } catch (Exception e) {
             e.printStackTrace();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Fallo en la compra. Disculpe las molestias"));
@@ -140,6 +144,7 @@ public class CarritoViewController implements Serializable {
                 if (i.getProducto().getIdproducto() == item.getProducto().getIdproducto()) {
 
                     itemList.remove(i);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Conseguido", "El articulo y todas sus unidades borradas con éxito."));
                     break;
 
                 }
@@ -173,10 +178,12 @@ public class CarritoViewController implements Serializable {
                     if (item.getCantidad() == 0) {
 
                         itemList.remove(i);
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Conseguido", "Borrado con éxito. Al marcar 0 ha eliminado toda la fila relativa a ese artículo."));
                         break;
 
                     } else {
                         i.setCantidad(item.getCantidad());
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Conseguido", "Reducción de unidades del articulo exitosa."));
                         break;
                     }
 
@@ -196,6 +203,16 @@ public class CarritoViewController implements Serializable {
             System.out.println("Error editando producto en carritoView..................");
         }
 
+    }
+    public void listarProvincias(){
+        
+        this.provincias = Arrays.asList("A Coruña", "Álava","Albacete","Alicante","Almería","Asturias","Ávila","Badajoz",
+                "Baleares","Barcelona", "Burgos", "Cáceres", "Cádiz", "Cantabria", "Castellón", "Ciudad Real", "Córdoba", 
+                "Cuenca","Girona","Granada","Guadalajara","Gipuzkoa","Huelva","Huesca","Jaén","La Rioja","Las Palmas","León",
+                "Lérida","Lugo","Madrid","Málaga","Murcia","Navarra","Ourense","Palencia","Pontevedra","Salamanca","Segovia",
+                "Sevilla","Soria","Tarragona","Santa Cruz de Tenerife","Teruel","Toledo","Valencia","Valladolid","Vizcaya",
+                "Zamora","Zaragoza");
+        
     }
 
     public List<CartItem> getItems() {
@@ -230,4 +247,12 @@ public class CarritoViewController implements Serializable {
         this.pedido = pedido;
     }
 
+    public List<String> getProvincias() {
+        return provincias;
+    }
+
+    public void setProvincias(List<String> provincias) {
+        this.provincias = provincias;
+    }
+    
 }

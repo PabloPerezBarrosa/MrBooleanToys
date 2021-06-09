@@ -100,11 +100,17 @@
                                 <!-- COLUMNA CON BOTÓN DE BORRADO -->
                                 <p:column styleClass="centeredColumnContent">
                                     <p:commandButton icon="ui-icon-trash" action="#{categoriaController.eliminarProducto(pro)}" 
-                                                     update="tabla_productos"/>
+                                                     update="tabla_productos">
+                                        <p:confirm header="Confirmación" message="¿Seguro que quiere borrar?"/>
+                                    </p:commandButton>
                                 </p:column>
                                 <p:ajax event="rowEdit" listener="#{categoriaController.modificarProducto(pro)}" 
                                         update="tabla_productos"/>
                             </p:dataTable>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
+                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
 
 
                         </div>
@@ -117,7 +123,7 @@
                     </h:form>
                 </div>
                 <br/><br/><br/><br/>
-                
+
                 <!-- DIALOGO PARA LA CREACIÓN DE PRODUCTOS -->
                 <p:dialog id="dia_addpro" widgetVar="waddprod" draggable="false" resizable="false" closeOnEscape="true" 
                           modal="true" showEffect="slide" hideEffect="slide" styleClass="modalResponsivo">
@@ -157,14 +163,14 @@
                         </p:fieldset>
                     </h:form>
                 </p:dialog>
-                
+
                 <!-- DIALOG PARA EL CAMBIO DE IMAGEN-->
                 <p:dialog id="dia_cimg" widgetVar="wcimg" draggable="false" resizable="false" closeOnEscape="true" 
                           modal="true" showEffect="explode" hideEffect="explode" styleClass="modalResponsivo">
                     <h:form id="diacimg" enctype="multipart/form-data">
                         <p:fieldset legend="#{productoController.producto.nombre}">
                             <f:facet name="header">
-                                
+
                             </f:facet>
                             <div class="cont">
                                 <p:graphicImage class="prod_img_big" name="/productos/#{productoController.producto.url}" library="images"/>

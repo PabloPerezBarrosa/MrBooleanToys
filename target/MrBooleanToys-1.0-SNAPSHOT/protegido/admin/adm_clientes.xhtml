@@ -103,10 +103,17 @@
                                     <p:rowEditor/>
                                 </p:column>
                                 <p:column styleClass="centeredColumnContent">
-                                    <p:commandButton icon="ui-icon-trash" action="#{adminUsuarioController.eliminarCliente(cli)}" update="tabla_clientes"/>
+                                    <p:commandButton icon="ui-icon-trash" action="#{adminUsuarioController.eliminarCliente(cli)}" update="tabla_clientes">
+                                        <p:confirm header="Confirmación" message="¿Seguro que quiere borrar?"/>
+                                    </p:commandButton>
                                 </p:column>
                                 <p:ajax event="rowEdit" listener="#{adminUsuarioController.modificarUsuario(cli)}" update="tabla_clientes"/>
                             </p:dataTable>
+                            
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
+                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
                         </div>
                         <br></br>
                         <div class="cont">

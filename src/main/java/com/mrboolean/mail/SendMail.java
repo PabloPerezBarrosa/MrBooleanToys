@@ -50,9 +50,12 @@ public class SendMail {
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(cliente.getEmail()));
                 message.setSubject("Verificación de cuenta Mr Boolean Toys");
                 message.setContent(
-                        "<h1 style='color: #6ea5d1'>Verificacion de correo</h1><br><p>Buenos días " + cliente.getNombre() + ". Click para terminar su registro<br><a>http://localhost:8080/MrBooleanToys/faces/protegido/verificacion/verificacion.xhtml?key1=" + cliente.getIdcliente() + "</a></p>",
+                        "<h1 style='color: #6ea5d1;display: flex;align-items: center;justify-content: center;overflow: hidden;'>Mr Boolean Toys</h1><br><p>Buenos días " + cliente.getNombre() + ". Click para terminar su registro: <br><a href='http://localhost:8080/MrBooleanToys/faces/protegido/verificacion/verificacion.xhtml?key1=" + cliente.getIdcliente() + "'>Enlace de activación de cuenta</a></p>",
                         "text/html");
                 Transport.send(message);
+                
+    
+    
             }else{
                 MimeMessage message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(email));

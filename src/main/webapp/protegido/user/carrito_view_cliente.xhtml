@@ -17,7 +17,8 @@
                         <br/><br/>
                         <div class="cont">
                             <p:dataTable id="tabla_carrito" value="#{carritoViewController.items}" var="item" 
-                                         tableStyle="table-layout: auto;" scrollable="true" scrollWidth="100%" editable="true">
+                                         tableStyle="table-layout: auto;" scrollable="true" scrollWidth="100%" editable="true" 
+                                         emptyMessage="No quedan artículos en el carrito">
                                 <p:columnGroup type="header">
                                     <p:row>
                                         <p:column colspan="5" headerText="Artículos en su carrito"/>
@@ -63,18 +64,20 @@
                                         </f:facet>
                                     </p:cellEditor> 
                                 </p:column>
-                                
+
                                 <!-- COLUMNA CON BOTÓN DE EDITADO -->
                                 <p:column style="width:4em;" styleClass="centeredColumnContent">
                                     <p:rowEditor/>
                                 </p:column>
-                                
+
                                 <!-- COLUMNA CON BOTÓN DE BORRADO -->
                                 <p:column styleClass="centeredColumnContent">
                                     <p:commandButton icon="ui-icon-trash" action="#{carritoViewController.eliminarCartItem(item)}" 
-                                                     update="tabla_carrito"/>
+                                                     update="tabla_carrito">
+                                        <p:confirm header="Confirmación" message="¿Seguro que quiere borrar?"/>
+                                    </p:commandButton>
                                 </p:column>
-                                
+
                                 <!--Evento al editar una línea, llama a la función para la modificación en el back-->
                                 <p:ajax event="rowEdit" listener="#{carritoViewController.editarCartItem(item)}" 
                                         update="tabla_carrito"/>
@@ -82,6 +85,10 @@
 
 
                             </p:dataTable>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
+                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
                         </div>
                         <br/><br/>
                         <div class="cont">
@@ -121,7 +128,10 @@
                                 <p:inputText id="dir" value="#{carritoViewController.pedido.direccion}" required="true"/>
 
                                 <h:outputLabel for="prov" value="Provincia" />
-                                <p:inputText id="prov" value="#{carritoViewController.pedido.provincia}" required="true"/>
+                                <p:selectOneMenu id="prov" value="#{carritoViewController.pedido.provincia}" effect="fold" required="true">
+                                    <f:selectItems value="#{carritoViewController.provincias}"/>
+                                </p:selectOneMenu>
+                                
 
                                 <h:outputLabel for="cp" value="Código Postal" />
                                 <p:inputMask mask="99999" value="#{carritoViewController.pedido.cp}" id="cp" required="true"/>
