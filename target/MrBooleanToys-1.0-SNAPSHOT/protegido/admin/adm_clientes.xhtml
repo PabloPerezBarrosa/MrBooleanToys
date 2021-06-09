@@ -11,7 +11,7 @@
         <ui:composition template="./../../WEB-INF/templates/template_admin.xhtml">
 
             <ui:define name="content">
-                <div class="container-fluid">
+                <div class="container-fluid principal_contenedor">
                     <p:growl autoUpdate="true"/>
                     <h:form id="cliente_form1">
                         <br/><br/>
@@ -83,7 +83,7 @@
                                         </f:facet>
                                     </p:cellEditor>
                                 </p:column>
-                                
+
                                 <!--COLUMNA ESTADO USUARIO-->
                                 <p:column sortBy="#{cli.estado}" headerText="Estado" styleClass="centeredColumnContent">
                                     <p:cellEditor>
@@ -116,7 +116,7 @@
                     </h:form>
                 </div>
                 <p:dialog id="dia_regusu" widgetVar="wregusu" draggable="false" resizable="false" closeOnEscape="true" 
-                          modal="true" showEffect="slide" hideEffect="slide">
+                          modal="true" showEffect="slide" hideEffect="slide" styleClass="modalResponsivo">
                     <h:form id="diaregusu">
                         <!--mensaje de confirmaciones etc.-->
                         <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true" showSummary="false"/>
@@ -158,6 +158,6 @@
             </ui:define>
 
         </ui:composition>
-            
+
     </body>
 </html>

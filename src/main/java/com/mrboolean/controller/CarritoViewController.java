@@ -109,6 +109,13 @@ public class CarritoViewController implements Serializable {
         try{
             
             pr.setStock(pr.getStock()-cantidad);
+            
+            if(pr.getStock() == 0){
+                pr.setEstado("Agotado");
+            }else{
+                pr.setEstado("Disponible");
+            }
+            
             productoEJB.edit(pr);
             
             

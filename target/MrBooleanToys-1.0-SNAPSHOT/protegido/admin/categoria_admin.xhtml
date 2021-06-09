@@ -120,7 +120,7 @@
                 
                 <!-- DIALOGO PARA LA CREACIÓN DE PRODUCTOS -->
                 <p:dialog id="dia_addpro" widgetVar="waddprod" draggable="false" resizable="false" closeOnEscape="true" 
-                          modal="true" showEffect="slide" hideEffect="slide">
+                          modal="true" showEffect="slide" hideEffect="slide" styleClass="modalResponsivo">
                     <h:form id="diaaddpro" enctype="multipart/form-data">
                         <!--mensaje de confirmaciones etc.-->
                         <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true" showSummary="false"/>
@@ -160,7 +160,7 @@
                 
                 <!-- DIALOG PARA EL CAMBIO DE IMAGEN-->
                 <p:dialog id="dia_cimg" widgetVar="wcimg" draggable="false" resizable="false" closeOnEscape="true" 
-                          modal="true" showEffect="explode" hideEffect="explode">
+                          modal="true" showEffect="explode" hideEffect="explode" styleClass="modalResponsivo">
                     <h:form id="diacimg" enctype="multipart/form-data">
                         <p:fieldset legend="#{productoController.producto.nombre}">
                             <f:facet name="header">

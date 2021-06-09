@@ -33,6 +33,12 @@ public class Producto implements Serializable{
     @Column(name = "stock")
     private int stock;
     
+    @Column(name = "estado")
+    private String estado;
+    
+    @Column(name = "rating")
+    private int rating;
+    
     @ManyToOne
     @JoinColumn(name = "idcategoria", nullable = false)
     private Categoria categoria;
@@ -91,6 +97,22 @@ public class Producto implements Serializable{
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     
 }

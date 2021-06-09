@@ -113,6 +113,12 @@ public class ProductoController implements Serializable {
         categoria = categoriaEJB.find(this.cat_id);
 
         this.producto.setCategoria(categoria);
+        
+        if(this.producto.getStock() == 0){
+            this.producto.setEstado("Agotado");
+        }else{
+            this.producto.setEstado("Disponible");
+        }
 
         productoEJB.create(this.producto);
         

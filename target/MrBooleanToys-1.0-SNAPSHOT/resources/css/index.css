@@ -108,6 +108,9 @@ td.centeredColumnContent{
     width: 3em;
     height: 3em;
 }
+@media screen and (max-width: 768px ) {
+  .modalResponsivo { width: 90% !important;} }
+
 
 /*ZONA DE CATEGORIA.XHTML*/
 
@@ -119,3 +122,15 @@ td.centeredColumnContent{
     width: 25em;
     height: 18em;
 }
+#descrip{
+    min-height: 4em !important;
+}
+.agotado{
+    color:white;
+    background-color: red;
+}
+.disponible{
+    color:white;
+    background-color: green;
+}
+

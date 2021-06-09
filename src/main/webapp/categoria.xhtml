@@ -11,9 +11,11 @@
         <ui:composition template="./WEB-INF/templates/template.xhtml">
 
             <ui:define name="content">
+
+                <!--DATA GRID-->
                 <br/><br/>
                 <div class="container-fluid principal_contenedor">
-                    <h:form>
+                    <h:form id="form">
                         <br/>
                         <div class="cont">
                             <h1 id="categorias_titulo"><p:outputLabel id="titulo" value="#{categoriaController.categoria.nombre}" /></h1>
@@ -25,74 +27,55 @@
                                 <p:selectOneMenu value="#{categoriaController.codigo_categoria}">
                                     <f:selectItems value="#{categoriaController.categorias}" var="cat" itemLabel="#{cat.nombre}" itemValue="#{cat.idcategoria}"/>
                                 </p:selectOneMenu>
-                                <p:commandButton value="Buscar" update="tabla_productos titulo" actionListener="#{categoriaController.cargarCategoria(null)}"/>
+                                <p:commandButton value="Buscar" update="productos_grid" actionListener="#{categoriaController.cargarCategoria(null)}"/>
                             </p:panelGrid>
                         </div>
                         <br/><br/>
-                        <div class="cont">
-                            <p:dataTable id="tabla_productos" value="#{categoriaController.productos}" var="pro" 
-                                         tableStyle="table-layout: auto;">
-                                <p:columnGroup type="header">
-                                    <p:row>
-                                        <p:column rowspan="2" headerText="Nombre" sortBy="#{pro.nombre}"/>
-                                        <p:column rowspan="2" headerText="Descripción" />
-                                        <p:column rowspan="2" headerText="Precio" style="width:5em;"/>
-                                        <p:column rowspan="2" headerText="Disponibilidad"/>
-                                        <p:column rowspan="2" headerText="Imagen" />
-                                        <p:column colspan="2" headerText="Añadir" style="width:10em;"/>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column headerText="Cantidad"/>
-                                        <p:column headerText="Aceptar"/>
-                                    </p:row>
-                                </p:columnGroup>
+                        <div class="product card">
 
-                                <!--COLUMNA NOMBRE DEL PRODUCTO-->
-                                <p:column sortBy="#{pro.nombre}" styleClass="centeredColumnContent" style="max-width: 10em;">
-                                    <p:outputLabel value="#{pro.nombre}"/>
-                                </p:column>
+                            <p:dataGrid var="prod" value="#{categoriaController.productos}" columns="3" layout="grid"
+                                        rows="12" paginator="true" id="productos_grid"
+                                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                        rowsPerPageTemplate="6,12,16">
 
-                                <!--COLUMNA DESCRIPCIÓN DEL PRODUCTO-->
-                                <p:column styleClass="centeredColumnContent" style="max-width: 10em;">
-                                    <p:outputLabel value="#{pro.descripcion}"/>
-                                </p:column>
+                                <f:facet name="header">
+                                    #{categoriaController.categoria.nombre}
+                                </f:facet>
 
-                                <!--COLUMNA PRECIO DEL PRODUCTO-->
-                                <p:column styleClass="centeredColumnContent">
-                                    <p:outputLabel value="#{pro.precio}€"/>
-                                </p:column>
+                                <div class="product-grid-item card" style="margin-bottom: 0">
+                                    <div class="product-grid-item-top">
+                                        <span class="product-badge #{prod.estado.toLowerCase()}">#{prod.estado}</span>
+                                    </div>
+                                    <div class="product-grid-item-content">
+                                        <div class="cont">
+                                            <p:commandLink actionListener="#{productoController.leerProducto(prod)}" 
+                                                           oncomplete="PF('wimg').show();" update="dia_img">
+                                                <p:graphicImage name="/productos/#{prod.url}" library="images" class="prod_img"/>
+                                            </p:commandLink>
+                                        </div>
+                                        <div class="cont"><div class="product-name">#{prod.nombre}</div></div>
+                                        <div class="cont" id="descrip"><div class="product-description">#{prod.descripcion}</div></div>
+                                        <div class="cont"><p:rating readonly="true" value="#{prod.rating}"/></div>
+                                    </div>
+                                    <div class="product-grid-item-bottom cont" style="display:flex;">
+                                        <h:outputText value="#{prod.precio}" styleClass="product-price" style="margin-right:1em;">
+                                            <f:convertNumber currencySymbol="€" type="currency"/>
+                                        </h:outputText>
+                                        <p:commandButton icon="ui-icon-cart"  actionListener="#{categoriaController.noLog()}" 
+                                                         disabled="#{prod.estado == 'Agotado'}"/>
+                                    </div>
+                                </div>
 
-                                <!--COLUMNA STOCK DEL PRODUCTO-->
-                                <p:column styleClass="centeredColumnContent">
-                                    <p:outputLabel value="Disponible" rendered="#{pro.stock > 0 eq true}" style="color:green;" />
-                                    <p:outputLabel value="Agotado" rendered="#{pro.stock eq 0}" style="color:red;"/>
-                                </p:column>
+                            </p:dataGrid>
 
-                                <!--COLUMNA IMAGEN DEL PRODUCTO-->
-                                <p:column styleClass="centeredColumnContent">
-                                    <p:commandLink actionListener="#{productoController.leerProducto(pro)}" 
-                                                   oncomplete="PF('wimg').show();" update="dia_img">
-                                        <p:graphicImage class="prod_img" name="/productos/#{pro.url}" library="images"/>
-                                    </p:commandLink>
-                                </p:column>
-
-                                <!--COLUMNA CANTIDAD DEL PRODUCTO-->
-                                <p:column styleClass="centeredColumnContent">
-                                    <p:inputNumber minValue="1" maxValue="50" emptyValue="1" inputStyle="width: 3em;"/>
-                                </p:column>
-
-                                <!--COLUMNA ACEPTAR DEL PRODUCTO-->
-                                <p:column styleClass="centeredColumnContent">
-                                    <p:commandButton type="button" icon="ui-icon-cart"/>
-                                </p:column>
-                            </p:dataTable>
                         </div>
-                        <br/><br/><br/>
                     </h:form>
+                    <br/>
                 </div>
+                <br/><br/>
                 <br/><br/><br/><br/>
                 <p:dialog id="dia_img" widgetVar="wimg" draggable="false" resizable="false" closeOnEscape="true" 
-                          modal="true" showEffect="explode" hideEffect="explode">
+                          modal="true" showEffect="explode" hideEffect="explode" styleClass="modalResponsivo">
                     <h:form id="diacimg" enctype="multipart/form-data">
                         <p:fieldset legend="#{productoController.producto.nombre}">
                             <f:facet name="header"/>

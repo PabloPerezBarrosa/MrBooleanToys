@@ -11,66 +11,68 @@
         <ui:composition template="./../../WEB-INF/templates/template_cliente.xhtml">
 
             <ui:define name="content">
-                <h:form>
+                <div class="container-fluid principal_contenedor">
+                    <h:form id="ca_v">
 
-                    <br/><br/>
-                    <div class="cont">
-                        <p:dataTable id="tabla_carrito" value="#{carritoViewController.items}" var="item" 
-                                     tableStyle="table-layout: auto;">
-                            <p:columnGroup type="header">
-                                <p:row>
-                                    <p:column colspan="5" headerText="Artículos en su carrito"/>
-                                </p:row>
-                                <p:row>
-                                    <p:column rowspan="1" headerText="Nombre"/>
-                                    <p:column rowspan="1" headerText="Descripción" />
-                                    <p:column rowspan="1" headerText="Imagen"/>
-                                    <p:column rowspan="1" headerText="Precio"/>
-                                    <p:column rowspan="1" headerText="Cantidad" />
-                                </p:row>
-                            </p:columnGroup>
+                        <br/><br/>
+                        <div class="cont">
+                            <p:dataTable id="tabla_carrito" value="#{carritoViewController.items}" var="item" 
+                                         tableStyle="table-layout: auto;" scrollable="true" scrollWidth="100%">
+                                <p:columnGroup type="header">
+                                    <p:row>
+                                        <p:column colspan="5" headerText="Artículos en su carrito"/>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column rowspan="1" headerText="Nombre"/>
+                                        <p:column rowspan="1" headerText="Descripción" />
+                                        <p:column rowspan="1" headerText="Imagen"/>
+                                        <p:column rowspan="1" headerText="Precio"/>
+                                        <p:column rowspan="1" headerText="Cantidad" />
+                                    </p:row>
+                                </p:columnGroup>
 
-                            <!--COLUMNA NOMBRE DEL PRODUCTO-->
-                            <p:column sortBy="#{item.producto.nombre}" styleClass="centeredColumnContent" style="max-width: 10em;">
-                                <p:outputLabel value="#{item.producto.nombre}"/>
-                            </p:column>
+                                <!--COLUMNA NOMBRE DEL PRODUCTO-->
+                                <p:column sortBy="#{item.producto.nombre}" styleClass="centeredColumnContent" style="max-width: 10em;">
+                                    <p:outputLabel value="#{item.producto.nombre}"/>
+                                </p:column>
 
-                            <!--COLUMNA DESCRIPCIÓN DEL PRODUCTO-->
-                            <p:column styleClass="centeredColumnContent" style="max-width: 10em;">
-                                <p:outputLabel value="#{item.producto.descripcion}"/>
-                            </p:column>
+                                <!--COLUMNA DESCRIPCIÓN DEL PRODUCTO-->
+                                <p:column styleClass="centeredColumnContent" style="max-width: 10em;">
+                                    <p:outputLabel value="#{item.producto.descripcion}"/>
+                                </p:column>
 
-                            <!--COLUMNA IMAGEN DEL PRODUCTO-->
-                            <p:column styleClass="centeredColumnContent">
-                                <p:commandLink actionListener="#{carritoViewController.leerItem(item)}" 
-                                               oncomplete="PF('wimg').show();" update="dia_img">
-                                    <p:graphicImage class="prod_img" name="/productos/#{item.producto.url}" library="images"/>
-                                </p:commandLink>
-                            </p:column>
-                            <!--COLUMNA PRECIO DEL PRODUCTO-->
-                            <p:column styleClass="centeredColumnContent">
-                                <p:outputLabel value="#{item.producto.precio}€"/>
-                            </p:column>
-                            <!--COLUMNA CANTIDAD DEL PRODUCTO-->
-                            <p:column styleClass="centeredColumnContent">
-                                <p:outputLabel value="#{item.cantidad}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </div>
-                    <br/><br/>
-                    <div class="cont">
-                        <p:panelGrid columns ="2">
-                            <p:outputLabel value="Total a pagar"/>
-                            <p:outputLabel value="#{carritoViewController.monto}€"/>
-                        </p:panelGrid>
-                        <p:panelGrid columns="1">
-                            <p:commandButton value="A la compra" onclick="PF('wcart').show();"/>
-                        </p:panelGrid>
-                    </div>
-                    <br/>
-                </h:form>
+                                <!--COLUMNA IMAGEN DEL PRODUCTO-->
+                                <p:column styleClass="centeredColumnContent">
+                                    <p:commandLink actionListener="#{carritoViewController.leerItem(item)}" 
+                                                   oncomplete="PF('wimg').show();" update="dia_img">
+                                        <p:graphicImage class="prod_img" name="/productos/#{item.producto.url}" library="images"/>
+                                    </p:commandLink>
+                                </p:column>
+                                <!--COLUMNA PRECIO DEL PRODUCTO-->
+                                <p:column styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{item.producto.precio}€"/>
+                                </p:column>
+                                <!--COLUMNA CANTIDAD DEL PRODUCTO-->
+                                <p:column styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{item.cantidad}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                        <br/><br/>
+                        <div class="cont">
+                            <p:panelGrid columns ="2">
+                                <p:outputLabel value="Total a pagar"/>
+                                <p:outputLabel value="#{carritoViewController.monto}€"/>
+                            </p:panelGrid>
+                            <p:panelGrid columns="1">
+                                <p:commandButton value="A la compra" onclick="PF('wcart').show();"/>
+                            </p:panelGrid>
+                        </div>
+                        <br/>
+                    </h:form>
+                </div>
                 <p:dialog id="dia_img" widgetVar="wimg" draggable="false" resizable="false" closeOnEscape="true" 
-                          modal="true" showEffect="explode" hideEffect="explode">
+                          modal="true" showEffect="explode" hideEffect="explode" styleClass="modalResponsivo">
                     <h:form id="diacimg">
                         <p:fieldset legend="#{carritoViewController.item.producto.nombre}">
                             <f:facet name="header"/>
@@ -82,7 +84,7 @@
                     </h:form>
                 </p:dialog>
                 <p:dialog id="dia_cart" widgetVar="wcart" draggable="false" resizable="false" closeOnEscape="true" 
-                          modal="true" showEffect="slide" hideEffect="slide">
+                          modal="true" showEffect="slide" hideEffect="slide" styleClass="modalResponsivo">
                     <h:form id="diacart">
                         <p:fieldset legend="Confirmación de compra">
                             <f:facet name="header">
@@ -110,7 +112,7 @@
 
                             </p:panelGrid>
                             <p:panelGrid columns="1">
-                                <p:commandButton value="Comprar" action="#{carritoViewController.confirmarCompra()}" update="tabla_carrito"/>
+                                <p:commandButton value="Comprar" action="#{carritoViewController.confirmarCompra()}" update=":ca_v:tabla_carrito"/>
                             </p:panelGrid>
                             <f:facet name="footer"/>
                         </p:fieldset>

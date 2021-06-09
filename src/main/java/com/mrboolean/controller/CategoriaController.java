@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -35,10 +36,10 @@ public class CategoriaController implements Serializable {
         try {
             categorias = categoriaEJB.findAll();
             this.nombre_categoria = (String) (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("categoria_sesion"));
-            
-            if(this.nombre_categoria != null){
+
+            if (this.nombre_categoria != null) {
                 cargarCategoria(this.nombre_categoria);
-            }   
+            }
             sacarCategoria();
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,10 +47,11 @@ public class CategoriaController implements Serializable {
         }
 
     }
-    public void sacarCategoria(){
-        
+
+    public void sacarCategoria() {
+
         this.categoria = categoriaEJB.find(this.codigo_categoria);
-        
+
     }
 
     public void redirectCategorias(String cat) {
@@ -85,15 +87,15 @@ public class CategoriaController implements Serializable {
     }
 
     public void cargarCategoria(String cat) throws Exception {
-        
+
         Categoria categoria_aux = new Categoria();
-        
+
         if (cat != null) {
             sacarCatId(cat);
             this.nombre_categoria = cat;
-        }else{
-             categoria_aux= categoriaEJB.find(this.codigo_categoria);
-             this.nombre_categoria = categoria_aux.getNombre();
+        } else {
+            categoria_aux = categoriaEJB.find(this.codigo_categoria);
+            this.nombre_categoria = categoria_aux.getNombre();
         }
 
         try {
@@ -114,7 +116,7 @@ public class CategoriaController implements Serializable {
         }
     }
 
-    public void listarAllProductos() {  
+    public void listarAllProductos() {
 
         this.productos = productoEJB.findAll();
 
@@ -125,21 +127,33 @@ public class CategoriaController implements Serializable {
         try {
             productoEJB.remove(pro);
             cargarCategoria(this.nombre_categoria);
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
             e.printStackTrace();
             System.out.println("Error en eliminarProducto()...");
         }
 
     }
-    public void modificarProducto(Producto pro){
-        
-        try{
-             productoEJB.edit(pro);
-        }catch(Exception e){
+
+    public void modificarProducto(Producto pro) {
+
+        try {
+            if (pro.getStock() == 0) {
+                pro.setEstado("Agotado");
+            } else {
+                pro.setEstado("Disponible");
+            }
+            productoEJB.edit(pro);
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error en modificarProducto()...");
         }
+    }
+
+    public void noLog() {
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Para añadir cosas al carrito, debe tener una cuenta y estar conectado a ella. Disculpe las molestias, muchas gracias."));
+
     }
 
     public CategoriaFacadeLocal getCategoriaEJB() {
@@ -197,5 +211,5 @@ public class CategoriaController implements Serializable {
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
-    
+
 }
