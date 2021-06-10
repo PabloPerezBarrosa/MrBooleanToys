@@ -63,7 +63,10 @@
                                             <p:outputLabel value="#{cli.email}"/>
                                         </f:facet>
                                         <f:facet name="input">
-                                            <p:inputText value="#{cli.email}"/>
+                                            <p:inputText id="eMail" value="#{cli.email}" required="true" 
+                                                         validatorMessage="Introduzca un email válido">
+                                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                            </p:inputText>
                                         </f:facet>
                                     </p:cellEditor>
                                 </p:column>
@@ -109,7 +112,7 @@
                                 </p:column>
                                 <p:ajax event="rowEdit" listener="#{adminUsuarioController.modificarUsuario(cli)}" update="tabla_clientes"/>
                             </p:dataTable>
-                            
+
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
                                 <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" />
                                 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>

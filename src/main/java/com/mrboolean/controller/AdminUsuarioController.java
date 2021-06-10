@@ -89,9 +89,14 @@ public class AdminUsuarioController implements Serializable {
             cli.setClave(encriptar(cli.getClave()));
 
             clienteEJB.edit(cli);
+            
+            cli.setClave(desencriptar(cli.getClave()));
+            
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Conseguido", "Usuario editado correctamente."));
 
         } catch (Exception e) {
             e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Fallo editando usuario"));
         }
     }
 

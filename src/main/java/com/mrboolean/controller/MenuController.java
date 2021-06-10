@@ -55,7 +55,7 @@ public class MenuController implements Serializable {
         boolean match_name = false;
 
         try {
-
+         
             clientes = clienteEJB.findAll();
 
             for (Cliente cl : clientes) {
