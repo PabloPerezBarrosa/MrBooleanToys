@@ -23,4 +23,8 @@ public interface PedidoFacadeLocal {
     
     List<Pedido> findByEstado(String estado);
     
+    List<Pedido> findByIdCliente(int id_cl);
+    
+    List<Pedido> findByEstadoAndIdCliente(String estado, int id_cl);
+    
 }

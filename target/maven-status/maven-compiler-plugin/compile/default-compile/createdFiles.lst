@@ -1,5 +1,6 @@
 com/mrboolean/controller/AdminUsuarioController.class
 com/mrboolean/mail/SendMail$1.class
+com/mrboolean/controller/MisPedidosController.class
 com/mrboolean/ejb/ClienteFacade.class
 com/mrboolean/controller/CategoriaController.class
 com/mrboolean/ejb/ProductoFacadeLocal.class

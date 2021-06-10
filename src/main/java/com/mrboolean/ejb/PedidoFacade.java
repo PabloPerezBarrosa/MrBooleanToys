@@ -43,29 +43,48 @@ public class PedidoFacade extends AbstractFacade<Pedido> implements PedidoFacade
         return pedidos;
 
     }
-//    @Override
-//    public Cliente findByEmail(String email) {
-//        List<Cliente>clientes = new ArrayList<Cliente>();
-//        Cliente cliente = new Cliente();
-//        String consulta = "";
-//        
-//        try{
-//            
-//          consulta = "FROM Cliente c WHERE c.email = ?1";
-//          Query query = em.createQuery(consulta);
-//          query.setParameter(1,email);
-//          clientes =(List<Cliente>) query.getResultList();
-//          
-//          if(clientes != null && clientes.size() > 0){
-//              cliente = clientes.get(0);
-//          }else{
-//              cliente = null;
-//          }
-//            
-//        }catch(Exception e){
-//            e.printStackTrace();
-//            System.out.println("Error en findByTipo() en ClienteFacade ...");
-//        }
-//        return cliente;
-//    }
+    @Override
+    public List<Pedido> findByIdCliente(int id_cl) {
+        
+        List<Pedido> pedidos = new ArrayList<Pedido>();
+        String consulta = "";
+        
+        try{
+            consulta = "FROM Pedido p WHERE p.cliente.idcliente = ?1";
+            
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, id_cl);
+            
+            pedidos = query.getResultList();
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Fallo en PedidoFacade sacando lista por Id cliente.....................");
+        }
+        
+        return pedidos;
+    }
+
+    @Override
+    public List<Pedido> findByEstadoAndIdCliente(String estado, int id_cl) {
+        
+        List<Pedido> pedidos = new ArrayList<Pedido>();
+        String consulta = "";
+         try{
+             
+             consulta = "FROM Pedido p WHERE p.estado =?1 and p.cliente.idcliente = ?2";
+            
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, estado);
+            query.setParameter(2, id_cl);
+            
+            pedidos = query.getResultList();
+             
+         }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Fallo en PedidoFacade sacando lista por Estado e Id cliente.....................");
+        }
+        
+        return pedidos;
+    }
+
 }

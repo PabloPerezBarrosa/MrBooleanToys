@@ -20,7 +20,7 @@ public class SendMail {
         this.password = password;
     }
 
-    public static void sendEmail(Cliente cliente, boolean opcion) {
+    public static void sendEmail(Cliente cliente, int opcion) {
 
         final String email = "pablo.mr.boolean.toys@gmail.com";
         final String pass = "mrbooleantoys1983";
@@ -44,7 +44,7 @@ public class SendMail {
         });
 
         try {
-            if (opcion) {
+            if (opcion == 0) {
                 MimeMessage message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(email));
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(cliente.getEmail()));
@@ -53,10 +53,8 @@ public class SendMail {
                         "<h1 style='color: #6ea5d1;display: flex;align-items: center;justify-content: center;overflow: hidden;'>Mr Boolean Toys</h1><br><p>Buenos días " + cliente.getNombre() + ". Click para terminar su registro: <br><a href='http://localhost:8080/MrBooleanToys/faces/protegido/verificacion/verificacion.xhtml?key1=" + cliente.getIdcliente() + "'>Enlace de activación de cuenta</a></p>",
                         "text/html");
                 Transport.send(message);
-                
-    
-    
-            }else{
+
+            } else if (opcion == 1) {
                 MimeMessage message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(email));
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(cliente.getEmail()));
@@ -65,9 +63,18 @@ public class SendMail {
                         "<h1 style='color: #6ea5d1;display: flex;align-items: center;justify-content: center;overflow: hidden;'>Mr Boolean Toys</h1><br><p>Buenos dias " + cliente.getNombre() + " para recuperar su clave acceda a este enlace:<br><a href='http://localhost:8080/MrBooleanToys/faces/protegido/verificacion/recuperar_clave.xhtml?key1=" + cliente.getIdcliente() + "'>Enlace de recuperación de Clave</a></p>",
                         "text/html");
                 Transport.send(message);
-            }
+            } else if (opcion == 2) {
 
-            
+                MimeMessage message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(email));
+                message.addRecipient(Message.RecipientType.TO, new InternetAddress(cliente.getEmail()));
+                message.setSubject("Cambio de clave Mr Boolean Toys");
+                message.setContent(
+                        "<h1 style='color: #6ea5d1;display: flex;align-items: center;justify-content: center;overflow: hidden;'>Mr Boolean Toys</h1><br><p>Buenos dias " + cliente.getNombre() + " para cambiar su clave acceda a este enlace:<br><a href='http://localhost:8080/MrBooleanToys/faces/protegido/verificacion/recuperar_clave.xhtml?key1=" + cliente.getIdcliente() + "'>Enlace de cambio de Clave</a></p>",
+                        "text/html");
+                Transport.send(message);
+
+            }
 
         } catch (Exception e) {
 

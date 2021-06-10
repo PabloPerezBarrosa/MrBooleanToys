@@ -44,13 +44,9 @@ public class PedidosController implements Serializable {
 
         try {
 
-            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx");
-            System.out.println(this.estado_comparator);
-            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx");
 
             if (this.estado_comparator == null || this.estado_comparator.equals("t") || this.estado_comparator.equals("")) {
                 this.pedidos = pedidoEJB.findAll();
-                System.out.println(this.pedidos.size());
             } else {
                 this.pedidos = pedidoEJB.findByEstado(this.estado_comparator);
             }

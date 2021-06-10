@@ -114,7 +114,14 @@
                             <p:panelGrid columns ="2">
                                 <p:outputLabel value="Nombre"/>
                                 <p:inputText value="#{menuController.cliente_sesion.nombre}" required="true"/>
-
+                                
+                                <p:column/>
+                                <p:commandLink value="Mis pedidos" action="pedidos_cliente.xhtml" style="color:#6ea5d1 !important"/>
+                                
+                                <p:column/>
+                                <p:commandLink value="Cambio de clave" action="#{menuController.cambiarClave()}" style="color:#6ea5d1 !important"/>
+                                
+                                <p:column/>
                                 <p:commandButton value="Cambiar Nombre  " actionListener="#{menuController.modUser()}" update="user_dialog"/>
                             </p:panelGrid> 
                         </p:fieldset> 

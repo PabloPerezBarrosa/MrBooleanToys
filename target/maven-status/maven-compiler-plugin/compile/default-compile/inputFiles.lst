@@ -20,6 +20,7 @@
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/controller/MenuController.java
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/ejb/ProductoFacade.java
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/ejb/CategoriaFacade.java
+/home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/controller/MisPedidosController.java
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/model/LineaPedido.java
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/controller/CarritoController.java
 /home/praxis2/Pablo/Mis_Proyectos/MrBooleanToys/src/main/java/com/mrboolean/ejb/ClienteFacade.java

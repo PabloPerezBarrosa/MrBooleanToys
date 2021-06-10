@@ -77,7 +77,7 @@ public class MenuController implements Serializable {
 
                 clienteEJB.create(this.cliente);
 
-                SendMail.sendEmail(this.cliente, true);
+                SendMail.sendEmail(this.cliente, 0);
 
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Registro Exitoso"));
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Atención", "Revise su email para verificación de cuenta"));
@@ -269,6 +269,22 @@ public class MenuController implements Serializable {
         clienteEJB.edit(cl);
 
     }
+    public void cambiarClave(){
+        
+        try{
+            FacesContext context = FacesContext.getCurrentInstance();
+            Cliente cl = (Cliente) context.getExternalContext().getSessionMap().get("cliente");
+            
+            SendMail.sendEmail(cl, 2);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Revise su email para cambiar su clave"));
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Fallo en cambiarClave.......");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Fallo enviando email de cambio de clave."));
+        }
+        
+    }
 
     public void recuperarClave() {
 
@@ -279,7 +295,7 @@ public class MenuController implements Serializable {
             cl = clienteEJB.findByEmail(this.email_recu);
 
             if (cl != null) {
-                SendMail.sendEmail(cl, false);
+                SendMail.sendEmail(cl, 1);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Revise su email para recuperar su clave"));
                 PrimeFaces.current().executeScript("PF('wrecu').hide();");
                 PrimeFaces.current().executeScript("PF('wlog').hide();");

@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template_cliente.xhtml">
+
+            <ui:define name="content">
+                <div class="container-fluid principal_contenedor">
+                    <h:form id="admin_pedidos_form">
+                        <br/><br/>
+                        <div class="cont">
+                            <p:panelGrid columns="3">
+                                <p:outputLabel value="Pedidos por Estado"/>
+                                <p:selectOneMenu value="#{misPedidosController.estado_comparator}">
+                                    <f:selectItem itemLabel="Todos" itemValue="t"/>
+                                    <f:selectItem itemLabel="En espera" itemValue="En espera"/>
+                                    <f:selectItem itemLabel="En entrega" itemValue="En entrega"/>
+                                    <f:selectItem itemLabel="Entregado" itemValue="Entregado"/>
+                                </p:selectOneMenu>
+                                <p:commandButton value="Buscar" update="tabla_pedidos" 
+                                                 actionListener="#{misPedidosController.listarPedidosCliente()}"/>
+                            </p:panelGrid>
+                        </div>
+                        <br/><br/>
+                        <div class="cont">  
+                            <p:dataTable id="tabla_pedidos" value="#{misPedidosController   .pedidos_aux}" var="pedi" editable="true" 
+                                         tableStyle="table-layout: auto;" emptyMessage="No se encontraron pedidos">
+
+                                <!--COLUMNA ID PEDIDO-->
+                                <p:column sortBy="#{pedi.pedido.idpedido}" headerText="Id" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.pedido.idpedido}"/>
+                                </p:column>
+
+                                <!--COLUMNA FECHA PEDIDO-->
+                                <p:column sortBy="#{pedi.dateString}" headerText="Fecha Pedido" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.dateString}"/>
+                                </p:column>
+
+                                <!--COLUMNA DIRECCIÓN PEDIDO-->
+                                <p:column headerText="Dirección" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.pedido.direccion}"/>
+                                </p:column>
+
+                                <!--COLUMNA PROVINCIA PEDIDO-->
+                                <p:column headerText="Provincia" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.pedido.provincia}"/>
+                                </p:column>
+
+                                <!--COLUMNA CP PEDIDO-->
+                                <p:column sortBy="#{pedi.pedido.cp}" headerText="Cp" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.pedido.cp}"/>
+                                </p:column>
+
+                                <!--COLUMNA MONTO PEDIDO-->
+                                <p:column headerText="Monto" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.pedido.total_pagado}€"/>
+                                </p:column>
+
+                                <!--COLUMNA ESTADO PEDIDO-->
+                                <p:column sortBy="#{pedi.pedido.estado}" headerText="Estado" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.pedido.estado}" class="#{pedi.pedido.estado.toLowerCase()}"/>
+                                </p:column>
+                            </p:dataTable>
+
+                        </div>
+                        <br/><br/><br/>
+                    </h:form>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
