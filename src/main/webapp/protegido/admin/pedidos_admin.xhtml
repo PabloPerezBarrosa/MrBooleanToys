@@ -16,7 +16,7 @@
                         <br/><br/>
                         <div class="cont">
                             <p:panelGrid columns="3">
-                                <p:outputLabel value="Pedidos estado"/>
+                                <p:outputLabel value="Pedidos por Estado"/>
                                 <p:selectOneMenu value="#{pedidosController.estado_comparator}">
                                     <f:selectItem itemLabel="Todos" itemValue="t"/>
                                     <f:selectItem itemLabel="En espera" itemValue="En espera"/>
@@ -30,7 +30,7 @@
                         <br/><br/>
                         <div class="cont">  
                             <p:dataTable id="tabla_pedidos" value="#{pedidosController.pedidos_aux}" var="pedi" editable="true" 
-                                         tableStyle="table-layout: auto;">
+                                         tableStyle="table-layout: auto;" emptyMessage="No se encontraron pedidos">
 
                                 <!--COLUMNA ID PEDIDO-->
                                 <p:column sortBy="#{pedi.pedido.idpedido}" headerText="Id" styleClass="centeredColumnContent">

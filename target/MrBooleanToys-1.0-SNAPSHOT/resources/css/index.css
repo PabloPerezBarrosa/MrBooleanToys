@@ -98,13 +98,8 @@ td.centeredColumnContent{
     background-color:#eaf4fd !important;
 }
 #categorias_titulo{
-    padding: 0.1em 1em 0em 1em;
     font-style: monaco;
     color: #6ea5d1;
-    border:0px solid #6ea5d1;
-    box-shadow: 5px 10px 18px #6ea5d1;
-    border-radius: 0.5em 0.5em 0.5em 0.5em;
-    background-color: #eaf4fd !important;
 }
 .user_img{
     margin-right: 1em;

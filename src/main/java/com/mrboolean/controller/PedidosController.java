@@ -43,20 +43,30 @@ public class PedidosController implements Serializable {
     public void listarPedidos() {
 
         try {
-            if(this.estado_comparator == null || this.estado_comparator.equals("t") || this.estado_comparator.equals("")){
+
+            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx");
+            System.out.println(this.estado_comparator);
+            System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx");
+
+            if (this.estado_comparator == null || this.estado_comparator.equals("t") || this.estado_comparator.equals("")) {
                 this.pedidos = pedidoEJB.findAll();
-            }else{
+                System.out.println(this.pedidos.size());
+            } else {
                 this.pedidos = pedidoEJB.findByEstado(this.estado_comparator);
             }
-            
+
             this.pedidos_aux.clear();
-            
+
             for (Pedido p : this.pedidos) {
 
                 PedidosAux p_aux = new PedidosAux();
+                String dateString = "Fecha no actualizada";
+                if (p.getFecha_pedido() != null) {
 
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-                String dateString = format.format(p.getFecha_pedido());
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                    dateString = format.format(p.getFecha_pedido());
+
+                }
 
                 System.out.println(dateString);
 
@@ -86,12 +96,12 @@ public class PedidosController implements Serializable {
             listarEstados();
             listarPedidos();
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Conseguido", "Pedido editado correctamente."));
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
             e.printStackTrace();
             System.out.println("Fallo en Editar Pedidos....................");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Fallo editando pedido."));
-            
+
         }
 
     }
