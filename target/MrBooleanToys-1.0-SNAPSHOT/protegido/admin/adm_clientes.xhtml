@@ -12,7 +12,6 @@
 
             <ui:define name="content">
                 <div class="container-fluid principal_contenedor">
-                    <p:growl autoUpdate="true"/>
                     <h:form id="cliente_form1">
                         <br/><br/>
                         <div class="cont">
@@ -127,9 +126,7 @@
                 </div>
                 <p:dialog id="dia_regusu" widgetVar="wregusu" draggable="false" resizable="false" closeOnEscape="true" 
                           modal="true" showEffect="slide" hideEffect="slide" styleClass="modalResponsivo">
-                    <h:form id="diaregusu">
-                        <!--mensaje de confirmaciones etc.-->
-                        <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true" showSummary="false"/>
+                    <h:form id="diaregusu">         
                         <p:fieldset legend="Añadir nuevo usuario">
                             <f:facet name="header">
                                 Datos Usuario

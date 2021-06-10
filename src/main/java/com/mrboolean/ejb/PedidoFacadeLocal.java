@@ -21,4 +21,6 @@ public interface PedidoFacadeLocal {
 
     int count();
     
+    List<Pedido> findByEstado(String estado);
+    
 }

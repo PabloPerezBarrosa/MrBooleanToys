@@ -1,4 +1,4 @@
-package com.mrboolean.controller;
+    package com.mrboolean.controller;
 
 import com.mrboolean.ejb.ClienteFacadeLocal;
 import com.mrboolean.model.Cliente;

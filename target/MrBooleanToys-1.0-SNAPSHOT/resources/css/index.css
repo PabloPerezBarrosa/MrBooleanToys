@@ -114,7 +114,18 @@ td.centeredColumnContent{
 @media screen and (max-width: 768px ) {
   .modalResponsivo { width: 90% !important;} }
 
-
+.espera{
+    background-color: red;
+    color:white;
+}
+.entrega{
+    background-color: orange;
+    color:white;
+}
+.entregado{
+    background-color: green;
+    color:white;
+}
 /*ZONA DE CATEGORIA.XHTML*/
 
 .prod_img{

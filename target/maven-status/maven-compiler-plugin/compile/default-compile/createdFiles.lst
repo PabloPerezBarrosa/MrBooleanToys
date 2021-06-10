@@ -12,6 +12,8 @@ com/mrboolean/ejb/CategoriaFacade.class
 com/mrboolean/ejb/AbstractFacade.class
 com/mrboolean/model/Cliente_.class
 com/mrboolean/model/Producto_.class
+com/mrboolean/model/PedidosAux.class
+com/mrboolean/controller/PedidosController.class
 com/mrboolean/controller/CarritoController.class
 com/mrboolean/model/LineaPedido_.class
 com/mrboolean/controller/MenuController.class

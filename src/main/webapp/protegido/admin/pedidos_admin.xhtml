@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../../WEB-INF/templates/template_admin.xhtml">
+
+            <ui:define name="content">
+                <div class="container-fluid principal_contenedor">
+                    <h:form id="admin_pedidos_form">
+                        <br/><br/>
+                        <div class="cont">
+                            <p:panelGrid columns="3">
+                                <p:outputLabel value="Pedidos estado"/>
+                                <p:selectOneMenu value="#{pedidosController.estado_comparator}">
+                                    <f:selectItem itemLabel="Todos" itemValue="t"/>
+                                    <f:selectItem itemLabel="En espera" itemValue="En espera"/>
+                                    <f:selectItem itemLabel="En entrega" itemValue="En entrega"/>
+                                    <f:selectItem itemLabel="Entregado" itemValue="Entregado"/>
+                                </p:selectOneMenu>
+                                <p:commandButton value="Buscar" update="tabla_pedidos" 
+                                                 actionListener="#{pedidosController.listarPedidos()}"/>
+                            </p:panelGrid>
+                        </div>
+                        <br/><br/>
+                        <div class="cont">  
+                            <p:dataTable id="tabla_pedidos" value="#{pedidosController.pedidos_aux}" var="pedi" editable="true" 
+                                         tableStyle="table-layout: auto;">
+
+                                <!--COLUMNA ID PEDIDO-->
+                                <p:column sortBy="#{pedi.pedido.idpedido}" headerText="Id" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.pedido.idpedido}"/>
+                                </p:column>
+
+                                <!--COLUMNA NOMBRE USUARIO PEDIDO-->
+                                <p:column headerText="Cliente" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.pedido.cliente.nombre}"/>
+                                </p:column>
+
+                                <!--COLUMNA FECHA PEDIDO-->
+                                <p:column sortBy="#{pedi.dateString}" headerText="Fecha Pedido" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.dateString}"/>
+                                </p:column>
+
+                                <!--COLUMNA DIRECCIÓN PEDIDO-->
+                                <p:column headerText="Dirección" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.pedido.direccion}"/>
+                                </p:column>
+
+                                <!--COLUMNA PROVINCIA PEDIDO-->
+                                <p:column headerText="Provincia" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.pedido.provincia}"/>
+                                </p:column>
+
+                                <!--COLUMNA CP PEDIDO-->
+                                <p:column sortBy="#{pedi.pedido.cp}" headerText="Cp" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.pedido.cp}"/>
+                                </p:column>
+
+                                <!--COLUMNA MONTO PEDIDO-->
+                                <p:column headerText="Monto" styleClass="centeredColumnContent">
+                                    <p:outputLabel value="#{pedi.pedido.total_pagado}€"/>
+                                </p:column>
+
+                                <!--COLUMNA ESTADO PEDIDO-->
+                                <p:column sortBy="#{pedi.pedido.estado}" headerText="Estado" styleClass="centeredColumnContent">
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <p:outputLabel value="#{pedi.pedido.estado}" class="#{pedi.pedido.estado.toLowerCase()}"/>
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:selectOneMenu value="#{pedi.pedido.estado}" style="width:100%">
+                                                <f:selectItems value="#{pedidosController.estados}"/>
+                                            </p:selectOneMenu>
+                                        </f:facet>
+                                    </p:cellEditor>
+
+                                </p:column>
+                                <p:column style="width:4em;" styleClass="centeredColumnContent">
+                                    <p:rowEditor/>
+                                </p:column>
+                                <p:column styleClass="centeredColumnContent">
+                                    <p:commandButton icon="ui-icon-trash" action="#{pedidosController.eliminarPedido(pedi.pedido)}" update="tabla_pedidos">
+                                        <p:confirm header="Confirmación" message="¿Eliminar Pedido?"/>
+                                    </p:commandButton>
+                                </p:column>
+                               <p:ajax event="rowEdit" listener="#{pedidosController.editarEstado(pedi.pedido)}" update="tabla_pedidos"/>
+                            </p:dataTable>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
+                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+                            </p:confirmDialog>
+                        </div>
+                        <br/><br/><br/>
+                    </h:form>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
