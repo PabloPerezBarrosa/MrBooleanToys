@@ -147,7 +147,7 @@
 
                             </p:panelGrid>
                             <p:panelGrid columns="1">
-                                <p:commandButton value="Comprar" action="#{carritoViewController.confirmarCompra()}" update=":ca_v:tabla_carrito"/>
+                                <p:commandButton value="Comprar" action="#{carritoViewController.confirmarCompra()}" onclick="redirectDelayUserPrin();" update=":ca_v:tabla_carrito"/>
                             </p:panelGrid>
                             <f:facet name="footer"/>
                         </p:fieldset>

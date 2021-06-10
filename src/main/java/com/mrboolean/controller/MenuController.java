@@ -125,22 +125,29 @@ public class MenuController implements Serializable {
 
             cl = clienteEJB.iniciarSesion(this.cliente);
             if (cl != null) {
-                List<CartItem> items = new ArrayList<CartItem>();
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("cliente", cl);
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("carrito", items);
 
-                if (url.equals(url1)) {
-                    if (cl.getTipo().equals("a")) {
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/admin/principal_admin.xhtml");
+                if (cl.getEstado() == 1) {
+                    List<CartItem> items = new ArrayList<CartItem>();
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("cliente", cl);
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("carrito", items);
+
+                    if (url.equals(url1)) {
+                        if (cl.getTipo().equals("a")) {
+                            FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/admin/principal_admin.xhtml");
+                        } else {
+                            FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/user/principal_cliente.xhtml");
+                        }
                     } else {
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/user/principal_cliente.xhtml");
+                        if (cl.getTipo().equals("a")) {
+                            FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/admin/categoria_admin.xhtml");
+                        } else {
+                            FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/user/categoria_cliente.xhtml");
+                        }
                     }
-                } else {
-                    if (cl.getTipo().equals("a")) {
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/admin/categoria_admin.xhtml");
-                    } else {
-                        FacesContext.getCurrentInstance().getExternalContext().redirect("/MrBooleanToys/faces/protegido/user/categoria_cliente.xhtml");
-                    }
+                }else{
+                   PrimeFaces.current().executeScript("PF('wlog').hide();");
+                   FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Sus datos son correctos, pero aún no ha confirmado su eMail. Por favor vaya a su correo y entre en el enlace de activación.")); 
+                    
                 }
 
             } else {
@@ -293,6 +300,8 @@ public class MenuController implements Serializable {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
 
         this.id_recu = Integer.parseInt(request.getParameter("key1"));
+
+        PrimeFaces.current().executeScript("PF('wrecuclave').show();");
 
     }
 

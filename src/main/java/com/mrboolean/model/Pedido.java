@@ -36,6 +36,9 @@ public class Pedido implements Serializable{
     @Column(name ="total_pagado")
     private double total_pagado;
     
+    @Column(name ="estado")
+    private String estado;
+    
     @ManyToOne
     @JoinColumn(name = "idcliente", nullable = false)
     private Cliente cliente;
@@ -94,6 +97,14 @@ public class Pedido implements Serializable{
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
         
 }

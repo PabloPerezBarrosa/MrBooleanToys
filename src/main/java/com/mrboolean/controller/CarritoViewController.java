@@ -82,6 +82,8 @@ public class CarritoViewController implements Serializable {
             Cliente cl = (Cliente) context.getExternalContext().getSessionMap().get("cliente");
 
             this.pedido.setCliente(cl);
+            
+            this.pedido.setEstado("En espera");
 
             pedidoEJB.create(this.pedido);
 

@@ -37,6 +37,11 @@ public class AdminUsuarioController implements Serializable {
     public void listarAllClientes() {
         try {
             clientes = clienteEJB.findAll();
+            for(Cliente c : clientes){
+                
+                c.setClave(desencriptar(c.getClave()));
+                
+            }
             this.tipo_user = "t";
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,14 +51,26 @@ public class AdminUsuarioController implements Serializable {
 
     public void listarClientesByTipo() {
 
-        if (this.tipo_user.equals("t")) {
+        try{
+            if (this.tipo_user.equals("t")) {
 
             listarAllClientes();
 
         } else {
 
             this.clientes = clienteEJB.findByTipo(this.tipo_user);
+            
+            for(Cliente c : clientes){
+                
+                c.setClave(desencriptar(c.getClave()));
+                
+            }
 
+        }
+        }catch(Exception e){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error", "Fallo listando los clientes por su tipo"));
+            System.out.println("Error en listarClientesByTipo........");
+            e.printStackTrace();
         }
     }
 
