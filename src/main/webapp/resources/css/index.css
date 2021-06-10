@@ -142,4 +142,10 @@ td.centeredColumnContent{
     color:white;
     background-color: green;
 }
+.ui-panelgrid td, .ui-panelgrid tr
+{
+    border-style: none !important
+}
+
+            
 

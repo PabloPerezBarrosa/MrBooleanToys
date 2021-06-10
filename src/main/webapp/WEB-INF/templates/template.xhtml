@@ -83,18 +83,18 @@
                             </f:facet>
                             <p:panelGrid columns="2">
 
-                                <h:outputLabel for="Nombre" value="Nombre" />
+                                <h:outputLabel for="Nombre" value="Nombre"/>
                                 <p:inputText id="Nombre" value="#{menuController.cliente.nombre}" required="true"/>
 
-                                <h:outputLabel for="Clave" value="Clave" />
+                                <h:outputLabel for="Clave" value="Clave"/>
                                 <p:password id="Clave" value="#{menuController.cliente.clave}" match="ClaveRepetida"
                                             feedback="true" promptLabel="Ingrese una clave" strongLabel="Fuerte" weakLabel="Débil"
                                             goodLabel="Media" validatorMessage="Las claves no coinciden" required="true"/>
 
-                                <h:outputLabel for="ClaveRepetida" value="Repetir Clave" />
+                                <h:outputLabel for="ClaveRepetida" value="Repetir Clave"/>
                                 <p:password id="ClaveRepetida" required="true"/>
 
-                                <h:outputLabel for="eMail" value="eMail"/>
+                                <h:outputLabel for="eMail" value="eMail" />
                                 <p:inputText id="eMail" value="#{menuController.cliente.email}" required="true" 
                                              validatorMessage="Introduzca un email válido">
                                     <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />

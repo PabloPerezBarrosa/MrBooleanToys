@@ -112,17 +112,15 @@
                             </div><br/>
 
                             <p:panelGrid columns ="2">
-                                <p:outputLabel value="Nombre"/>
+
                                 <p:inputText value="#{menuController.cliente_sesion.nombre}" required="true"/>
-                                
-                                <p:column/>
-                                <p:commandLink value="Mis pedidos" action="pedidos_cliente.xhtml" style="color:#6ea5d1 !important"/>
-                                
-                                <p:column/>
-                                <p:commandLink value="Cambio de clave" action="#{menuController.cambiarClave()}" style="color:#6ea5d1 !important"/>
-                                
-                                <p:column/>
                                 <p:commandButton value="Cambiar Nombre  " actionListener="#{menuController.modUser()}" update="user_dialog"/>
+
+                                <p:commandLink value="Mis pedidos" action="pedidos_cliente.xhtml" style="color:#6ea5d1 !important"/>
+                                <p:column/>
+
+                                <p:commandLink value="Cambio de clave" action="#{menuController.cambiarClave()}" style="color:#6ea5d1 !important"/>
+                                <p:column/> 
                             </p:panelGrid> 
                         </p:fieldset> 
                     </h:form>
@@ -143,10 +141,10 @@
                                                 library="images" rendered="#{menuController.cliente_sesion.url ne null}"/>
                             </div>
                             <p:panelGrid columns="1">
-                                <p:fileUpload id="Imagen" value="#{menuController.file}" mode="simple"/>
+                                <p:fileUpload id="Imagen" value="#{menuController.file}" mode="simple" style ="color:#6ea5d1 !important;"/>
                             </p:panelGrid>
                             <p:panelGrid columns="1">
-                                <p:commandButton value="Cambiar Imagen" actionListener="#{menuController.modificarImagen()}" ajax="false" onclick="redirectDelayUserPrin();"/>
+                                <p:commandButton value="Cambiar Imagen" actionListener="#{menuController.modificarImagen()}" ajax="false" onclick="redirectDelayUserPrin();" />
                             </p:panelGrid>
                             <f:facet name="footer"/>
                         </p:fieldset> 
@@ -174,7 +172,7 @@
                 window.setTimeout(function () {
                     location.href = "principal_cliente.xhtml"
                 }, 5000);
-            }   
+            }
 
         </script>
     </h:body>

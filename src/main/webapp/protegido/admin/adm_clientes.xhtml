@@ -38,7 +38,7 @@
                                             <p:outputLabel value="#{cli.nombre}"/>
                                         </f:facet>
                                         <f:facet name="input">
-                                            <p:inputText value="#{cli.nombre}"/>
+                                            <p:inputText value="#{cli.nombre}" style="width: 7em !important;"/>
                                         </f:facet>
                                     </p:cellEditor> 
                                 </p:column>
@@ -50,7 +50,7 @@
                                             <p:outputLabel value="#{cli.clave}"/>
                                         </f:facet>
                                         <f:facet name="input">
-                                            <p:inputText value="#{cli.clave}"/>
+                                            <p:inputText value="#{cli.clave}" style="width: 4em !important;"/>
                                         </f:facet>
                                     </p:cellEditor>
                                 </p:column>
@@ -63,7 +63,7 @@
                                         </f:facet>
                                         <f:facet name="input">
                                             <p:inputText id="eMail" value="#{cli.email}" required="true" 
-                                                         validatorMessage="Introduzca un email válido">
+                                                         validatorMessage="Introduzca un email válido" style="width: 9em !important;">
                                                 <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                                             </p:inputText>
                                         </f:facet>

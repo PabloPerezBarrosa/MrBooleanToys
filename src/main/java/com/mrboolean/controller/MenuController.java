@@ -277,7 +277,7 @@ public class MenuController implements Serializable {
             
             SendMail.sendEmail(cl, 2);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Información", "Revise su email para cambiar su clave"));
-            
+            PrimeFaces.current().executeScript("PF('wuser').hide();");
         }catch(Exception e){
             e.printStackTrace();
             System.out.println("Fallo en cambiarClave.......");

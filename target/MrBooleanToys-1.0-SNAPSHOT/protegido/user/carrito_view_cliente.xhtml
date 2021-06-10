@@ -13,54 +13,45 @@
             <ui:define name="content">
                 <div class="container-fluid principal_contenedor">
                     <h:form id="ca_v">
-
+                        <br/><br/>
+                        <div class="cont">
+                            <p:outputLabel value ="ARTÍCULOS EN EL CARRITO DE LA COMPRA" style="color:#6ea5d1"/>
+                        </div>
                         <br/><br/>
                         <div class="cont">
                             <p:dataTable id="tabla_carrito" value="#{carritoViewController.items}" var="item" 
                                          tableStyle="table-layout: auto;" scrollable="true" scrollWidth="100%" editable="true" 
                                          emptyMessage="No hay artículos en el carrito">
-                                <p:columnGroup type="header">
-                                    <p:row>
-                                        <p:column colspan="5" headerText="Artículos en su carrito"/>
-                                    </p:row>
-                                    <p:row>
-                                        <p:column rowspan="1" headerText="Nombre"/>
-                                        <p:column rowspan="1" headerText="Descripción" />
-                                        <p:column rowspan="1" headerText="Imagen"/>
-                                        <p:column rowspan="1" headerText="Precio"/>
-                                        <p:column rowspan="1" headerText="Cantidad" />
-                                    </p:row>
-                                </p:columnGroup>
 
                                 <!--COLUMNA NOMBRE DEL PRODUCTO-->
-                                <p:column sortBy="#{item.producto.nombre}" styleClass="centeredColumnContent" style="max-width: 10em;">
-                                    <p:outputLabel value="#{item.producto.nombre}"/>
+                                <p:column headerText="Producto" sortBy="#{item.producto.nombre}" styleClass="centeredColumnContent" style="max-width: 10em;">
+                                    <p:outputLabel value="#{item.producto.nombre}" style="max-width: 10em;"/>
                                 </p:column>
 
                                 <!--COLUMNA DESCRIPCIÓN DEL PRODUCTO-->
-                                <p:column styleClass="centeredColumnContent" style="max-width: 10em;">
+                                <p:column headerText="Descripción" styleClass="centeredColumnContent">
                                     <p:outputLabel value="#{item.producto.descripcion}"/>
                                 </p:column>
 
                                 <!--COLUMNA IMAGEN DEL PRODUCTO-->
-                                <p:column styleClass="centeredColumnContent">
+                                <p:column headerText="Imagen" styleClass="centeredColumnContent">
                                     <p:commandLink actionListener="#{carritoViewController.leerItem(item)}" 
                                                    oncomplete="PF('wimg').show();" update="dia_img">
                                         <p:graphicImage class="prod_img" name="/productos/#{item.producto.url}" library="images"/>
                                     </p:commandLink>
                                 </p:column>
                                 <!--COLUMNA PRECIO DEL PRODUCTO-->
-                                <p:column styleClass="centeredColumnContent">
+                                <p:column headerText="Precio/u" styleClass="centeredColumnContent">
                                     <p:outputLabel value="#{item.producto.precio}€"/>
                                 </p:column>
                                 <!--COLUMNA CANTIDAD DEL PRODUCTO-->
-                                <p:column styleClass="centeredColumnContent">
+                                <p:column headerText="Cantidad" styleClass="centeredColumnContent" style="width: 2em !important;">
                                     <p:cellEditor>
                                         <f:facet name="output">
-                                            <p:outputLabel value="#{item.cantidad}"/>
+                                            <p:outputLabel value="#{item.cantidad}" style="width: 3em !important;"/>
                                         </f:facet>
                                         <f:facet name="input">
-                                            <p:inputText value="#{item.cantidad}"/>
+                                            <p:inputText value="#{item.cantidad}" style="width:100%"/>
                                         </f:facet>
                                     </p:cellEditor> 
                                 </p:column>
@@ -71,9 +62,9 @@
                                 </p:column>
 
                                 <!-- COLUMNA CON BOTÓN DE BORRADO -->
-                                <p:column styleClass="centeredColumnContent">
+                                <p:column styleClass="centeredColumnContent" style="width: 2em !important;">
                                     <p:commandButton icon="ui-icon-trash" action="#{carritoViewController.eliminarCartItem(item)}" 
-                                                     update="tabla_carrito">
+                                                     update="tabla_carrito" style="width: 2em !important;">
                                         <p:confirm header="Confirmación" message="¿Seguro que quiere borrar?"/>
                                     </p:commandButton>
                                 </p:column>
@@ -86,7 +77,7 @@
 
                             </p:dataTable>
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true">
-                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" />
+                                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes"/>
                                 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
                             </p:confirmDialog>
                         </div>
