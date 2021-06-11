@@ -5,7 +5,9 @@
  */
 package com.mrboolean.controller;
 
+import com.mrboolean.ejb.LineaPedidoFacadeLocal;
 import com.mrboolean.ejb.PedidoFacadeLocal;
+import com.mrboolean.model.LineaPedido;
 import com.mrboolean.model.Pedido;
 import com.mrboolean.model.PedidosAux;
 import java.io.Serializable;
@@ -28,6 +30,8 @@ public class PedidosController implements Serializable {
 
     @EJB
     private PedidoFacadeLocal pedidoEJB;
+    @EJB
+    private LineaPedidoFacadeLocal lineaPedidoEJB;
 
     private List<PedidosAux> pedidos_aux = new ArrayList<PedidosAux>();
     private List<Pedido> pedidos = new ArrayList<Pedido>();
@@ -43,8 +47,9 @@ public class PedidosController implements Serializable {
     public void listarPedidos() {
 
         try {
-
-
+            System.out.print(this.estado_comparator);
+            System.out.print(this.estado_comparator);
+            System.out.print(this.estado_comparator);
             if (this.estado_comparator == null || this.estado_comparator.equals("t") || this.estado_comparator.equals("")) {
                 this.pedidos = pedidoEJB.findAll();
             } else {
@@ -106,7 +111,17 @@ public class PedidosController implements Serializable {
 
         try {
             if (p.getEstado().equals("Entregado")) {
-
+                
+                List<LineaPedido> lineas = new ArrayList<LineaPedido>();
+                
+                lineas = lineaPedidoEJB.findByPedidoId(p.getIdpedido());
+                
+                for(LineaPedido l : lineas){
+                    
+                    lineaPedidoEJB.remove(l);
+                    
+                }
+                
                 pedidoEJB.remove(p);
                 listarEstados();
                 listarPedidos();

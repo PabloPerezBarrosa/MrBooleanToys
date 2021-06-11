@@ -21,4 +21,6 @@ public interface LineaPedidoFacadeLocal {
 
     int count();
     
+    List<LineaPedido> findByPedidoId(int id_ped);
+    
 }
