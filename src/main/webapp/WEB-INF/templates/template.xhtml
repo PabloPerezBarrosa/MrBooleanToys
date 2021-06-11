@@ -54,7 +54,7 @@
                     </div>
                     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                         <ul class="navbar-nav">
-                            
+
                             <li class="nav-item">
                                 <h:form>
                                     <p:commandLink class ="nav-link" value="Conectar" onclick="PF('wlog').show();"/>
@@ -74,13 +74,14 @@
                 <!-- Dialog de Registro-->
                 <p:dialog id="dia_reg" widgetVar="wreg" draggable="false" resizable="false" closeOnEscape="true" 
                           modal="true" showEffect="slide" hideEffect="slide" styleClass="modalResponsivo">
-                    <h:form id="diareg">
-                        <!--mensaje de confirmaciones etc.-->
-                        <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true" showSummary="false"/>
-                        <p:fieldset legend="Registro de Clientes">
-                            <f:facet name="header">
-                                Datos Cuenta
-                            </f:facet>
+
+                    <!--mensaje de confirmaciones etc.-->
+                    <p:growl autoUpdate="true" class="ui-growl-image-warn" showDetail="true" showSummary="false"/>
+                    <p:fieldset legend="Registro de Clientes">
+                        <f:facet name="header">
+                            Datos Cuenta
+                        </f:facet>
+                        <h:form id="diareg">
                             <p:panelGrid columns="2">
 
                                 <h:outputLabel for="Nombre" value="Nombre"/>
@@ -102,12 +103,17 @@
 
                             </p:panelGrid>
                             <p:panelGrid columns="1">
-                                <p:commandLink value="Al registrarse acepta nuestras condiciones    " style="color:red !important;"/>
                                 <p:commandButton value="Registrar" actionListener="#{menuController.registrarCliente()}"/>
                             </p:panelGrid>
-                            <f:facet name="footer"/>
-                        </p:fieldset>
-                    </h:form>
+                        </h:form>
+                        <f:facet name="footer"/>
+                        <h:form>
+                            <p:panelGrid columns="1">
+                                <p:commandLink value="Al registrarse acepta nuestras condiciones" style="color:red !important;" action="terminos.xhtml"/>
+                            </p:panelGrid>
+                        </h:form>
+                    </p:fieldset>
+
                 </p:dialog>
 
                 <!--Dialog de Login-->
@@ -141,7 +147,7 @@
                         </p:panelGrid>       
                     </h:form>
                 </p:dialog>
-                
+
                 <!-- DIALOGO DE RECUPERACIÓN DE CUENTA-->
                 <p:dialog id="dia_recu" widgetVar="wrecu" draggable="false" resizable="false" closeOnEscape="true" 
                           modal="true" showEffect="highlight" hideEffect="highlight" styleClass="modalResponsivo">
